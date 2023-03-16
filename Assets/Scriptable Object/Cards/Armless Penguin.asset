@@ -1,0 +1,28 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b154a774a01d2194289df1b9dafdf1e6, type: 3}
+  m_Name: Armless Penguin
+  m_EditorClassIdentifier: 
+  ID: 1
+  Rarity: 3
+  ManaCost: 0
+  Artwork: {fileID: 21300000, guid: 958cc67fb76fbf84c9f86b92bd9e2237, type: 3}
+  Effects: []
+  Name: Armless Penguin
+  Description: Who would dare to harm this cute penguin
+  Atk: 1
+  Health: 1
+  Race: 3
+  MonsterPrefab: {fileID: 3216057225856356651, guid: cb86df6d3b3f0984d990fe8fc9c964d6,
+    type: 3}
+  MonsterPrefabScale: {x: 2.5, y: 2.5, z: 2.5}
+  Taunt: 0
