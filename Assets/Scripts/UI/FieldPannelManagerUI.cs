@@ -1,5 +1,7 @@
-﻿using ArcaneRealms.Scripts.Cards;
+﻿using ArcaneRealms.Scripts.ArrowPointer;
+using ArcaneRealms.Scripts.Cards;
 using ArcaneRealms.Scripts.Managers;
+using Unity.Netcode;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
@@ -36,7 +38,6 @@ namespace Assets.Scripts.UI {
 		}
 
 		public void OnDrop(PointerEventData eventData) {
-			//TODO - handle this.
 			IsInsideFieldPannel = false;
 
 			GameObject gameObjectDropped = eventData.pointerDrag;
@@ -44,18 +45,32 @@ namespace Assets.Scripts.UI {
 			if(card != null) {
 				CardInGame cardInGame = card.GetCardInGame();
 				if(cardInGame.IsMonsterCard(out var monster)) {
-					card.DestroyAndResetState();
 					Ray ray = Camera.main.ScreenPointToRay(eventData.position);
 					if(Physics.Raycast(ray, out RaycastHit hit, 100, layerMask)) {
-						FieldManager.Instance.TrySummonMonsterOnLocation(monster, hit.point, out int index);
+						FieldManager.Instance.TrySummonMonsterOnLocation(monster, hit.point, out int index, out Transform monsterTransform);
+						if (cardInGame.HasTargetingEffects()) {
+							ArrowPointerBuilder.CreateBuilder()
+								.SetActionCallback((cardTarget) => {
+									//we didn't choose a right target, reset the card in hand
+									if(cardTarget == null) {
+										//TODO - FieldManager.Instance.RemoveMonster(....)
+										card.OnEndDrag(null); //TODO - maybe a nicer visual?
+										return;
+									}
 
-						//TODO - Run Game Manager summon Monster on position
+
+								}).SetPredicateFilter((cardToFilter) => {
+									return false;
+								}).SetStartingPosition(monsterTransform)
+								.BuildArrowPointer();
+						} else {
+							card.DestroyAndResetState();
+							GameManager.Instance.PlayerPlayCardFromHandServerRPC(card.GetCardInGameIndex(), index);
+						}
 					}
 
 				}
 			}
-			//Debug.Log("DROPPING! name: " + gameObject.name);
-
 		}
 
 		public void PointerAt(PointerEventData eventData) {

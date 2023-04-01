@@ -13,11 +13,11 @@ namespace ArcaneRealms.Scripts.Cards {
 		//TODO - we could probably handle these with public StatChanger statChanger; and currentHealth = statChanger.TotalHealth - DamageRecived;
 		public int _CurrentHealth;
 
-		public MonsterCard(MonsterInfoSO info) : base(info) {
+		public MonsterCard(MonsterInfoSO info, ulong team) : base(info, team) {
 			cardInfoSO = info;
 		}
 
-		protected override void Start() {
+		public override void Start() {
 			_CurrentHealth = cardInfoSO.Health;
 			Dictionary<StatType, int> map = new() {
 				{ StatType.Health, cardInfoSO.Health },
@@ -25,6 +25,12 @@ namespace ArcaneRealms.Scripts.Cards {
 				{ StatType.ManaCost, cardInfoSO.ManaCost }
 			};
 			statHandler = new StatHandler(map);
+		}
+
+
+		public bool CanAttack(MonsterCard monsterCard) {
+			//GameManager.Instance.CanMonsterAttack()
+			return true;
 		}
 
 

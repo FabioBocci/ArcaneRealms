@@ -1,29 +1,42 @@
 ﻿using ArcaneRealms.Scripts.Effects;
+using ArcaneRealms.Scripts.Enums;
 using ArcaneRealms.Scripts.SO;
+using ArcaneRealms.Scripts.Utils;
 using Assets.Scripts.SO;
 using System;
-using System.Collections.Generic;
 using UnityEditor;
 using UnityEngine;
 
 
 namespace ArcaneRealms.Editor {
 
-	[CustomEditor(typeof(CardInfoSO))]
+	[CustomEditor(typeof(CardInfoSO), true)]
 	public class CardInfoSOEditor : UnityEditor.Editor {
 		private SerializedProperty effectInfosProperty;
+		private SerializedProperty databaseProperty;
 		private bool showEffectInfos = true;
 
 		private void OnEnable() {
 			effectInfosProperty = serializedObject.FindProperty("Effects");
+			databaseProperty = serializedObject.FindProperty("database");
 		}
 
 		public override void OnInspectorGUI() {
 			EditorGUI.BeginChangeCheck();
 			serializedObject.Update();
 
-			DrawDefaultInspector();
+			if(databaseProperty.objectReferenceValue == null) {
+				EditorGUILayout.Space(30);
+				EditorGUILayout.BeginHorizontal();
+				EditorGUILayout.PropertyField(databaseProperty);
+				EditorGUILayout.EndHorizontal();
+				EditorGUILayout.Space(30);
+				serializedObject.ApplyModifiedProperties();
+				EditorUtility.SetDirty(target);
+			}
 
+
+			DrawDefaultInspector();
 			EditorGUILayout.Space(20);
 
 			GUIStyle style = new GUIStyle(EditorStyles.boldLabel);
@@ -31,15 +44,19 @@ namespace ArcaneRealms.Editor {
 			style.alignment = TextAnchor.LowerLeft;
 			showEffectInfos = EditorGUILayout.Foldout(showEffectInfos, "Card Effects", true, style);
 
+			if(!showEffectInfos) {
+				return;
+			}
+
 			// display the list of card effects
 			for(int i = 0; i < effectInfosProperty.arraySize; i++) {
 				SerializedProperty effectInfoProperty = effectInfosProperty.GetArrayElementAtIndex(i);
-				SerializedProperty parametersProperty = effectInfoProperty.FindPropertyRelative("Parameters");
 
 				// display the effect foldout and name field
 				EditorGUILayout.BeginHorizontal();
 
-				SerializedProperty effectProperty = effectInfoProperty.FindPropertyRelative("EffectSO");
+				SerializedProperty effectProperty = effectInfoProperty.FindPropertyRelative("effectSO");
+				SerializedProperty implementedParamProperty = effectInfoProperty.FindPropertyRelative("effectParameters");
 
 				GUIContent guiContent = effectProperty.objectReferenceValue != null ? new GUIContent(((CardEffectSO) effectProperty.objectReferenceValue).GetType().Name) : new GUIContent("Card Effect");
 				EditorGUILayout.PropertyField(effectProperty, guiContent);
@@ -49,52 +66,50 @@ namespace ArcaneRealms.Editor {
 				EditorUtility.SetDirty(target);
 
 				if(effectProperty != null && effectProperty.objectReferenceValue != null) {
-					List<Parameter> defaultParameters = ((CardInfoSO) target).Effects[i].effectSO.GetDefaultValueDictionary();
-					// display the list of parameters for this effect
+					EffectParameters defaultParameters = ((CardInfoSO) target).Effects[i].effectSO.GetDefaultValueDictionary();
+					EffectParameters implementedParameters = ((CardInfoSO) target).Effects[i].effectParameters;
+					TargetsEnum targetType = defaultParameters.GetValueOrDefault(CardEffectSO.TARGET_PARAM_NAME, TargetsEnum.NONE);
+					defaultParameters = defaultParameters.AddAll(targetType.parameters);
+					for(int j = 0; j < defaultParameters.GetSize(); j++) {
 
-
-					for(int j = 0; j < defaultParameters.Count; j++) {
-						if(parametersProperty.arraySize <= j) {
-							parametersProperty.InsertArrayElementAtIndex(parametersProperty.arraySize);
+						if(implementedParameters.GetSize() <= j) {
+							implementedParameters.Add(new() { Key = defaultParameters[j].Key, Value = defaultParameters[j].Value, Type = defaultParameters[j].Type });
+							serializedObject.ApplyModifiedProperties();
+							EditorUtility.SetDirty(target);
+							Debug.Log("Created new parameter. For parameter: " + defaultParameters[j].Key + " with value: " + implementedParameters[j].Value);
 						}
-						SerializedProperty parameterProperty = parametersProperty.GetArrayElementAtIndex(j);
-
-						// get the parameter key and value fields
-						SerializedProperty valueProperty = parameterProperty.FindPropertyRelative("Value");
-						SerializedProperty keyProperty = parameterProperty.FindPropertyRelative("Key");
-
 						EditorGUILayout.BeginHorizontal();
 
 						EditorGUILayout.LabelField(defaultParameters[j].Key);
-						bool useDefaultValue = valueProperty == null || valueProperty.propertyType == SerializedPropertyType.Generic || valueProperty.stringValue == null || valueProperty.stringValue.Length == 0;
-						if(useDefaultValue) {
-							keyProperty.stringValue = defaultParameters[j].Key;
-							valueProperty.stringValue = defaultParameters[j].Value;
-							serializedObject.ApplyModifiedProperties();
-							EditorUtility.SetDirty(target);
-						}
-						Type type = Type.GetType(defaultParameters[j].Type);
 
+						Type type = Type.GetType(defaultParameters[j].Type);
 						switch(type) {
 							case Type t when t == typeof(int):
-								valueProperty.stringValue = EditorGUILayout.IntField(int.Parse(useDefaultValue ? defaultParameters[j].Value : valueProperty.stringValue)).ToString();
+								implementedParameters[j].Value = EditorGUILayout.IntField(int.Parse(implementedParameters[j].Value)).ToString();
 								break;
 							case Type t when t == typeof(float):
-								valueProperty.stringValue = EditorGUILayout.FloatField(float.Parse(valueProperty.stringValue)).ToString();
+								implementedParameters[j].Value = EditorGUILayout.FloatField(float.Parse(implementedParameters[j].Value)).ToString();
 								break;
 							case Type t when t == typeof(string):
-								valueProperty.stringValue = EditorGUILayout.TextField(valueProperty.stringValue);
+								implementedParameters[j].Value = EditorGUILayout.TextField(implementedParameters[j].Value);
 								break;
 							case Type t when t == typeof(bool):
-								valueProperty.stringValue = EditorGUILayout.Toggle(bool.Parse(valueProperty.stringValue)).ToString();
+								implementedParameters[j].Value = EditorGUILayout.Toggle(bool.Parse(implementedParameters[j].Value)).ToString();
 								break;
-							/*case Type t when t == typeof(CardEffectTarget):
-								CardEffectTarget targetCardEffect = (CardEffectTarget) Enum.Parse(typeof(CardEffectTarget), valueProperty.stringValue);
-								targetCardEffect = (CardEffectTarget) EditorGUILayout.EnumPopup(targetCardEffect, GUILayout.MinWidth(500));
-								valueProperty.stringValue = targetCardEffect.ToString();
-								break;*/
+							case Type t when t == typeof(TargetsEnum):
+								EditorGUILayout.Space(5);
+								TargetsEnum target = TargetsEnum.GetTargetType(implementedParameters[j].Value);
+								if(target == null) {
+									Debug.Log("TargetsEnum == null -> resetting default value: " + targetType.name);
+									target = targetType;
+								}
+								int index = TargetsEnum.GetIndexOf(target);
+								index = EditorGUILayout.Popup(index, TargetsEnum.GetTargetTypeNames().ToArray(), GUILayout.MinWidth(500));
+								implementedParameters[j].Value = TargetsEnum.GetTargetTypes()[index].name;
+								EditorGUILayout.Space(5);
+								break;
 							default:
-								EditorGUILayout.HelpBox("Unsupported property type: " + valueProperty.propertyType, MessageType.Warning);
+								EditorGUILayout.HelpBox("Unsupported property type: " + defaultParameters[j].Type, MessageType.Warning);
 								break;
 						}
 
@@ -108,12 +123,12 @@ namespace ArcaneRealms.Editor {
 				if(GUILayout.Button("Delete")) {
 					deleteIndex = i;
 				}
-
-				EditorGUILayout.Space(20);
+				DrawUILine(Color.gray, 2, 20);
 
 				if(deleteIndex >= 0) {
 					effectInfosProperty.DeleteArrayElementAtIndex(deleteIndex);
 				}
+				implementedParamProperty.serializedObject.ApplyModifiedProperties();
 			}
 			// Add card effect button
 			if(GUILayout.Button("Add Card Effect")) {
@@ -122,6 +137,18 @@ namespace ArcaneRealms.Editor {
 			}
 			serializedObject.ApplyModifiedProperties();
 			EditorUtility.SetDirty(target);
+			//AssetDatabase.SaveAssets();
+		}
+
+
+
+		public static void DrawUILine(Color color, int thickness = 2, int padding = 10) {
+			Rect r = EditorGUILayout.GetControlRect(GUILayout.Height(padding + thickness));
+			r.height = thickness;
+			r.y += padding / 2;
+			r.x -= 2;
+			r.width += 6;
+			EditorGUI.DrawRect(r, color);
 		}
 	}
 }

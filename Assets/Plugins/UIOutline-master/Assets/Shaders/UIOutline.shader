@@ -156,7 +156,7 @@ Shader "PicoTanks/UI/UIOutline"
 		ENDCG
 	}
 	}
-		CustomEditor "ASEMaterialInspector"
+		//CustomEditor "ASEMaterialInspector"
 	
 	
 }/*ASEBEGIN

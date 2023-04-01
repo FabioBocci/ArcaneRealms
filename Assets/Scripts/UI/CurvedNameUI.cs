@@ -43,17 +43,17 @@ public class CurvedNameUI : MonoBehaviour {
 		Matrix4x4 matrix;
 
 		m_TextComponent.havePropertiesChanged = true; // Need to force the TextMeshPro Object to be updated.
-		CurveScale *= 10;
-		float old_CurveScale = CurveScale;
+		float realCurveScale = CurveScale * 10;
+		float old_CurveScale = realCurveScale;
 		AnimationCurve old_curve = CopyAnimationCurve(VertexCurve);
 
 		while(true) {
-			if(!m_TextComponent.havePropertiesChanged && old_CurveScale == CurveScale && old_curve.keys[1].value == VertexCurve.keys[1].value) {
+			if(!m_TextComponent.havePropertiesChanged && old_CurveScale == realCurveScale && old_curve.keys[1].value == VertexCurve.keys[1].value) {
 				yield return null;
 				continue;
 			}
 
-			old_CurveScale = CurveScale;
+			old_CurveScale = realCurveScale;
 			old_curve = CopyAnimationCurve(VertexCurve);
 
 			m_TextComponent.ForceMeshUpdate(); // Generate the mesh and populate the textInfo with data we can use and manipulate.
@@ -97,8 +97,8 @@ public class CurvedNameUI : MonoBehaviour {
 				// Compute the angle of rotation for each character based on the animation curve
 				float x0 = (offsetToMidBaseline.x - boundsMinX) / (boundsMaxX - boundsMinX); // Character's position relative to the bounds of the mesh.
 				float x1 = x0 + 0.0001f;
-				float y0 = VertexCurve.Evaluate(x0) * CurveScale;
-				float y1 = VertexCurve.Evaluate(x1) * CurveScale;
+				float y0 = VertexCurve.Evaluate(x0) * realCurveScale;
+				float y1 = VertexCurve.Evaluate(x1) * realCurveScale;
 
 				Vector3 horizontal = new(1, 0, 0);
 				//Vector3 normal = new Vector3(-(y1 - y0), (x1 * (boundsMaxX - boundsMinX) + boundsMinX) - offsetToMidBaseline.x, 0);

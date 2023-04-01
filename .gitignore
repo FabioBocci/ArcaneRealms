@@ -73,3 +73,4 @@ crashlytics-build.properties
 
 # Autosave plugin saves
 /[Aa]ssets/AutoSave/*
+/Assets/JMO Assets
