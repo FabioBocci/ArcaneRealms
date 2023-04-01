@@ -10,10 +10,6 @@ public class ArchLayoutGroup : HorizontalOrVerticalLayoutGroup {
 	[SerializeField] private float curveRadius = 200;
 	[SerializeField] private float angleOut = Mathf.PI;
 
-	protected override void OnValidate() {
-		base.OnValidate();
-	}
-
 	public override void CalculateLayoutInputVertical() {
 		base.CalculateLayoutInputHorizontal();
 	}

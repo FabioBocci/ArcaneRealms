@@ -1,6 +1,5 @@
 ﻿using ArcaneRealms.Scripts.Cards;
 using ArcaneRealms.Scripts.Enums;
-using ArcaneRealms.Scripts.Managers;
 using Assets.Scripts.Cards;
 using System.Collections.Generic;
 using System.Linq;
@@ -40,6 +39,7 @@ namespace ArcaneRealms.Scripts.Players {
 		public int usableMana = 0;
 
 		public readonly ulong ID;
+		//also for teams
 
 		public PlayerInGame(ulong iD) {
 			ID = iD;
@@ -48,16 +48,18 @@ namespace ArcaneRealms.Scripts.Players {
 		//these function will call the GameManager to sync the players to this state!
 
 		public void AddMana(int amount) {
-			AddMana(amount, true);
+			AddMana(amount, true, false);
 		}
 
-		public void AddMana(int mana, bool permanent) {
+		public void AddMana(int mana, bool permanent, bool onlyEmpty) {
 			if(permanent) {
 				currentManaPool = (currentManaPool + mana) % MAX_MANA;
 			}
-			usableMana = (usableMana + mana) % MAX_MANA;
+			if(!onlyEmpty) {
+				usableMana = (usableMana + mana) % MAX_MANA;
+			}
 
-			GameManager.Instance.PlayerManaChangedClientRPC(ID, currentManaPool, usableMana);
+			//GameManager.Instance.PlayerManaChangedClientRPC(ID, currentManaPool, usableMana);
 		}
 
 		public void DrawCards(int count) {
@@ -77,7 +79,7 @@ namespace ArcaneRealms.Scripts.Players {
 
 				handCards.Add(card);
 
-				GameManager.Instance.PlayerDrawCardClientRPC(ID, card.cardInfoSO.ID, "TODO - handle json of card");
+				//GameManager.Instance.PlayerDrawCardClientRPC(ID, card.cardInfoSO.ID, "TODO - handle json of card");
 			}
 
 		}
@@ -88,6 +90,21 @@ namespace ArcaneRealms.Scripts.Players {
 		//when you drow a card
 		public void AddCardToHand(CardInGame card) {
 			handCards.Add(card);
+		}
+
+		public void RemoveCardFromHand(int index) {
+			handCards.RemoveAt(index);
+		}
+
+		internal void RemoveCardFromDeck(string cardID) {
+			if(currentDeck == null || currentDeck.Count == 0) {
+				return;
+			}
+			CardInGame cardFromDeck = currentDeck.Find(card => card.cardInfoSO.ID == cardID);
+			if(cardFromDeck == null) {
+				return;
+			}
+			currentDeck.Remove(cardFromDeck);
 		}
 
 		//when the enemy draw a card
@@ -124,5 +141,7 @@ namespace ArcaneRealms.Scripts.Players {
 			Debug.LogError("Tryied to play a card that is not a Monster or a Spell?");
 
 		}
+
+
 	}
 }

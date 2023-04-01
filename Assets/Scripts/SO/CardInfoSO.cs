@@ -7,16 +7,39 @@ using UnityEngine;
 
 namespace ArcaneRealms.Scripts.SO {
 	public class CardInfoSO : ScriptableObject {
+		private static CardInfoDataBase DatabaseStatic;
+
+		[SerializeField]
+		[HideInInspector]
+		private CardInfoDataBase database;
+
 		public string ID = "I-1";
 		public CardRarity Rarity;
 		public int ManaCost;
 		public Sprite Artwork;
 
+		[HideInInspector]
 		public List<CardEffect> Effects;
 
 		public string Name;
 		public string Description;
 
+
+		private void OnValidate() {
+			if(database != null && DatabaseStatic == null) {
+				DatabaseStatic = database;
+			}
+
+			if(database == null && DatabaseStatic != null) {
+				database = DatabaseStatic;
+			}
+
+			if(DatabaseStatic != null) {
+				if(!DatabaseStatic.Cards.Contains(this)) {
+					DatabaseStatic.Cards.Add(this);
+				}
+			}
+		}
 
 
 		public bool IsSpell(out SpellInfoSO card) {
@@ -35,15 +58,17 @@ namespace ArcaneRealms.Scripts.SO {
 			return this is MonsterInfoSO;
 		}
 
-		public CardInGame BuildCardInGame(string statHandlerJson = null) {
+		public CardInGame BuildCardInGame(string statHandlerJson = null, ulong team = 0) {
 			CardInGame cardInGame = null;
 			if(IsMonster(out var monster)) {
-				cardInGame = new MonsterCard(monster);
+				cardInGame = new MonsterCard(monster, team);
 			}
 
 			if(IsSpell(out var spell)) {
-				cardInGame = new SpellCard(spell);
+				cardInGame = new SpellCard(spell, team);
 			}
+
+			cardInGame.Start();
 
 			if(cardInGame != null && statHandlerJson != null) {
 				cardInGame.SetStatHandlerFromJson(statHandlerJson);

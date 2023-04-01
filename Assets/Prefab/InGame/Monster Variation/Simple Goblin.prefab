@@ -71,7 +71,15 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 8272943599224061573, guid: 47b41978aba272c47ae5f4a2f7179c61,
+        type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1784685503387515261}
+    - targetCorrespondingSourceObject: {fileID: 8272943599224061573, guid: 47b41978aba272c47ae5f4a2f7179c61,
+        type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1909252754566992315}
   m_SourcePrefab: {fileID: 100100000, guid: 47b41978aba272c47ae5f4a2f7179c61, type: 3}
 --- !u!4 &8344254335715732464 stripped
 Transform:
@@ -79,6 +87,46 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 73140908627429717}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &8344254335716095952 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 8272943599224061573, guid: 47b41978aba272c47ae5f4a2f7179c61,
+    type: 3}
+  m_PrefabInstance: {fileID: 73140908627429717}
+  m_PrefabAsset: {fileID: 0}
+--- !u!195 &1784685503387515261
+NavMeshAgent:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8344254335716095952}
+  m_Enabled: 1
+  m_AgentTypeID: 0
+  m_Radius: 0.5
+  m_Speed: 3.5
+  m_Acceleration: 8
+  avoidancePriority: 50
+  m_AngularSpeed: 120
+  m_StoppingDistance: 2.5
+  m_AutoTraverseOffMeshLink: 1
+  m_AutoBraking: 1
+  m_AutoRepath: 1
+  m_Height: 2
+  m_BaseOffset: 0
+  m_WalkableMask: 4294967295
+  m_ObstacleAvoidanceType: 4
+--- !u!114 &1909252754566992315
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8344254335716095952}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 040f2f5adcfb51f40946ea848e31ded2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &8793605580087564543
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -172,7 +220,13 @@ PrefabInstance:
       propertyPath: m_Name
       value: Simple Goblin
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    - target: {fileID: 6430138953049541357, guid: 66bf9fc679c1d3240bee1480136e58a1,
+        type: 3}
+      propertyPath: m_Height
+      value: 3.28
+      objectReference: {fileID: 0}
+    m_RemovedComponents:
+    - {fileID: 3265335055039863279, guid: 66bf9fc679c1d3240bee1480136e58a1, type: 3}
     m_RemovedGameObjects:
     - {fileID: 4808917198782623086, guid: 66bf9fc679c1d3240bee1480136e58a1, type: 3}
     - {fileID: 8549761536560975209, guid: 66bf9fc679c1d3240bee1480136e58a1, type: 3}
@@ -189,7 +243,7 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 6244402162264967636, guid: 66bf9fc679c1d3240bee1480136e58a1,
         type: 3}
       insertIndex: -1
-      addedObject: {fileID: 1345340795330573487}
+      addedObject: {fileID: 1365108495617244678}
   m_SourcePrefab: {fileID: 100100000, guid: 66bf9fc679c1d3240bee1480136e58a1, type: 3}
 --- !u!1 &3216057225856356651 stripped
 GameObject:
@@ -197,29 +251,23 @@ GameObject:
     type: 3}
   m_PrefabInstance: {fileID: 8793605580087564543}
   m_PrefabAsset: {fileID: 0}
---- !u!136 &1345340795330573487
-CapsuleCollider:
+--- !u!114 &1365108495617244678
+MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3216057225856356651}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6e60b0c7f16a2524eb1442edb03dc82d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  basePlatform: {fileID: 9011262807304831292}
+  monsterPositionOnPlate: {fileID: 8344254335715732464}
+  terreinLayerMask:
     serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 1
-  m_ProvidesContacts: 0
-  m_Enabled: 0
-  serializedVersion: 2
-  m_Radius: 1.4
-  m_Height: 4
-  m_Direction: 1
-  m_Center: {x: 0, y: 1, z: 0}
+    m_Bits: 1024
 --- !u!4 &6003886512024904135 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 2980045218193340728, guid: 66bf9fc679c1d3240bee1480136e58a1,

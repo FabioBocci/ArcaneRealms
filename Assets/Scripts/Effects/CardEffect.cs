@@ -1,6 +1,8 @@
-﻿using Assets.Scripts.SO;
+﻿using ArcaneRealms.Scripts.Cards;
+using ArcaneRealms.Scripts.Players;
+using Assets.Scripts.SO;
 using System;
-using System.Collections.Generic;
+using UnityEngine;
 
 namespace ArcaneRealms.Scripts.Effects {
 
@@ -8,68 +10,50 @@ namespace ArcaneRealms.Scripts.Effects {
 	public class CardEffect {
 
 		public CardEffectSO effectSO;
-		public List<Parameter> parameters = new();
+		[SerializeField] public EffectParameters effectParameters = new();
 
 
 		//Called when the card is posizioned on the field
-		public virtual void OnActivation() => effectSO.OnActivation(this);
+		public virtual void OnActivation(PlayerInGame owner, CardInGame card) => effectSO.OnActivation(owner, card, effectParameters);
 
 		public virtual bool HasActivationEffect() => effectSO.HasActivationEffect();
 
 
 		//Called when the card is destroyed from the field
-		public virtual void OnDestruction() => effectSO.OnDestruction(this);
+		public virtual void OnDestruction(PlayerInGame owner, CardInGame card) => effectSO.OnDestruction(owner, card, effectParameters);
 
 		public virtual bool HasDestuctionEffect() => effectSO.HasDestuctionEffect();
 
 
 		//Called when the card is draw from the deck to your hand
-		public virtual void OnDraw() => effectSO.OnDraw(this);
+		public virtual void OnDraw(PlayerInGame owner, CardInGame card) => effectSO.OnDraw(owner, card, effectParameters);
 
-		public virtual bool HasDrawEffect() => effectSO.HasDrawEffect();
+		public virtual bool HasDrawEffect(PlayerInGame owner, CardInGame card) => effectSO.HasDrawEffect();
 
 
 
 		//Called when the game start
-		public virtual void OnGameStart() => effectSO.OnGameStart(this);
+		public virtual void OnGameStart(PlayerInGame owner, CardInGame card) => effectSO.OnGameStart(owner, card, effectParameters);
 
 		public virtual bool HasGameStartEffect() => effectSO.HasGameStartEffect();
 
 
 		//Called when ThisCardAttack
-		public virtual void OnThisCardAttack() => effectSO.OnThisCardAttack(this);
+		public virtual void OnThisCardAttack(PlayerInGame owner, CardInGame card) => effectSO.OnThisCardAttack(owner, card, effectParameters);
 
 		public virtual bool HasThisCardAttackEffect() => effectSO.HasThisCardAttackEffect();
 
 
 		//Called when OtherCardAttack
-		public virtual void OnOtherCardAttack() => effectSO.OnOtherCardAttack(this);
+		public virtual void OnOtherCardAttack(PlayerInGame owner, CardInGame card) => effectSO.OnOtherCardAttack(owner, card, effectParameters);
 
 		public virtual bool HasOtherCardAttackEffect() => effectSO.HasOtherCardAttackEffect();
 
+		public virtual bool RequireTargetToRun() => effectSO.RequireTargetToRun(effectParameters);
+
+		public string GetDesc() => effectSO.GetDesc(effectParameters);
 
 
-		public string GetDesc() {
-			return effectSO.GetDesc(this);
-		}
-
-		public string GetParameter(string key) {
-			var parameter = parameters.Find(p => p.Key == key);
-			if(parameter == null) {
-				return null;
-			} else {
-				return parameter.Value;
-			}
-		}
-
-	}
-
-
-
-	public class Parameter {
-		public string Key;
-		public string Value;
-		public string Type;
 	}
 
 }

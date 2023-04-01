@@ -1,8 +1,10 @@
-﻿using ArcaneRealms.Scripts.Cards;
+﻿using ArcaneRealms.Scripts.ArrowPointer;
+using ArcaneRealms.Scripts.Cards;
 using ArcaneRealms.Scripts.Enums;
 using ArcaneRealms.Scripts.Managers;
 using ArcaneRealms.Scripts.SO;
 using ArcaneRealms.Scripts.UI;
+using Unity.Netcode;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
@@ -30,8 +32,6 @@ namespace Assets.Scripts.UI {
 		[SerializeField] private float ROTATION_SPEED = 20;
 
 		[Header("field params")]
-		[SerializeField] private Transform fieldTransform; //TODO - remove this line
-		[SerializeField] private Transform TMP_prefab; //TODO - remove this line
 		[SerializeField] private MonsterInfoSO TMP_Monster; //TODO - remove this line
 
 
@@ -46,6 +46,7 @@ namespace Assets.Scripts.UI {
 		private GameObject cardCloneShowing = null;
 		private RectTransform rectTransform = null;
 		private CanvasGroup canvasGroup = null;
+		private UIOutline uiOutline = null;
 		private Transform originalParent = null;
 		private int parentChildIndexForThisCard = -1;
 
@@ -53,16 +54,23 @@ namespace Assets.Scripts.UI {
 			cardBuilderUI = GetComponent<ICardBuilderUI>();
 			rectTransform = GetComponent<RectTransform>();
 			canvasGroup = GetComponent<CanvasGroup>();
-			BuildCard(new MonsterCard(TMP_Monster)); //TODO - remove this line
+			uiOutline = GetComponentInChildren<UIOutline>();
+			BuildCard(new MonsterCard(TMP_Monster, 0)); //TODO - remove this line
 		}
 
 		private void Update() {
-			if(hoveringThisCard && !isShowingThisCard && !IsDragging && !PlayersHandHandlerUI.Instance.PlayerIsDraggingCard) {
+			if(hoveringThisCard && !isShowingThisCard && !IsDragging && !HandUIManager.Instance.PlayerIsDraggingCard) {
 				interlTimer += Time.deltaTime;
 				if(interlTimer >= TIMER) {
 					interlTimer = 0;
 					ShowCard();
 				}
+			}
+
+			if(HandUIManager.Instance.PlayerIsDraggingCard && !IsDragging) {
+				uiOutline.enabled = false;
+			} else {
+				uiOutline.enabled = true;
 			}
 		}
 
@@ -72,7 +80,9 @@ namespace Assets.Scripts.UI {
 		}
 
 		private void ShowCard() {
-			//GameManager.Instance.PlayerHoverOnCardInHandServerRPC(NetworkManager.Singleton.LocalClientId, parentChildIndexForThisCard);
+			if(NetworkManager.Singleton != null) {
+				GameManager.Instance.PlayerHoverOnCardInHandServerRPC(parentChildIndexForThisCard);
+			}
 			isShowingThisCard = true;
 			cardCloneShowing = Instantiate(gameObject, gameObject.transform.position, Quaternion.identity);
 			cardCloneShowing.name = "CCShowing_" + cardInGame.cardInfoSO.Name;
@@ -132,6 +142,15 @@ namespace Assets.Scripts.UI {
 			return -1;
 		}
 
+		private void DestroyCardCloneShowing() {
+			if(isShowingThisCard) {
+				isShowingThisCard = false;
+				Destroy(cardCloneShowing);
+				cardCloneShowing = null;
+				canvasGroup.alpha = 1;
+			}
+		}
+
 
 		public void OnPointerEnter(PointerEventData eventData) {
 			hoveringThisCard = true;
@@ -140,30 +159,42 @@ namespace Assets.Scripts.UI {
 
 		public void OnPointerExit(PointerEventData eventData) {
 			hoveringThisCard = false;
-			if(isShowingThisCard) {
-				isShowingThisCard = false;
-				Destroy(cardCloneShowing);
-				cardCloneShowing = null;
-				gameObject.GetComponent<CanvasGroup>().alpha = 1;
+			if(isShowingThisCard && NetworkManager.Singleton != null) {
+				GameManager.Instance.PlayerHoverOnCardInHandServerRPC(-1);
 			}
+			DestroyCardCloneShowing();
 		}
 		public void OnBeginDrag(PointerEventData eventData) {
+
+			if(cardInGame != null && !cardInGame.IsMonsterCard(out var monster) && cardInGame.HasTargetingEffects()) {
+				//this only works for Spells not for monster since for monster we need before to check the final position
+				ArrowPointerBuilder.CreateBuilder()
+					.SetActionCallback((cardTarget) => {
+						//we didn't choose a right target, reset the card in hand
+						if(cardTarget == null) {
+							OnEndDrag(null);
+							return;
+						}
+
+
+					}).SetPredicateFilter((cardToFilter) => {
+						return false;
+					}).SetStartingPosition(transform) //todo set position from GameManager.Instance.localPlayerGameObject
+					.BuildArrowPointer();
+			}
+
 			if(cardInGame.IsMonsterCard(out var monstreCard) && GameManager.Instance.GetPlayerMonsterCount() >= 5) {
 				return;
 			}
 
 			IsDragging = true;
-			PlayersHandHandlerUI.Instance.PlayerIsDraggingCard = true;
+			HandUIManager.Instance.PlayerIsDraggingCard = true;
+
 			originalParent = transform.parent;
 			transform.SetParent(transform.parent.parent);
 			rectTransform.rotation = Quaternion.identity;
 
-			if(isShowingThisCard) {
-				isShowingThisCard = false;
-				Destroy(cardCloneShowing);
-				cardCloneShowing = null;
-				canvasGroup.alpha = 1;
-			}
+			DestroyCardCloneShowing();
 			canvasGroup.blocksRaycasts = false;
 			Cursor.visible = false;
 			FieldPannelManagerUI.Instance.ActiveGameObject();
@@ -172,6 +203,11 @@ namespace Assets.Scripts.UI {
 
 		public void OnDrag(PointerEventData eventData) {
 			if(cardInGame.IsMonsterCard(out var monstreCard) && GameManager.Instance.GetPlayerMonsterCount() >= 5) {
+				return;
+			}
+
+			if(ArrowPointerBuilder.HasRunningArrowPointer()) {
+				//we are choosing a target
 				return;
 			}
 
@@ -206,6 +242,7 @@ namespace Assets.Scripts.UI {
 
 			canvasGroup.blocksRaycasts = true;
 			FieldPannelManagerUI.Instance.DeactivateGameObject();
+			HandUIManager.Instance.PlayerIsDraggingCard = false;
 		}
 
 		internal CardInGame GetCardInGame() {
@@ -214,8 +251,12 @@ namespace Assets.Scripts.UI {
 
 		public void DestroyAndResetState() {
 			Destroy(gameObject);
-			PlayersHandHandlerUI.Instance.PlayerIsDraggingCard = false;
+			HandUIManager.Instance.PlayerIsDraggingCard = false;
 			Cursor.visible = true;
+		}
+
+		public int GetCardInGameIndex() {
+			return parentChildIndexForThisCard;
 		}
 	}
 }

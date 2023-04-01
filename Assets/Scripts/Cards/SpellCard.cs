@@ -7,16 +7,11 @@ namespace Assets.Scripts.Cards {
 	public class SpellCard : CardInGame {
 
 		public new SpellInfoSO cardInfoSO;
-		public SpellCard(SpellInfoSO infoSO) : base(infoSO) {
+		public SpellCard(SpellInfoSO infoSO, ulong team) : base(infoSO, team) {
 			cardInfoSO = infoSO;
-
-			Dictionary<StatType, int> map = new() {
-				{ StatType.ManaCost, cardInfoSO.ManaCost }
-			};
-			statHandler = new StatHandler(map);
 		}
 
-		protected override void Start() {
+		public override void Start() {
 			Dictionary<StatType, int> map = new() {
 				{ StatType.ManaCost, cardInfoSO.ManaCost }
 			};

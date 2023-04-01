@@ -14,7 +14,7 @@ namespace ArcaneRealms.Scripts.SO {
 
 		public Vector3 MonsterPrefabScale;
 
+		public GameObject MonsterSummonParticlePrefab;
 
-		public bool Taunt;
 	}
 }
