@@ -22,7 +22,7 @@ namespace ArcaneRealms.Scripts.Effects {
 		//Called when the card is destroyed from the field
 		public virtual void OnDestruction(PlayerInGame owner, CardInGame card) => effectSO.OnDestruction(owner, card, effectParameters);
 
-		public virtual bool HasDestuctionEffect() => effectSO.HasDestuctionEffect();
+		public virtual bool HasDestructionEffect() => effectSO.HasDestructionEffect();
 
 
 		//Called when the card is draw from the deck to your hand

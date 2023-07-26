@@ -52,7 +52,7 @@ namespace Assets.Scripts.SO {
 
 		}
 
-		public virtual bool HasDestuctionEffect() {
+		public virtual bool HasDestructionEffect() {
 			return false;
 		}
 
