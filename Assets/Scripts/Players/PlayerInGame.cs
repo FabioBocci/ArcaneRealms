@@ -1,4 +1,5 @@
-﻿using ArcaneRealms.Scripts.Cards;
+﻿using System;
+using ArcaneRealms.Scripts.Cards;
 using ArcaneRealms.Scripts.Enums;
 using Assets.Scripts.Cards;
 using System.Collections.Generic;
@@ -34,14 +35,16 @@ namespace ArcaneRealms.Scripts.Players {
 		//spell of type delayed
 		public List<SpellCard> delayedSpellCards = new();
 
+		public Dictionary<Guid, CardInGame> allCardInGameDicionary = new();
+
 
 		public int currentManaPool = 0;
 		public int usableMana = 0;
 
-		public readonly ulong ID;
+		public Guid ID { private set; get; }
 		//also for teams
 
-		public PlayerInGame(ulong iD) {
+		public PlayerInGame(Guid iD) {
 			ID = iD;
 		}
 
@@ -142,6 +145,9 @@ namespace ArcaneRealms.Scripts.Players {
 
 		}
 
-
+		public CardInGame GetCardInGameFromGuid(Guid guid)
+		{
+			return allCardInGameDicionary[guid];
+		}
 	}
 }

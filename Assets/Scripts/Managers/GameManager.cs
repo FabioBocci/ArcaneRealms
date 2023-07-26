@@ -1,4 +1,5 @@
 
+using System;
 using ArcaneRealms.Scripts.Cards;
 using ArcaneRealms.Scripts.Players;
 using ArcaneRealms.Scripts.SO;
@@ -6,6 +7,7 @@ using ArcaneRealms.Scripts.Utils;
 using System.Collections;
 using Unity.Netcode;
 using UnityEngine;
+using Random = UnityEngine.Random;
 
 namespace ArcaneRealms.Scripts.Managers {
 
@@ -29,8 +31,8 @@ namespace ArcaneRealms.Scripts.Managers {
 		[SerializeField] CardInfoDataBase cardDatabaseSO;
 		[SerializeField] CardEffectDataBaseSO cardEffectDatabaseSO;
 
-		private PlayerInGame localPlayer = new(0); //0
-		private PlayerInGame remotePlayer = new(1); //1
+		private PlayerInGame localPlayer = new(Guid.NewGuid()); //0
+		private PlayerInGame remotePlayer = new(Guid.NewGuid()); //1
 
 		[HideInInspector]
 		public NetworkVariable<int> playerTurn = new NetworkVariable<int>(0);
@@ -103,7 +105,7 @@ namespace ArcaneRealms.Scripts.Managers {
 			Instantiate(gameObjectPrefab, position, Quaternion.identity);
 		}*/
 
-		public PlayerInGame GetPlayerFromID(ulong clientID) {
+		public PlayerInGame GetPlayerFromID(Guid clientID) {
 			if(localPlayer.ID == clientID)
 				return localPlayer;
 			if(remotePlayer.ID == clientID)
@@ -293,6 +295,16 @@ namespace ArcaneRealms.Scripts.Managers {
 		public new bool IsClient { get { return base.IsClient; } }
 
 
+		public CardInGame GetCardFromGuid(Guid cardGuid)
+		{
+			CardInGame card = localPlayer.GetCardInGameFromGuid(cardGuid);
+			if (card != null)
+			{
+				return card;
+			}
+
+			return remotePlayer.GetCardInGameFromGuid(cardGuid);
+		}
 	}
 
 	public enum GameState {

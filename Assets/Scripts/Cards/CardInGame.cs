@@ -1,3 +1,4 @@
+using System;
 using ArcaneRealms.Scripts.Effects;
 using ArcaneRealms.Scripts.Enums;
 using ArcaneRealms.Scripts.Interfaces;
@@ -14,6 +15,8 @@ namespace ArcaneRealms.Scripts.Cards {
 		public StatHandler statHandler;
 
 		public ulong cardTeam;
+		
+		public Guid CardGuid { private set; get; }
 
 		private List<CardEffect> OnActivationCardEffects = new(); //TODO - add other effects list
 
