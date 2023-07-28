@@ -5,7 +5,7 @@ namespace ArcaneRealms.Scripts.Utils
 {
     public class Singleton<T> : MonoBehaviour where T : Component
     {
-        public T Instance { private set; get; }
+        public static T Instance { private set; get; }
 
         protected bool EnsureInstance()
         {

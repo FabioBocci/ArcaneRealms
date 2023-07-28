@@ -1,11 +1,13 @@
-using ArcaneRealms.Scripts.Cards;
+using System;
+using System.Collections.Generic;
+using ArcaneRealms.Scripts.Cards.GameCards;
 using ArcaneRealms.Scripts.Effects;
 using ArcaneRealms.Scripts.Enums;
+using ArcaneRealms.Scripts.SO;
 using Assets.Scripts.Cards;
-using System.Collections.Generic;
 using UnityEngine;
 
-namespace ArcaneRealms.Scripts.SO {
+namespace ArcaneRealms.Scripts.Cards.ScriptableCards {
 	public class CardInfoSO : ScriptableObject {
 		private static CardInfoDataBase DatabaseStatic;
 
@@ -58,14 +60,14 @@ namespace ArcaneRealms.Scripts.SO {
 			return this is MonsterInfoSO;
 		}
 
-		public CardInGame BuildCardInGame(string statHandlerJson = null, ulong team = 0) {
+		public CardInGame BuildCardInGame(Guid team, Guid cardGuid, string statHandlerJson = null) {
 			CardInGame cardInGame = null;
 			if(IsMonster(out var monster)) {
-				cardInGame = new MonsterCard(monster, team);
+				cardInGame = new MonsterCard(monster, cardGuid, team);
 			}
 
 			if(IsSpell(out var spell)) {
-				cardInGame = new SpellCard(spell, team);
+				cardInGame = new SpellCard(spell, cardGuid, team);
 			}
 
 			cardInGame.Start();

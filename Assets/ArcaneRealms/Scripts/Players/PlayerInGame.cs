@@ -4,6 +4,7 @@ using ArcaneRealms.Scripts.Enums;
 using Assets.Scripts.Cards;
 using System.Collections.Generic;
 using System.Linq;
+using ArcaneRealms.Scripts.Cards.GameCards;
 using UnityEngine;
 
 namespace ArcaneRealms.Scripts.Players {
@@ -14,6 +15,8 @@ namespace ArcaneRealms.Scripts.Players {
 		private const int MAX_MANA = 10;
 		private const int MAX_CARDS_IN_HAND = 7;
 
+		public Dictionary<Guid, CardInGame> allCardInGameDicionary = new();
+		
 		//immutable list of the card in the deck at the start of the game
 		public List<CardInGame> startingDeck = new();
 
@@ -35,17 +38,19 @@ namespace ArcaneRealms.Scripts.Players {
 		//spell of type delayed
 		public List<SpellCard> delayedSpellCards = new();
 
-		public Dictionary<Guid, CardInGame> allCardInGameDicionary = new();
 
 
 		public int currentManaPool = 0;
 		public int usableMana = 0;
 
 		public Guid ID { private set; get; }
+
+		public ulong playerUlong { private set; get; }
 		//also for teams
 
-		public PlayerInGame(Guid iD) {
+		public PlayerInGame(Guid iD, ulong player) {
 			ID = iD;
+			playerUlong = player;
 		}
 
 		//these function will call the GameManager to sync the players to this state!

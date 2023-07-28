@@ -1,4 +1,5 @@
 ﻿using ArcaneRealms.Scripts.Cards;
+using ArcaneRealms.Scripts.Cards.GameCards;
 using ArcaneRealms.Scripts.Effects;
 using ArcaneRealms.Scripts.Enums;
 using ArcaneRealms.Scripts.Players;

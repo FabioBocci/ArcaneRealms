@@ -1,5 +1,8 @@
-﻿using ArcaneRealms.Scripts.ArrowPointer;
+﻿using System;
+using ArcaneRealms.Scripts.ArrowPointer;
 using ArcaneRealms.Scripts.Cards;
+using ArcaneRealms.Scripts.Cards.GameCards;
+using ArcaneRealms.Scripts.Cards.ScriptableCards;
 using ArcaneRealms.Scripts.Enums;
 using ArcaneRealms.Scripts.Managers;
 using ArcaneRealms.Scripts.SO;
@@ -55,7 +58,7 @@ namespace Assets.Scripts.UI {
 			rectTransform = GetComponent<RectTransform>();
 			canvasGroup = GetComponent<CanvasGroup>();
 			uiOutline = GetComponentInChildren<UIOutline>();
-			BuildCard(new MonsterCard(TMP_Monster, 0)); //TODO - remove this line
+			BuildCard(new MonsterCard(TMP_Monster, Guid.NewGuid(), Guid.NewGuid())); //TODO - remove this line
 		}
 
 		private void Update() {
@@ -84,7 +87,7 @@ namespace Assets.Scripts.UI {
 				GameManager.Instance.PlayerHoverOnCardInHandServerRPC(parentChildIndexForThisCard);
 			}
 			isShowingThisCard = true;
-			cardCloneShowing = Instantiate(gameObject, gameObject.transform.position, Quaternion.identity);
+			cardCloneShowing = Instantiate(gameObject, transform.position, Quaternion.identity);
 			cardCloneShowing.name = "CCShowing_" + cardInGame.cardInfoSO.Name;
 			cardCloneShowing.transform.SetParent(transform.parent.parent);
 			cardCloneShowing.GetComponent<CanvasGroup>().blocksRaycasts = false;

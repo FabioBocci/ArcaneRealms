@@ -1,4 +1,6 @@
 using System;
+using System.Collections.Generic;
+using ArcaneRealms.Scripts.Cards.ScriptableCards;
 using ArcaneRealms.Scripts.Effects;
 using ArcaneRealms.Scripts.Enums;
 using ArcaneRealms.Scripts.Interfaces;
@@ -6,21 +8,22 @@ using ArcaneRealms.Scripts.Managers;
 using ArcaneRealms.Scripts.Players;
 using ArcaneRealms.Scripts.SO;
 using Assets.Scripts.Cards;
-using System.Collections.Generic;
 
-namespace ArcaneRealms.Scripts.Cards {
+namespace ArcaneRealms.Scripts.Cards.GameCards {
 	public abstract class CardInGame : ITargetable {
 		public CardInfoSO cardInfoSO;
 
 		public StatHandler statHandler;
 
-		public ulong cardTeam;
+		public Guid cardTeam;
 		
 		public Guid CardGuid { private set; get; }
 
 		private List<CardEffect> OnActivationCardEffects = new(); //TODO - add other effects list
 
-		protected CardInGame(CardInfoSO cardInfo, ulong team) {
+		protected CardInGame(CardInfoSO cardInfo, Guid cardGuid, Guid team)
+		{
+			CardGuid = cardGuid;
 			cardInfoSO = cardInfo;
 			cardTeam = team;
 
@@ -66,7 +69,7 @@ namespace ArcaneRealms.Scripts.Cards {
 			statHandler.FromJson(jsonStatHandler);
 		}
 
-		public ulong GetTeam() {
+		public Guid GetTeam() {
 			return cardTeam;
 		}
 

@@ -4,6 +4,7 @@ using ArcaneRealms.Scripts.SO;
 using ArcaneRealms.Scripts.Utils;
 using Assets.Scripts.SO;
 using System;
+using ArcaneRealms.Scripts.Cards.ScriptableCards;
 using UnityEditor;
 using UnityEngine;
 

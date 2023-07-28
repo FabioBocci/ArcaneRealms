@@ -5,8 +5,15 @@ using ArcaneRealms.Scripts.Players;
 using ArcaneRealms.Scripts.SO;
 using ArcaneRealms.Scripts.Utils;
 using System.Collections;
+using System.Collections.Generic;
+using System.Linq;
+using ArcaneRealms.Scripts.Cards.GameCards;
+using ArcaneRealms.Scripts.Cards.ScriptableCards;
+using ArcaneRealms.Scripts.Systems;
+using Unity.Collections;
 using Unity.Netcode;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using Random = UnityEngine.Random;
 
 namespace ArcaneRealms.Scripts.Managers {
@@ -19,23 +26,12 @@ namespace ArcaneRealms.Scripts.Managers {
 	public class GameManager : NetworkBehaviour {
 
 		public static GameManager Instance { get; private set; }
-
-		[Header("Events")]
-		[SerializeField] GameEventSO player_ManaChangeEventSO;
-		[SerializeField] GameEventSO player_DrawCardEventSO;
-		[SerializeField] GameEventSO player_DeclareAttackEventSO;
-		[SerializeField] GameEventSO enemyPlayer_PlayCardEventSO;
-		[SerializeField] GameEventSO enemyPlayer_HoverCardInHandEventSO;
-
-		[Header("Game Database and collection")]
-		[SerializeField] CardInfoDataBase cardDatabaseSO;
-		[SerializeField] CardEffectDataBaseSO cardEffectDatabaseSO;
-
-		private PlayerInGame localPlayer = new(Guid.NewGuid()); //0
-		private PlayerInGame remotePlayer = new(Guid.NewGuid()); //1
+		
+		private PlayerInGame localPlayer; //0
+		private PlayerInGame remotePlayer; //1
 
 		[HideInInspector]
-		public NetworkVariable<int> playerTurn = new NetworkVariable<int>(0);
+		public NetworkVariable<int> playerTurn = new();
 
 		private GameState gameState;
 
@@ -47,20 +43,48 @@ namespace ArcaneRealms.Scripts.Managers {
 			Instance = this;
 		}
 
-
 		private void Start() {
 			if(IsServer) {
 				playerTurn.Value = Random.Range(0.0f, 1f) > 0.5 ? 1 : 0;
+				gameState = GameState.PlayersHandShake;
+				StartHandlePlayersHandShake();
 				StartCoroutine(HandleGameStateCoroutine());
+			}
+
+			if (NetworkManagerHelper.Instance.IsClient)
+			{
+				//we are client we need to send our deck to the server and wait.
+
 			}
 		}
 
+		private void StartHandlePlayersHandShake()
+		{
+			
+			localPlayer = new PlayerInGame(Guid.NewGuid(), NetworkManager.ConnectedClients.Keys.First());
+			ulong remotePlayerUlong = 1;
+			foreach (var playerUlong in NetworkManager.ConnectedClients.Keys)
+			{
+				if (playerUlong != localPlayer.playerUlong)
+				{
+					remotePlayerUlong = playerUlong;
+					break;
+				}
+			}
 
+			remotePlayer = new PlayerInGame(Guid.NewGuid(), remotePlayerUlong);
+			SendSignalStartHandShakeClientRPC(localPlayer.playerUlong, localPlayer.ID, remotePlayer.playerUlong,
+				remotePlayer.ID);
+		}
+		
 		IEnumerator HandleGameStateCoroutine() {
 			while(true) {
 				yield return new WaitForSeconds(.5f);
 
 				switch(gameState) {
+					case GameState.PlayersChooseHandCards:
+						//after hand shake, so all player has loaded and we can start using Guid
+						
 					case GameState.TurnEnd:
 						//TODO - run effects that run at end turn
 						playerTurn.Value = (playerTurn.Value + 1) % 2;
@@ -69,12 +93,10 @@ namespace ArcaneRealms.Scripts.Managers {
 						break;
 					case GameState.TurnStart:
 						//TODO - run effect at turn start
-						PlayerAddManaStartingTurn();
 						StartTurnEventClientRPC();
 						gameState = GameState.PlayerDraw;
 						break;
 					case GameState.PlayerDraw:
-						PlayerDrawCardFromDeckAtStartingTurn();
 						//TODO - run effect at card draw
 						gameState = GameState.PlayerHandleTurn;
 						break;
@@ -92,19 +114,7 @@ namespace ArcaneRealms.Scripts.Managers {
 			//Debug.Log("HandleGameStateCoroutine Finished!");
 		}
 
-		/*[ServerRpc(RequireOwnership = false)]
-		public void SpawnCommandServerRPC(ServerRpcParams serverRpcParams = default) {
-			Debug.Log("Local Client ID: " + NetworkManager.Singleton.LocalClientId);
-			Debug.Log("Running on server RPC: " + serverRpcParams.Receive.SenderClientId);
-			SpawnOnRandomPositionClientRPC();
-		}
-
-		[ClientRpc]
-		public void SpawnOnRandomPositionClientRPC() {
-			Vector3 position = startingPosition.position + new Vector3(0, 0, Random.Range(0, 10));
-			Instantiate(gameObjectPrefab, position, Quaternion.identity);
-		}*/
-
+		
 		public PlayerInGame GetPlayerFromID(Guid clientID) {
 			if(localPlayer.ID == clientID)
 				return localPlayer;
@@ -113,36 +123,63 @@ namespace ArcaneRealms.Scripts.Managers {
 			return null;
 		}
 
-
-		public PlayerInGame GetLocalPlayer() {
-			return GetPlayerFromID(NetworkManager.Singleton.LocalClientId);
-		}
-
-		internal PlayerInGame GetEnemyPlayer(PlayerInGame owner) {
-			if(owner.ID == localPlayer.ID) {
-				return remotePlayer;
-			}
-			return localPlayer;
-		}
-
-		private void PlayerAddManaStartingTurn() {
-			if(playerTurn.Value == 0) {
-				localPlayer.AddMana(1);
-			} else {
-				remotePlayer.AddMana(1);
-			}
-		}
-
-		private void PlayerDrawCardFromDeckAtStartingTurn() {
-			if(playerTurn.Value == 0) {
-				localPlayer.DrawCards(1);
-			} else {
-				remotePlayer.DrawCards(1);
-			}
+		public PlayerInGame GetPlayerFromUlong(ulong clientUlong)
+		{
+			return localPlayer.playerUlong == clientUlong ? localPlayer : remotePlayer;
 		}
 
 
+		internal PlayerInGame GetEnemyPlayer(PlayerInGame owner)
+		{
+			return owner.ID == localPlayer.ID ? remotePlayer : localPlayer;
+		}
+
+		
+		
 		//----------------------Server RPCs-------------------------------
+
+		private Dictionary<PlayerInGame, List<DeckCardSerializer>> handShake;
+
+		[ServerRpc(RequireOwnership = false)]
+		public void PlayerSendHandShakeServerRPC(Guid playerGuid, List<CardInDeck> deck, string avatarId, ServerRpcParams parameters = default)
+		{
+			Debug.Log($"DeckSize: {deck.Count} cardsName: {deck.Select(card => card.card.name).ToArray()} ");
+			if (handShake == null)
+			{
+				handShake = new Dictionary<PlayerInGame, List<DeckCardSerializer>>
+				{
+					[localPlayer] = null,
+					[remotePlayer] = null
+				};
+			}
+
+			PlayerInGame player = GetPlayerFromID(playerGuid);
+			handShake[player] = new();
+			foreach (CardInDeck cardInDeck in deck)
+			{
+				for (int i = 0; i < cardInDeck.count; i++)
+				{
+					CardInGame card = cardInDeck.card.BuildCardInGame(player.ID, Guid.NewGuid());
+					handShake[player].Add(new DeckCardSerializer()
+					{
+						cardInfo = card.cardInfoSO,
+						guid = card.CardGuid
+					});
+					player.startingDeck.Add(card);
+					player.allCardInGameDicionary.Add(card.CardGuid, card);
+				}
+			}
+
+			if (!handShake.Any(pair => pair.Value == null || pair.Value.Count == 0))
+			{
+				SendPlayersDataAfterHandShakeClientRPC(localPlayer.ID, handShake[localPlayer].ToArray(), remotePlayer.ID, handShake[remotePlayer].ToArray());
+				handShake = null;
+				gameState = GameState.PlayersChooseHandCards;
+			}
+
+		}
+
+
 
 		[ServerRpc(RequireOwnership = false)]
 		public void PlayerHoverOnCardInHandServerRPC(int cardInHandIndex, ServerRpcParams parameters = default) {
@@ -157,12 +194,13 @@ namespace ArcaneRealms.Scripts.Managers {
 			//subtract the mana from the player (and send them to players)
 			//play the card on the field and then activate his effect
 			ulong clientID = parameters.Receive.SenderClientId;
-			PlayerInGame player = GetPlayerFromID(clientID);
+			PlayerInGame player = null; // GetPlayerFromID(clientID);
 			if(player == null) {
 				Debug.LogError("Player Null when Playing a Card From Hand? clientID: " + clientID);
 				return;
 			}
-			CardInGame cardInPlay = cardDatabaseSO.GetCardFromID("1").BuildCardInGame(); //TODO change this
+			return;
+			CardInGame cardInPlay = null; // cardDatabaseSO.GetCardFromID("1").BuildCardInGame(); //TODO change this
 			player.handCards.Remove(cardInPlay);
 			int manaCost = cardInPlay.GetManaCost();
 			player.usableMana -= manaCost;
@@ -188,18 +226,52 @@ namespace ArcaneRealms.Scripts.Managers {
 		// -------------------Client RPCs--------------------------------
 
 		[ClientRpc]
+		private void SendSignalStartHandShakeClientRPC(ulong localPlayerPlayerUlong, Guid localPlayerID, ulong remotePlayerPlayerUlong, Guid remotePlayerID)
+		{
+			if (!NetworkManagerHelper.Instance.IsServer)
+			{
+				localPlayer = new PlayerInGame(NetworkManager.LocalClientId == localPlayerPlayerUlong ? localPlayerID : remotePlayerID, NetworkManager.LocalClientId);
+				remotePlayer = new PlayerInGame(NetworkManager.LocalClientId != localPlayerPlayerUlong ? localPlayerID : remotePlayerID, remotePlayerPlayerUlong);
+			}
+			
+			DeckOfCards deck = PlayerDataManager.Instance.playerData.SelectedDeck;
+			if (deck == null)
+			{
+				Debug.LogError("[GameManager] null deck selected! this is a bug!");
+				return;
+			}
+
+
+			PlayerSendHandShakeServerRPC(localPlayer.ID, deck.cards, "empty");
+		}
+
+		[ClientRpc]
+		private void SendPlayersDataAfterHandShakeClientRPC(Guid player1, DeckCardSerializer[] player1Deck, Guid player2, DeckCardSerializer[] player2Deck)
+		{
+			if (!NetworkManagerHelper.Instance.IsServer)
+			{
+				PlayerInGame player = GetPlayerFromID(player1);
+				foreach (DeckCardSerializer card in player1Deck)
+				{
+					CardInGame cardInGame = card.cardInfo.BuildCardInGame(player1, card.guid);
+					player.startingDeck.Add(cardInGame);
+					player.allCardInGameDicionary[cardInGame.CardGuid] = cardInGame;
+				}
+			}
+		}
+		
+		[ClientRpc]
 		public void PlayerHoverOnCardInHandClientRPC(ulong clientID, int cardInHandIndex) {
 			if(clientID == NetworkManager.LocalClientId) {
 				return;
 			}
 			object[] parameters = { clientID, cardInHandIndex };
-			enemyPlayer_HoverCardInHandEventSO.Raise(this, parameters);
 		}
 
 		[ClientRpc]
 		public void PlayerManaChangedClientRPC(ulong clientID, int newManaPool, int newManaUsable) {
 			if(!IsServer) {
-				if(clientID == localPlayer.ID) {
+				if(false) {
 					localPlayer.usableMana = newManaUsable;
 					localPlayer.currentManaPool = newManaPool;
 				} else {
@@ -209,15 +281,13 @@ namespace ArcaneRealms.Scripts.Managers {
 			}
 
 			object[] parameters = { clientID, newManaPool, newManaUsable };
-			player_ManaChangeEventSO.Raise(this, parameters);
 		}
 
 		[ClientRpc]
 		public void PlayerDrawCardClientRPC(ulong clientID, string cardID, string cardJsonInfo) {
 			object[] parameters;
-			if(clientID == localPlayer.ID) {
-				CardInfoSO cardSO = cardDatabaseSO.GetCardFromID(cardID);
-				CardInGame cardInGame = cardSO.BuildCardInGame(cardJsonInfo, clientID);
+			if(false) {
+				CardInGame cardInGame = null; // cardSO.BuildCardInGame(cardJsonInfo, clientID);
 				if(!IsServer) {
 					localPlayer.AddCardToHand(cardInGame);
 					localPlayer.RemoveCardFromDeck(cardID);
@@ -230,19 +300,18 @@ namespace ArcaneRealms.Scripts.Managers {
 				parameters = objs;
 			}
 
-			player_DrawCardEventSO.Raise(this, parameters);
 		}
 
 		[ClientRpc]
-		public void PlayerPlayCardFromHandClientRPC(ulong clientID, int cardFromHandIndex, string cardID, string cardJsonInfo, int cardOnFloorDestinationIndex = 0) {
-			PlayerInGame player = GetPlayerFromID(clientID);
+		public void PlayerPlayCardFromHandClientRPC(ulong clientID, int cardFromHandIndex, string cardID, string cardJsonInfo, int cardOnFloorDestinationIndex = 0)
+		{
+			PlayerInGame player = null; // GetPlayerFromID(clientID);
 			if(player == null) {
 				Debug.LogError("Player == null with client ID: " + clientID);
 				return;
 			}
 
-			CardInfoSO cardSO = cardDatabaseSO.GetCardFromID(cardID);
-			CardInGame cardInGame = cardSO.BuildCardInGame(cardJsonInfo, clientID);
+			CardInGame cardInGame = null; // cardSO.BuildCardInGame(cardJsonInfo, clientID);
 			if(!IsServer) {
 				if(clientID == NetworkManager.Singleton.LocalClientId) {
 					player.RemoveCardFromHand(cardFromHandIndex);
@@ -251,21 +320,14 @@ namespace ArcaneRealms.Scripts.Managers {
 				}
 				player.PlayCard(cardInGame, cardOnFloorDestinationIndex);
 			}
-
-			if(player.ID == NetworkManager.Singleton.LocalClientId) {
-				return;
-			}
+			
 			object[] parameters = { clientID, cardInGame, cardOnFloorDestinationIndex };
-			enemyPlayer_PlayCardEventSO.Raise(this, parameters);
 		}
 
 		[ClientRpc]
 		private void DeclareMonsterAttackClientRPC(ulong senderClientId, int attackerIndex, int defenderIndex) {
 			//do this need to do anything? we need to update stats and have the effect run as the server
-
-			//TODO- run event!
-			object[] parameters = { senderClientId, attackerIndex, defenderIndex, false, false };
-			player_DeclareAttackEventSO.Raise(this, parameters);
+			
 		}
 
 		[ClientRpc]
@@ -284,8 +346,7 @@ namespace ArcaneRealms.Scripts.Managers {
 
 
 		public int GetPlayerMonsterCount() {
-			PlayerInGame playerInGame = GetLocalPlayer();
-			return playerInGame.monsterCardOnField.Count;
+			return localPlayer.monsterCardOnField.Count;
 		}
 
 
@@ -308,7 +369,8 @@ namespace ArcaneRealms.Scripts.Managers {
 	}
 
 	public enum GameState {
-		Waiting,
+		PlayersHandShake,
+		PlayersChooseHandCards,
 		GameStart,
 		TurnStart,
 		PlayerDraw,
@@ -316,4 +378,20 @@ namespace ArcaneRealms.Scripts.Managers {
 		TurnEnd,
 		GameEnd
 	}
+
+	#region DeckHandShakeSerialization
+	
+	public struct DeckCardSerializer : INetworkSerializable
+	{
+		public Guid guid;
+		public CardInfoSO cardInfo;
+
+		public void NetworkSerialize<T>(BufferSerializer<T> serializer) where T : IReaderWriter
+		{
+			serializer.SerializeValue(ref guid);
+			serializer.SerializeValue(ref cardInfo);
+		}
+	}
+
+	#endregion
 }

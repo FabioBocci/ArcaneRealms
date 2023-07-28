@@ -1,4 +1,5 @@
 ﻿using ArcaneRealms.Scripts.Cards;
+using ArcaneRealms.Scripts.Cards.GameCards;
 using UnityEngine;
 
 namespace ArcaneRealms.Scripts.UI {

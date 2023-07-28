@@ -1,4 +1,5 @@
 using ArcaneRealms.Scripts.Cards;
+using ArcaneRealms.Scripts.Cards.GameCards;
 using ArcaneRealms.Scripts.SO;
 using ArcaneRealms.Scripts.UI;
 using ArcaneRealms.Scripts.Utils;

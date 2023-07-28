@@ -1,3 +1,5 @@
+using System;
+using ArcaneRealms.Scripts.Systems;
 using Unity.Netcode;
 using UnityEngine;
 using UnityEngine.UI;
@@ -9,6 +11,7 @@ public class TestingHostClientUI : MonoBehaviour {
 	private void Awake() {
 		hostButton.onClick.AddListener(() => {
 			NetworkManager.Singleton.StartHost();
+			NetworkManagerHelper.Instance.OnClientConnectCallback += OnClientConnect;
 			gameObject.SetActive(false);
 		});
 		clientButton.onClick.AddListener(() => {
@@ -18,13 +21,16 @@ public class TestingHostClientUI : MonoBehaviour {
 
 	}
 
-	// Start is called before the first frame update
-	void Start() {
-
+	private void OnDestroy()
+	{
+		NetworkManagerHelper.Instance.OnClientConnectCallback -= OnClientConnect;
 	}
 
-	// Update is called once per frame
-	void Update() {
-
+	private void OnClientConnect()
+	{
+		if (NetworkManagerHelper.Instance.ConnectedClients >= 2)
+		{
+			NetworkManagerHelper.Instance.LoadMainGameScene();
+		}
 	}
 }

@@ -65,8 +65,8 @@ namespace ArcaneRealms.Scripts.Utils {
 				return start.Equals(possibleTarget);
 			}
 
-			ulong teamStart = start.GetTeam();
-			ulong teamTarget = possibleTarget.GetTeam();
+			Guid teamStart = start.GetTeam();
+			Guid teamTarget = possibleTarget.GetTeam();
 			bool sameTeam = teamStart == teamTarget;
 
 			switch(type.name) {

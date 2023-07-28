@@ -5,201 +5,99 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="a1cab302-7974-4ba2-b555-96411d3e727c" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/Assets/ArcaneRealms/Scripts/Cards/Collections.meta" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/ArcaneRealms/Scripts/Cards/Effects/ScriptableEffects.meta" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/ArcaneRealms/Scripts/Cards/GameCards.meta" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/ArcaneRealms/Scripts/Cards/ScriptableCards.meta" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/ArcaneRealms/Scripts/Scenes.meta" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/ArcaneRealms/Scripts/Utils/ScriptableDatabase.meta" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Editor.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Editor/ArchLayoutGroupEditor.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Editor/ArchLayoutGroupEditor.cs.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Editor/CardInfoSOEditor.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Editor/CardInfoSOEditor.cs.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Prefab.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Prefab/ArrowPointerHead.prefab" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Prefab/ArrowPointerHead.prefab.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Prefab/ArrowTail.prefab" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Prefab/ArrowTail.prefab.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Prefab/Cards.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Prefab/Cards/MonsterCardPrefab_Variant.prefab" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Prefab/Cards/MonsterCardPrefab_Variant.prefab.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Prefab/Cards/Visual.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Prefab/Cards/Visual/CardBackVisual.prefab" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Prefab/Cards/Visual/CardBackVisual.prefab.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Prefab/Cards/Visual/MonsterVisualPrefab.prefab" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Prefab/Cards/Visual/MonsterVisualPrefab.prefab.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Prefab/Cards/Visual/SpellVisualPrefab.prefab" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Prefab/Cards/Visual/SpellVisualPrefab.prefab.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Prefab/InGame.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Prefab/InGame/Monster Variation.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Prefab/InGame/Monster Variation/Simple Goblin.prefab" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Prefab/InGame/Monster Variation/Simple Goblin.prefab.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Prefab/InGame/MonsterInGamePrefab.prefab" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Prefab/InGame/MonsterInGamePrefab.prefab.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Prefab/TMP_PlayerPrefab.prefab" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Prefab/TMP_PlayerPrefab.prefab.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Prefab/anello.fbx" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Prefab/anello.fbx.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Prefab/freccia.fbx" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Prefab/freccia.fbx.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Prefab/puntatore.fbx" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Prefab/puntatore.fbx.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scenes.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scenes/Collection.unity" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scenes/Collection.unity.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scenes/NewLayer 1.terrainlayer" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scenes/NewLayer 1.terrainlayer.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scenes/NewLayer.terrainlayer" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scenes/NewLayer.terrainlayer.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scenes/Terrein test Scene.unity" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scenes/Terrein test Scene.unity.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scenes/TestScene.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scenes/TestScene.unity" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scenes/TestScene.unity.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scenes/TestScene/NavMesh-Plane.asset" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scenes/TestScene/NavMesh-Plane.asset.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scriptable Object.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scriptable Object/Card Effects DB.asset" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scriptable Object/Card Effects DB.asset.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scriptable Object/CardDatabase.asset" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scriptable Object/CardDatabase.asset.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scriptable Object/Cards.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scriptable Object/Cards/Monsters.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scriptable Object/Cards/Monsters/Angry Boar.asset" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scriptable Object/Cards/Monsters/Angry Boar.asset.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scriptable Object/Cards/Monsters/Armless Penguin.asset" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scriptable Object/Cards/Monsters/Armless Penguin.asset.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scriptable Object/Cards/Monsters/The Great Sorcerer Sebs.asset" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scriptable Object/Cards/Monsters/The Great Sorcerer Sebs.asset.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scriptable Object/Cards/Spells.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scriptable Object/Cards/Spells/Fireball.asset" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scriptable Object/Cards/Spells/Fireball.asset.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scriptable Object/Effects.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scriptable Object/Effects/Fireball Effect.asset" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scriptable Object/Effects/Fireball Effect.asset.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scriptable Object/Effects/Gain Empty Mana Effect.asset" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scriptable Object/Effects/Gain Empty Mana Effect.asset.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/ArrowPointer.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/ArrowPointer/ArrowPointer.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/ArrowPointer/ArrowPointer.cs.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/ArrowPointer/ArrowPointerBuilder.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/ArrowPointer/ArrowPointerBuilder.cs.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Cards.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Cards/CardInGame.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Cards/CardInGame.cs.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Cards/MonsterCard.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Cards/MonsterCard.cs.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Cards/MonsterControllers.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Cards/MonsterControllers/MeleeMonsterController.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Cards/MonsterControllers/MeleeMonsterController.cs.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Cards/MonsterControllers/RangedMonsterController.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Cards/MonsterControllers/RangedMonsterController.cs.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Cards/MonsterPlatformController.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Cards/MonsterPlatformController.cs.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Cards/SpellCard.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Cards/SpellCard.cs.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Cards/StatHandler.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Cards/StatHandler.cs.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Effects.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Effects/CardEffect.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Effects/CardEffect.cs.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Effects/EffectParameters.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Effects/EffectParameters.cs.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Effects/OnActivation.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Effects/OnActivation/GainEmptyManaEffect.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Effects/OnActivation/GainEmptyManaEffect.cs.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Effects/OnActivation/OnActivationEffect.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Effects/OnActivation/OnActivationEffect.cs.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Effects/OnActivation/ProjectileWithDamageEffect.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Effects/OnActivation/ProjectileWithDamageEffect.cs.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Enums.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Enums/CardRarity.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Enums/CardRarity.cs.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Enums/Race.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Enums/Race.cs.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Enums/SpellType.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Enums/SpellType.cs.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Enums/StatType.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Enums/StatType.cs.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Enums/TargetsEnum.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Enums/TargetsEnum.cs.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Interfaces.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Interfaces/IMonsterController.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Interfaces/IMonsterController.cs.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Interfaces/ITargetable.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Interfaces/ITargetable.cs.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Managers.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Managers/FieldManager.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Managers/FieldManager.cs.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Managers/GameManager.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Managers/GameManager.cs.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Managers/HandUIManager.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Managers/HandUIManager.cs.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Players.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Players/PlayerData.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Players/PlayerData.cs.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Players/PlayerDataManager.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Players/PlayerDataManager.cs.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Players/PlayerInGame.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Players/PlayerInGame.cs.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/SO.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/SO/CardEffectDataBaseSO.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/SO/CardEffectDataBaseSO.cs.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/SO/CardEffectSO.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/SO/CardEffectSO.cs.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/SO/CardInfoDataBase.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/SO/CardInfoDataBase.cs.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/SO/CardInfoSO.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/SO/CardInfoSO.cs.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/SO/MonsterInfoSO.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/SO/MonsterInfoSO.cs.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/SO/SpellInfoSO.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/SO/SpellInfoSO.cs.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/UI.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/UI/ArchLayoutGroup.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/UI/ArchLayoutGroup.cs.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/UI/CardInHandHandlerUI.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/UI/CardInHandHandlerUI.cs.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/UI/CurvedNameUI.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/UI/CurvedNameUI.cs.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/UI/EnemyCardInHandUI.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/UI/EnemyCardInHandUI.cs.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/UI/FieldPannelManagerUI.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/UI/FieldPannelManagerUI.cs.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/UI/ICardBuilderUI.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/UI/ICardBuilderUI.cs.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/UI/SetCardVisualMonster.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/UI/SetCardVisualMonster.cs.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/UI/SetCardVisualSpell.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/UI/SetCardVisualSpell.cs.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/UI/TestingHostClientUI.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/UI/TestingHostClientUI.cs.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Utils.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Utils/CardBorderSpriteManager.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Utils/CardBorderSpriteManager.cs.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Utils/CardUtils.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Utils/CardUtils.cs.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Utils/GameEventListener.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Utils/GameEventListener.cs.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Utils/GameEventSO.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Utils/GameEventSO.cs.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Utils/SerializerHelper.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Utils/SerializerHelper.cs.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Utils/Singleton.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Utils/Singleton.cs.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Utils/TypeUtils.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Utils/TypeUtils.cs.meta" beforeDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/ArcaneRealms/Scripts/Systems.meta" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/ArcaneRealms/Scripts/Systems/Database.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/ArcaneRealms/Scripts/Systems/Database.cs.meta" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/ArcaneRealms/Scripts/Systems/NetworkManagerHelper.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/ArcaneRealms/Scripts/Systems/NetworkManagerHelper.cs.meta" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/.idea.ArcaneRealms/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.ArcaneRealms/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/ArcaneRealms/Editor/CardInfoSOEditor.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/ArcaneRealms/Editor/CardInfoSOEditor.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/ArcaneRealms/Scenes/Terrein test Scene.unity" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/ArcaneRealms/Scenes/Terrein test Scene.unity" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/ArcaneRealms/Scenes/TestScene.unity" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/ArcaneRealms/Scenes/TestScene.unity" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/ArcaneRealms/Scriptable Object/Cards/Monsters/Angry Boar.asset" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/ArcaneRealms/Scriptable Object/Cards/Monsters/Angry Boar.asset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/ArcaneRealms/Scriptable Object/Cards/Monsters/Armless Penguin.asset" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/ArcaneRealms/Scriptable Object/Cards/Monsters/Armless Penguin.asset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/ArcaneRealms/Scriptable Object/Cards/Monsters/The Great Sorcerer Sebs.asset" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/ArcaneRealms/Scriptable Object/Cards/Monsters/The Great Sorcerer Sebs.asset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/ArcaneRealms/Scriptable Object/Cards/Spells/Fireball.asset" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/ArcaneRealms/Scriptable Object/Cards/Spells/Fireball.asset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/ArcaneRealms/Scripts/Cards/Effects/CardEffect.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/ArcaneRealms/Scripts/Cards/Effects/CardEffect.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/ArcaneRealms/Scripts/Cards/Effects/OnActivation/GainEmptyManaEffect.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/ArcaneRealms/Scripts/Cards/Effects/OnActivation/GainEmptyManaEffect.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/ArcaneRealms/Scripts/Cards/Effects/ScriptableEffects/CardEffectSO.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/ArcaneRealms/Scripts/Cards/Effects/ScriptableEffects/CardEffectSO.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/ArcaneRealms/Scripts/Cards/GameCards/CardInGame.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/ArcaneRealms/Scripts/Cards/GameCards/CardInGame.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/ArcaneRealms/Scripts/Cards/GameCards/MonsterCard.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/ArcaneRealms/Scripts/Cards/GameCards/MonsterCard.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/ArcaneRealms/Scripts/Cards/GameCards/MonsterPlatformController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/ArcaneRealms/Scripts/Cards/GameCards/MonsterPlatformController.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/ArcaneRealms/Scripts/Cards/GameCards/SpellCard.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/ArcaneRealms/Scripts/Cards/GameCards/SpellCard.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/ArcaneRealms/Scripts/Cards/ScriptableCards/CardInfoSO.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/ArcaneRealms/Scripts/Cards/ScriptableCards/CardInfoSO.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/ArcaneRealms/Scripts/Cards/ScriptableCards/MonsterInfoSO.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/ArcaneRealms/Scripts/Cards/ScriptableCards/MonsterInfoSO.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/ArcaneRealms/Scripts/Cards/ScriptableCards/SpellInfoSO.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/ArcaneRealms/Scripts/Cards/ScriptableCards/SpellInfoSO.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/ArcaneRealms/Scripts/Interfaces/ITargetable.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/ArcaneRealms/Scripts/Interfaces/ITargetable.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/ArcaneRealms/Scripts/Managers/FieldManager.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/ArcaneRealms/Scripts/Managers/FieldManager.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/ArcaneRealms/Scripts/Managers/GameManager.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/ArcaneRealms/Scripts/Managers/GameManager.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/ArcaneRealms/Scripts/Managers/HandUIManager.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/ArcaneRealms/Scripts/Managers/HandUIManager.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/ArcaneRealms/Scripts/Players/PlayerData.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/ArcaneRealms/Scripts/Players/PlayerData.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/ArcaneRealms/Scripts/Players/PlayerDataManager.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/ArcaneRealms/Scripts/Players/PlayerDataManager.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/ArcaneRealms/Scripts/Players/PlayerInGame.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/ArcaneRealms/Scripts/Players/PlayerInGame.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/ArcaneRealms/Scripts/UI/CardInHandHandlerUI.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/ArcaneRealms/Scripts/UI/CardInHandHandlerUI.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/ArcaneRealms/Scripts/UI/FieldPannelManagerUI.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/ArcaneRealms/Scripts/UI/FieldPannelManagerUI.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/ArcaneRealms/Scripts/UI/ICardBuilderUI.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/ArcaneRealms/Scripts/UI/ICardBuilderUI.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/ArcaneRealms/Scripts/UI/SetCardVisualMonster.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/ArcaneRealms/Scripts/UI/SetCardVisualMonster.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/ArcaneRealms/Scripts/UI/SetCardVisualSpell.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/ArcaneRealms/Scripts/UI/SetCardVisualSpell.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/ArcaneRealms/Scripts/UI/TestingHostClientUI.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/ArcaneRealms/Scripts/UI/TestingHostClientUI.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/ArcaneRealms/Scripts/Utils/CardBorderSpriteManager.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/ArcaneRealms/Scripts/Utils/CardBorderSpriteManager.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/ArcaneRealms/Scripts/Utils/ScriptableDatabase/CardInfoDataBase.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/ArcaneRealms/Scripts/Utils/ScriptableDatabase/CardInfoDataBase.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/ArcaneRealms/Scripts/Utils/SerializerHelper.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/ArcaneRealms/Scripts/Utils/SerializerHelper.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/ArcaneRealms/Scripts/Utils/Singleton.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/ArcaneRealms/Scripts/Utils/Singleton.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/ArcaneRealms/Scripts/Utils/TypeUtils.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/ArcaneRealms/Scripts/Utils/TypeUtils.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Events.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Events/Enemy Hover Card In Hand Event.asset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Events/Enemy Hover Card In Hand Event.asset.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Events/Enemy Play Card Event.asset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Events/Enemy Play Card Event.asset.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Events/Player Declare Attack Event.asset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Events/Player Declare Attack Event.asset.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Events/Player Draw Card Event.asset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Events/Player Draw Card Event.asset.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Events/Player Mana Change Event.asset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Events/Player Mana Change Event.asset.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Settings/URP-Balanced.asset" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Settings/URP-Balanced.asset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Settings/URP-HighFidelity.asset" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Settings/URP-HighFidelity.asset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Settings/URP-Performant.asset" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Settings/URP-Performant.asset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Packages/manifest.json" beforeDir="false" afterPath="$PROJECT_DIR$/Packages/manifest.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Packages/packages-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/Packages/packages-lock.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/ProjectSettings/EditorBuildSettings.asset" beforeDir="false" afterPath="$PROJECT_DIR$/ProjectSettings/EditorBuildSettings.asset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ProjectSettings/PackageManagerSettings.asset" beforeDir="false" afterPath="$PROJECT_DIR$/ProjectSettings/PackageManagerSettings.asset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ProjectSettings/ProjectSettings.asset" beforeDir="false" afterPath="$PROJECT_DIR$/ProjectSettings/ProjectSettings.asset" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
+  <component name="GitHubPullRequestSearchHistory">{
+  &quot;lastFilter&quot;: {
+    &quot;state&quot;: &quot;OPEN&quot;
+  }
+}</component>
+  <component name="GithubPullRequestsUISettings">
+    <option name="selectedUrlAndAccountId">
+      <UrlAndAccount>
+        <option name="accountId" value="92c75cb6-9441-4d86-86b4-b31237a3b38c" />
+        <option name="url" value="https://github.com/FabioBocci/ArcaneRealms.git" />
+      </UrlAndAccount>
+    </option>
+  </component>
   <component name="HighlightingSettingsPerFile">
-    <setting file="mock://D:/Projects/Unity/ArcaneRealms/Assets/Settings/URP-HighFidelity-Renderer.asset" root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock://D:/Projects/Unity/ArcaneRealms/Assets/ArcaneRealms/Scripts/Cards/ScriptableCards/CardInfoSO.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Library/PackageCache/com.unity.collections@1.2.4/Unity.Collections/NativeList.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Library/PackageCache/com.unity.netcode.gameobjects@1.5.1/Runtime/Connection/NetworkClient.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Library/PackageCache/com.unity.netcode.gameobjects@1.5.1/Runtime/Core/NetworkBehaviour.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Library/PackageCache/com.unity.netcode.gameobjects@1.5.1/Runtime/Core/NetworkManager.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Library/PackageCache/com.unity.netcode.gameobjects@1.5.1/Runtime/Messaging/Messages/RpcMessages.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Library/PackageCache/com.unity.netcode.gameobjects@1.5.1/Runtime/SceneManagement/NetworkSceneManager.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Library/PackageCache/com.unity.netcode.gameobjects@1.5.1/Runtime/Serialization/FastBufferReader.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Library/PackageCache/com.unity.render-pipelines.core@14.0.8/Runtime/Debugging/DebugUpdater.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Library/PackageCache/com.unity.services.authentication@2.6.1/Runtime/IAuthenticationService.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Library/PackageCache/com.unity.services.authentication@2.6.1/Runtime/Models/SignInOptions.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Library/PackageCache/com.unity.services.core@1.10.1/Runtime/Core/Initialization/ServicesInitializationState.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Library/PackageCache/com.unity.services.core@1.10.1/Runtime/Core/UnityServices.cs" root0="SKIP_HIGHLIGHTING" />
   </component>
   <component name="MetaFilesCheckinStateConfiguration" checkMetaFiles="true" />
   <component name="ProjectId" id="2T1S9ESzonhH1NG86CpeFufutDZ" />
@@ -232,8 +130,16 @@
   }
 }</component>
   <component name="RunManager" selected="Attach to Unity Editor.Attach to Unity Editor">
+    <configuration name="Standalone Player" type="RunUnityExe" factoryName="Unity Executable">
+      <option name="EXE_PATH" value="$USER_HOME$/Desktop/Arcane Realms 2\ArcaneRealms.exe" />
+      <option name="PROGRAM_PARAMETERS" value="" />
+      <option name="WORKING_DIRECTORY" value="C:\Users\fabio\Desktop\Arcane Realms" />
+      <option name="PASS_PARENT_ENVS" value="1" />
+      <option name="USE_EXTERNAL_CONSOLE" value="0" />
+      <method v="2" />
+    </configuration>
     <configuration name="Start Unity" type="RunUnityExe" factoryName="Unity Executable">
-      <option name="EXE_PATH" value="C:\Program Files\Unity\Hub\Editor\2022.3.5f1\Editor\Unity.exe" />
+      <option name="EXE_PATH" value="D:\Programming Programs\Unity\2022.3.5f1\Editor\Unity.exe" />
       <option name="PROGRAM_PARAMETERS" value="-projectPath D:\Projects\Unity\ArcaneRealms -debugCodeOptimization" />
       <option name="WORKING_DIRECTORY" value="D:\Projects\Unity\ArcaneRealms" />
       <option name="PASS_PARENT_ENVS" value="1" />
@@ -241,7 +147,7 @@
       <method v="2" />
     </configuration>
     <configuration name="Unit Tests (batch mode)" type="RunUnityExe" factoryName="Unity Executable">
-      <option name="EXE_PATH" value="C:\Program Files\Unity\Hub\Editor\2022.3.5f1\Editor\Unity.exe" />
+      <option name="EXE_PATH" value="D:\Programming Programs\Unity\2022.3.5f1\Editor\Unity.exe" />
       <option name="PROGRAM_PARAMETERS" value="-runTests -batchmode -projectPath D:\Projects\Unity\ArcaneRealms -testResults Logs/results.xml -testPlatform EditMode -debugCodeOptimization" />
       <option name="WORKING_DIRECTORY" value="D:\Projects\Unity\ArcaneRealms" />
       <option name="PASS_PARENT_ENVS" value="1" />
@@ -279,7 +185,7 @@
       <updated>1690208940138</updated>
       <workItem from="1690208941274" duration="13232000" />
       <workItem from="1690278822821" duration="9866000" />
-      <workItem from="1690398610656" duration="797000" />
+      <workItem from="1690418332108" duration="39449000" />
     </task>
     <servers />
   </component>
@@ -289,6 +195,17 @@
   <component name="UnityCheckinConfiguration" checkUnsavedScenes="true" />
   <component name="UnityProjectConfiguration" hasMinimizedUI="true" />
   <component name="UnityUnitTestConfiguration" currentTestLauncher="Both" />
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
+  </component>
   <component name="VcsManagerConfiguration">
     <option name="CLEAR_INITIAL_COMMIT_MESSAGE" value="true" />
   </component>

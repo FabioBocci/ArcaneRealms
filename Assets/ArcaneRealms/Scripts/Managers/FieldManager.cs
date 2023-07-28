@@ -2,6 +2,7 @@
 using ArcaneRealms.Scripts.Cards;
 using System.Collections;
 using System.Collections.Generic;
+using ArcaneRealms.Scripts.Cards.GameCards;
 using Unity.AI.Navigation;
 using Unity.Netcode;
 using UnityEngine;

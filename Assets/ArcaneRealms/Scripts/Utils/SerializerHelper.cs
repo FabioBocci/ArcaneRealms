@@ -1,6 +1,12 @@
 using System;
+using System.Collections.Generic;
 using ArcaneRealms.Scripts.Cards;
+using ArcaneRealms.Scripts.Cards.GameCards;
+using ArcaneRealms.Scripts.Cards.ScriptableCards;
 using ArcaneRealms.Scripts.Managers;
+using ArcaneRealms.Scripts.Players;
+using ArcaneRealms.Scripts.SO;
+using ArcaneRealms.Scripts.Systems;
 using Unity.Netcode;
 
 namespace ArcaneRealms.Scripts.Utils
@@ -65,6 +71,108 @@ namespace ArcaneRealms.Scripts.Utils
         }
         
         #endregion
+
+        #region CardInfoSoSerialization
+
+        public static void ReadValueSafe(this FastBufferReader reader, out CardInfoSO card)
+        {
+            reader.ReadValueSafe(out string cardId);
+            card = Database.Instance.cardsDatabase.GetCardFromID(cardId);
+        }
+
+        public static void WriteValueSafe(this FastBufferWriter writer, in CardInfoSO card)
+        {
+            writer.WriteValueSafe(card.ID);
+        }
+        
+        public static void SerializeValue<TReaderWriter>(this BufferSerializer<TReaderWriter> serializer, ref CardInfoSO card) where TReaderWriter: IReaderWriter
+        {
+            if (serializer.IsReader)
+            {
+                FastBufferReader reader = serializer.GetFastBufferReader();
+                reader.ReadValueSafe(out card);
+            }
+
+            if (serializer.IsWriter)
+            {
+                FastBufferWriter writer = serializer.GetFastBufferWriter();
+                writer.WriteValueSafe(card);
+            }
+        }
+        
+        #endregion
+        
+        #region CardInDeckSerialization
+
+        public static void ReadValueSafe(this FastBufferReader reader, out CardInDeck card)
+        {
+            reader.ReadValueSafe(out CardInfoSO cardSo);
+            reader.ReadValueSafe(out int count);
+            card = new CardInDeck()
+            {
+                card = cardSo,
+                count = count
+            };
+        }
+
+        public static void WriteValueSafe(this FastBufferWriter writer, in CardInDeck card)
+        {
+            writer.WriteValueSafe(card.card);
+            writer.WriteValueSafe(card.count);
+        }
+        
+        public static void SerializeValue<TReaderWriter>(this BufferSerializer<TReaderWriter> serializer, ref CardInDeck card) where TReaderWriter: IReaderWriter
+        {
+            if (serializer.IsReader)
+            {
+                FastBufferReader reader = serializer.GetFastBufferReader();
+                reader.ReadValueSafe(out card);
+            }
+
+            if (serializer.IsWriter)
+            {
+                FastBufferWriter writer = serializer.GetFastBufferWriter();
+                writer.WriteValueSafe(card);
+            }
+        }
+        
+        public static void ReadValueSafe(this FastBufferReader reader, out List<CardInDeck> cards)
+        {
+            cards = new();
+            reader.ReadValueSafe(out int size);
+            for (int i = 0; i < size; i++)
+            {
+                reader.ReadValueSafe(out CardInDeck card);
+                cards.Add(card);
+            }
+        }
+
+        public static void WriteValueSafe(this FastBufferWriter writer, in List<CardInDeck> cards)
+        {
+            writer.WriteValueSafe(cards.Count);
+            foreach (var card in cards)
+            {
+                writer.WriteValueSafe(card);
+            }
+        }
+        
+        public static void SerializeValue<TReaderWriter>(this BufferSerializer<TReaderWriter> serializer, ref List<CardInDeck> cards) where TReaderWriter: IReaderWriter
+        {
+            if (serializer.IsReader)
+            {
+                FastBufferReader reader = serializer.GetFastBufferReader();
+                reader.ReadValueSafe(out cards);
+            }
+
+            if (serializer.IsWriter)
+            {
+                FastBufferWriter writer = serializer.GetFastBufferWriter();
+                writer.WriteValueSafe(in cards);
+            }
+        }
+
+        #endregion
+        
         
         
     }

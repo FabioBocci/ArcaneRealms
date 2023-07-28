@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using ArcaneRealms.Scripts.Cards.ScriptableCards;
 using ArcaneRealms.Scripts.SO;
 using UnityEngine;
 
@@ -11,7 +12,7 @@ namespace ArcaneRealms.Scripts.Players
     {
         public Guid deckSelected;
 
-        public HashSet<int> sawCards = new();
+        public List<int> sawCards = new();
         public List<CardCollection> collectionList = new();
         
         public List<DeckOfCards> decks = new();
@@ -32,7 +33,10 @@ namespace ArcaneRealms.Scripts.Players
 
         public void SawCard(int cardId)
         {
-            sawCards.Add(cardId);
+            if (!sawCards.Contains(cardId))
+            {
+                sawCards.Add(cardId);
+            }
         }
         
         public void ObtainCard(int cardId, bool isSpecial = false)

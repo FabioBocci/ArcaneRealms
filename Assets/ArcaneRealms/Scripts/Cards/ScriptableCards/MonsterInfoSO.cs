@@ -1,4 +1,5 @@
-﻿using ArcaneRealms.Scripts.Enums;
+﻿using ArcaneRealms.Scripts.Cards.ScriptableCards;
+using ArcaneRealms.Scripts.Enums;
 using UnityEngine;
 
 namespace ArcaneRealms.Scripts.SO {

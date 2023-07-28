@@ -2,6 +2,7 @@
 using ArcaneRealms.Scripts.Players;
 using Assets.Scripts.SO;
 using System;
+using ArcaneRealms.Scripts.Cards.GameCards;
 using UnityEngine;
 
 namespace ArcaneRealms.Scripts.Effects {

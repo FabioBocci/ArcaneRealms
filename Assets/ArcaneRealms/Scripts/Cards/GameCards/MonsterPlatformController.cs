@@ -4,6 +4,7 @@ using ArcaneRealms.Scripts.Enums;
 using ArcaneRealms.Scripts.Interfaces;
 using System;
 using System.Collections;
+using ArcaneRealms.Scripts.Cards.GameCards;
 using UnityEngine;
 
 namespace ArcaneRealms.Scripts.Cards {
@@ -26,7 +27,7 @@ namespace ArcaneRealms.Scripts.Cards {
 			return monsterPositionOnPlate;
 		}
 
-		public ulong GetTeam() => MonsterCard.GetTeam();
+		public Guid GetTeam() => MonsterCard.GetTeam();
 
 		public TargetType GetTargetType() => MonsterCard.GetTargetType();
 

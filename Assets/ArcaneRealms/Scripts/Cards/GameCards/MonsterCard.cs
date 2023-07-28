@@ -1,8 +1,9 @@
-﻿using ArcaneRealms.Scripts.Enums;
-using ArcaneRealms.Scripts.SO;
+﻿using System;
 using System.Collections.Generic;
+using ArcaneRealms.Scripts.Enums;
+using ArcaneRealms.Scripts.SO;
 
-namespace ArcaneRealms.Scripts.Cards {
+namespace ArcaneRealms.Scripts.Cards.GameCards {
 	public class MonsterCard : CardInGame {
 
 
@@ -13,7 +14,7 @@ namespace ArcaneRealms.Scripts.Cards {
 		//TODO - we could probably handle these with public StatChanger statChanger; and currentHealth = statChanger.TotalHealth - DamageRecived;
 		public int _CurrentHealth;
 
-		public MonsterCard(MonsterInfoSO info, ulong team) : base(info, team) {
+		public MonsterCard(MonsterInfoSO info, Guid cardGuid, Guid team) : base(info, cardGuid, team) {
 			cardInfoSO = info;
 		}
 

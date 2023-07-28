@@ -1,5 +1,6 @@
 ﻿using ArcaneRealms.Scripts.ArrowPointer;
 using ArcaneRealms.Scripts.Cards;
+using ArcaneRealms.Scripts.Cards.GameCards;
 using ArcaneRealms.Scripts.Managers;
 using Unity.Netcode;
 using UnityEngine;

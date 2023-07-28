@@ -4,6 +4,7 @@ using ArcaneRealms.Scripts.Managers;
 using ArcaneRealms.Scripts.Players;
 using ArcaneRealms.Scripts.Utils;
 using System.Collections.Generic;
+using ArcaneRealms.Scripts.Cards.GameCards;
 using UnityEngine;
 
 namespace ArcaneRealms.Scripts.Effects.OnActivation {
