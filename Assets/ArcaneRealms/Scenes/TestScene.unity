@@ -2289,20 +2289,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 04ac54db90df44946adc8829b83dd91d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  player_ManaChangeEventSO: {fileID: 11400000, guid: 4d88c0461e29db543a7f787bbdb43be0,
-    type: 2}
-  player_DrawCardEventSO: {fileID: 11400000, guid: 204c7933c28167446972a76e01123034,
-    type: 2}
-  player_DeclareAttackEventSO: {fileID: 11400000, guid: 8b569b387ef2144419852176a6a6b61d,
-    type: 2}
-  enemyPlayer_PlayCardEventSO: {fileID: 11400000, guid: 41493fdd54d3b9c4d82356fc2e6c03ea,
-    type: 2}
-  enemyPlayer_HoverCardInHandEventSO: {fileID: 11400000, guid: ec26656f89716c54992574de30c97167,
-    type: 2}
-  cardDatabaseSO: {fileID: 11400000, guid: b553070d189a5704c986a61319ddc7f3, type: 2}
-  cardEffectDatabaseSO: {fileID: 0}
-  playerTurn:
-    m_InternalValue: 0
+  startingHandSize: 3
+  priorityEvent:
+    list: []
 --- !u!4 &727867033
 Transform:
   m_ObjectHideFlags: 0
@@ -5409,7 +5398,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1964602100}
   - component: {fileID: 1964602099}
-  - component: {fileID: 1964602098}
+  - component: {fileID: 1964602101}
   m_Layer: 0
   m_Name: EventSystem
   m_TagString: Untagged
@@ -5417,26 +5406,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &1964602098
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1964602097}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4f231c4fb786f3946a6b90b886c48677, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_SendPointerHoverToParent: 1
-  m_HorizontalAxis: Horizontal
-  m_VerticalAxis: Vertical
-  m_SubmitButton: Submit
-  m_CancelButton: Cancel
-  m_InputActionsPerSecond: 10
-  m_RepeatDelay: 0.5
-  m_ForceModuleActive: 0
 --- !u!114 &1964602099
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5467,6 +5436,47 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1964602101
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1964602097}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 01614664b831546d2ae94a42149d80ac, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_SendPointerHoverToParent: 1
+  m_MoveRepeatDelay: 0.5
+  m_MoveRepeatRate: 0.1
+  m_XRTrackingOrigin: {fileID: 0}
+  m_ActionsAsset: {fileID: -944628639613478452, guid: ca9f5fa95ffab41fb9a615ab714db018,
+    type: 3}
+  m_PointAction: {fileID: -1654692200621890270, guid: ca9f5fa95ffab41fb9a615ab714db018,
+    type: 3}
+  m_MoveAction: {fileID: -8784545083839296357, guid: ca9f5fa95ffab41fb9a615ab714db018,
+    type: 3}
+  m_SubmitAction: {fileID: 392368643174621059, guid: ca9f5fa95ffab41fb9a615ab714db018,
+    type: 3}
+  m_CancelAction: {fileID: 7727032971491509709, guid: ca9f5fa95ffab41fb9a615ab714db018,
+    type: 3}
+  m_LeftClickAction: {fileID: 3001919216989983466, guid: ca9f5fa95ffab41fb9a615ab714db018,
+    type: 3}
+  m_MiddleClickAction: {fileID: -2185481485913320682, guid: ca9f5fa95ffab41fb9a615ab714db018,
+    type: 3}
+  m_RightClickAction: {fileID: -4090225696740746782, guid: ca9f5fa95ffab41fb9a615ab714db018,
+    type: 3}
+  m_ScrollWheelAction: {fileID: 6240969308177333660, guid: ca9f5fa95ffab41fb9a615ab714db018,
+    type: 3}
+  m_TrackedDevicePositionAction: {fileID: 6564999863303420839, guid: ca9f5fa95ffab41fb9a615ab714db018,
+    type: 3}
+  m_TrackedDeviceOrientationAction: {fileID: 7970375526676320489, guid: ca9f5fa95ffab41fb9a615ab714db018,
+    type: 3}
+  m_DeselectOnBackgroundClick: 1
+  m_PointerBehavior: 0
+  m_CursorLockBehavior: 0
 --- !u!1001 &2028029059
 PrefabInstance:
   m_ObjectHideFlags: 0

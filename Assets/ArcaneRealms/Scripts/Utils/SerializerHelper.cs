@@ -70,6 +70,43 @@ namespace ArcaneRealms.Scripts.Utils
             }
         }
         
+        public static void ReadValueSafe(this FastBufferReader reader, out List<CardInGame> cards)
+        {
+            cards = new List<CardInGame>();
+            reader.ReadValueSafe(out int count);
+            for (int i = 0; i < count; i++)
+            {
+                reader.ReadValueSafe(out Guid cardGuid);
+                var card = GameManager.Instance.GetCardFromGuid(cardGuid);
+                cards.Add(card);
+            }
+        }
+
+        public static void WriteValueSafe(this FastBufferWriter writer, in List<CardInGame> cards)
+        {
+            writer.WriteValueSafe(cards.Count);
+            foreach (CardInGame card in cards)
+            {
+                writer.WriteValueSafe(card.CardGuid);
+            }
+        }
+        
+        public static void SerializeValue<TReaderWriter>(this BufferSerializer<TReaderWriter> serializer, ref List<CardInGame> cards) where TReaderWriter: IReaderWriter
+        {
+            if (serializer.IsReader)
+            {
+                FastBufferReader reader = serializer.GetFastBufferReader();
+                reader.ReadValueSafe(out cards);
+            }
+
+            if (serializer.IsWriter)
+            {
+                FastBufferWriter writer = serializer.GetFastBufferWriter();
+                writer.WriteValueSafe(cards);
+            }
+        }
+        
+        
         #endregion
 
         #region CardInfoSoSerialization
@@ -172,8 +209,37 @@ namespace ArcaneRealms.Scripts.Utils
         }
 
         #endregion
+
+        #region PlayerInGameSerialization
         
+        public static void ReadValueSafe(this FastBufferReader reader, out PlayerInGame player)
+        {
+            reader.ReadValueSafe(out Guid playerGuid);
+            player = GameManager.Instance.GetPlayerFromID(playerGuid);
+        }
+
+        public static void WriteValueSafe(this FastBufferWriter writer, in PlayerInGame player)
+        {
+            writer.WriteValueSafe(player.ID);
+        }
         
+        public static void SerializeValue<TReaderWriter>(this BufferSerializer<TReaderWriter> serializer, ref PlayerInGame player) where TReaderWriter: IReaderWriter
+        {
+            if (serializer.IsReader)
+            {
+                FastBufferReader reader = serializer.GetFastBufferReader();
+                reader.ReadValueSafe(out player);
+            }
+
+            if (serializer.IsWriter)
+            {
+                FastBufferWriter writer = serializer.GetFastBufferWriter();
+                writer.WriteValueSafe(player);
+            }
+        }
+
+
+        #endregion
         
     }
 }

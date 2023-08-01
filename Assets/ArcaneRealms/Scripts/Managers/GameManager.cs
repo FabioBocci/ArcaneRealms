@@ -10,10 +10,11 @@ using System.Linq;
 using ArcaneRealms.Scripts.Cards.GameCards;
 using ArcaneRealms.Scripts.Cards.ScriptableCards;
 using ArcaneRealms.Scripts.Systems;
-using Unity.Collections;
+using ArcaneRealms.Scripts.Utils.Events;
+using NaughtyAttributes;
 using Unity.Netcode;
 using UnityEngine;
-using UnityEngine.SceneManagement;
+using UnityEngine.Events;
 using Random = UnityEngine.Random;
 
 namespace ArcaneRealms.Scripts.Managers {
@@ -25,13 +26,26 @@ namespace ArcaneRealms.Scripts.Managers {
 	/// </summary>
 	public class GameManager : NetworkBehaviour {
 
+		[Header("Game Infos")]
+		[SerializeField] private int startingHandSize = 3;
+
+
+		#region Events
+
+				
+		[Header("Events")]
+		[SerializeField] private UnityEvent OnStartingCardsRecived;
+		
+		
+		#endregion
+		
 		public static GameManager Instance { get; private set; }
 		
 		private PlayerInGame localPlayer; //0
 		private PlayerInGame remotePlayer; //1
 
 		[HideInInspector]
-		public NetworkVariable<int> playerTurn = new();
+		public NetworkVariable<Guid> playerTurn = new();
 
 		private GameState gameState;
 
@@ -45,22 +59,15 @@ namespace ArcaneRealms.Scripts.Managers {
 
 		private void Start() {
 			if(IsServer) {
-				playerTurn.Value = Random.Range(0.0f, 1f) > 0.5 ? 1 : 0;
 				gameState = GameState.PlayersHandShake;
 				StartHandlePlayersHandShake();
 				StartCoroutine(HandleGameStateCoroutine());
 			}
-
-			if (NetworkManagerHelper.Instance.IsClient)
-			{
-				//we are client we need to send our deck to the server and wait.
-
-			}
+			
 		}
 
 		private void StartHandlePlayersHandShake()
 		{
-			
 			localPlayer = new PlayerInGame(Guid.NewGuid(), NetworkManager.ConnectedClients.Keys.First());
 			ulong remotePlayerUlong = 1;
 			foreach (var playerUlong in NetworkManager.ConnectedClients.Keys)
@@ -73,8 +80,23 @@ namespace ArcaneRealms.Scripts.Managers {
 			}
 
 			remotePlayer = new PlayerInGame(Guid.NewGuid(), remotePlayerUlong);
+			playerTurn.Value = Random.Range(0.0f, 1f) > 0.5 ? localPlayer.ID : remotePlayer.ID;
 			SendSignalStartHandShakeClientRPC(localPlayer.playerUlong, localPlayer.ID, remotePlayer.playerUlong,
 				remotePlayer.ID);
+		}
+		
+		private void HandlePlayerChooseCards()
+		{
+			PlayerInGame player = GetPlayerTurn();
+			//chose 3 card from the player and 3 for the other
+			List<CardInGame> cardsInHand = player.currentDeck.GetRange(0, startingHandSize);
+
+			PlayerInGame secondPlayer = GetEnemyPlayer(player);
+
+			List<CardInGame> cardsInHandSecondPlayer = player.currentDeck.GetRange(0, startingHandSize);
+
+			SendPlayersStartingHandsClientRPC(player, cardsInHand, secondPlayer, cardsInHandSecondPlayer);
+
 		}
 		
 		IEnumerator HandleGameStateCoroutine() {
@@ -84,10 +106,11 @@ namespace ArcaneRealms.Scripts.Managers {
 				switch(gameState) {
 					case GameState.PlayersChooseHandCards:
 						//after hand shake, so all player has loaded and we can start using Guid
-						
+						HandlePlayerChooseCards();
+						break;
 					case GameState.TurnEnd:
 						//TODO - run effects that run at end turn
-						playerTurn.Value = (playerTurn.Value + 1) % 2;
+						SetPlayerTurn(GetEnemyPlayer(GetPlayerTurn()));
 						EndTurnEventClientRPC();
 						gameState = GameState.TurnStart;
 						break;
@@ -114,7 +137,20 @@ namespace ArcaneRealms.Scripts.Managers {
 			//Debug.Log("HandleGameStateCoroutine Finished!");
 		}
 
-		
+
+		public PlayerInGame GetPlayerTurn()
+		{
+			return GetPlayerFromID(playerTurn.Value);
+		}
+
+		public void SetPlayerTurn(PlayerInGame player)
+		{
+			if (NetworkManagerHelper.Instance.IsServer)
+			{
+				playerTurn.Value = player.ID;
+			}
+		}
+
 		public PlayerInGame GetPlayerFromID(Guid clientID) {
 			if(localPlayer.ID == clientID)
 				return localPlayer;
@@ -167,6 +203,8 @@ namespace ArcaneRealms.Scripts.Managers {
 					});
 					player.startingDeck.Add(card);
 					player.allCardInGameDicionary.Add(card.CardGuid, card);
+					player.currentDeck.AddRange(player.startingDeck);
+					player.currentDeck.Shuffle();
 				}
 			}
 
@@ -253,11 +291,30 @@ namespace ArcaneRealms.Scripts.Managers {
 				PlayerInGame player = GetPlayerFromID(player1);
 				foreach (DeckCardSerializer card in player1Deck)
 				{
-					CardInGame cardInGame = card.cardInfo.BuildCardInGame(player1, card.guid);
+					CardInGame cardInGame = card.cardInfo.BuildCardInGame(player.ID, card.guid);
 					player.startingDeck.Add(cardInGame);
 					player.allCardInGameDicionary[cardInGame.CardGuid] = cardInGame;
 				}
+				player.currentDeck.AddRange(player.startingDeck);
+				player.currentDeck.Shuffle();
+
+				player = GetPlayerFromID(player2);
+				foreach (DeckCardSerializer card in player2Deck)
+				{
+					CardInGame cardInGame = card.cardInfo.BuildCardInGame(player.ID, card.guid);
+					player.startingDeck.Add(cardInGame);
+					player.allCardInGameDicionary[cardInGame.CardGuid] = cardInGame;
+				}
+				player.currentDeck.AddRange(player.startingDeck);
+				player.currentDeck.Shuffle();
 			}
+		}
+
+		[ClientRpc]
+		private void SendPlayersStartingHandsClientRPC(PlayerInGame player1, List<CardInGame> startingHandP1,
+			PlayerInGame player2, List<CardInGame> startingHandP2)
+		{
+			Debug.LogError($"Recived SendPlayersStartingHandsClientRPC");
 		}
 		
 		[ClientRpc]

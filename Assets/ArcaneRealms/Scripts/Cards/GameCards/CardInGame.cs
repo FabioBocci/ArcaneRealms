@@ -8,9 +8,10 @@ using ArcaneRealms.Scripts.Managers;
 using ArcaneRealms.Scripts.Players;
 using ArcaneRealms.Scripts.SO;
 using Assets.Scripts.Cards;
+using Unity.VisualScripting;
 
 namespace ArcaneRealms.Scripts.Cards.GameCards {
-	public abstract class CardInGame : ITargetable {
+	public abstract class CardInGame : ITargetable, IEquatable<CardInGame> {
 		public CardInfoSO cardInfoSO;
 
 		public StatHandler statHandler;
@@ -115,6 +116,39 @@ namespace ArcaneRealms.Scripts.Cards.GameCards {
 
 		}
 
+
+		public static bool operator ==(CardInGame card1, CardInGame card2)
+		{
+			if (ReferenceEquals(card1, card2)) 
+				return true;
+			if (ReferenceEquals(card1, null)) 
+				return false;
+			if (ReferenceEquals(card2, null))
+				return false;
+			return card1.Equals(card2);
+		}
+
+		public static bool operator !=(CardInGame card1, CardInGame card2) => !(card1 == card2);
+
+		public bool Equals(CardInGame other)
+		{
+			if (ReferenceEquals(null, other)) return false;
+			if (ReferenceEquals(this, other)) return true;
+			return CardGuid.Equals(other.CardGuid);
+		}
+
+		public override bool Equals(object obj)
+		{
+			if (ReferenceEquals(null, obj)) return false;
+			if (ReferenceEquals(this, obj)) return true;
+			if (obj.GetType() != this.GetType()) return false;
+			return Equals((CardInGame)obj);
+		}
+
+		public override int GetHashCode()
+		{
+			return CardGuid.GetHashCode();
+		}
 	}
 
 }
