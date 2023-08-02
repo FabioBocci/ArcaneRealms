@@ -1,13 +1,12 @@
-﻿using ArcaneRealms.Scripts.Cards;
+﻿using System.Collections.Generic;
+using ArcaneRealms.Scripts.Cards.GameCards;
 using ArcaneRealms.Scripts.Enums;
 using ArcaneRealms.Scripts.Managers;
 using ArcaneRealms.Scripts.Players;
 using ArcaneRealms.Scripts.Utils;
-using System.Collections.Generic;
-using ArcaneRealms.Scripts.Cards.GameCards;
 using UnityEngine;
 
-namespace ArcaneRealms.Scripts.Effects.OnActivation {
+namespace ArcaneRealms.Scripts.Cards.Effects.OnActivation {
 
 	[CreateAssetMenu(fileName = "Gain Empty Mana Effect", menuName = "card effect/Gain Empty Mana")]
 	public class GainEmptyManaEffect : OnActivationEffect {

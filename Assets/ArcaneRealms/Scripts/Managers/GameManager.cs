@@ -2,7 +2,6 @@
 using System;
 using ArcaneRealms.Scripts.Cards;
 using ArcaneRealms.Scripts.Players;
-using ArcaneRealms.Scripts.SO;
 using ArcaneRealms.Scripts.Utils;
 using System.Collections;
 using System.Collections.Generic;
@@ -31,10 +30,8 @@ namespace ArcaneRealms.Scripts.Managers {
 
 
 		#region Events
-
-				
-		[Header("Events")]
-		[SerializeField] private UnityEvent OnStartingCardsRecived;
+		
+		private event EntityEvent<List<CardInGame>> OnStartingCardsReceived;
 		
 		
 		#endregion
@@ -90,13 +87,12 @@ namespace ArcaneRealms.Scripts.Managers {
 			PlayerInGame player = GetPlayerTurn();
 			//chose 3 card from the player and 3 for the other
 			List<CardInGame> cardsInHand = player.currentDeck.GetRange(0, startingHandSize);
-
-			PlayerInGame secondPlayer = GetEnemyPlayer(player);
-
-			List<CardInGame> cardsInHandSecondPlayer = player.currentDeck.GetRange(0, startingHandSize);
-
-			SendPlayersStartingHandsClientRPC(player, cardsInHand, secondPlayer, cardsInHandSecondPlayer);
-
+			
+			SendPlayersStartingHandsClientRPC(player, cardsInHand, player.thisClientRpcTarget);
+			
+			player = GetEnemyPlayer(player);
+			cardsInHand = player.currentDeck.GetRange(0, startingHandSize);
+			SendPlayersStartingHandsClientRPC(player, cardsInHand, player.thisClientRpcTarget);
 		}
 		
 		IEnumerator HandleGameStateCoroutine() {
@@ -311,10 +307,17 @@ namespace ArcaneRealms.Scripts.Managers {
 		}
 
 		[ClientRpc]
-		private void SendPlayersStartingHandsClientRPC(PlayerInGame player1, List<CardInGame> startingHandP1,
-			PlayerInGame player2, List<CardInGame> startingHandP2)
+		private void SendPlayersStartingHandsClientRPC(PlayerInGame thisPlayer, List<CardInGame> startingHand, ClientRpcParams clientRpcParam = default)
 		{
 			Debug.LogError($"Recived SendPlayersStartingHandsClientRPC");
+			if (thisPlayer != localPlayer)
+			{
+				Debug.LogError($" Received a ClientRPC for a different client! Aborting RPC! this client {localPlayer.playerUlong} received {thisPlayer.playerUlong}");
+				return;
+			}
+			
+			OnStartingCardsReceived?.Invoke(new EntityEventData<List<CardInGame>>(startingHand));
+			
 		}
 		
 		[ClientRpc]

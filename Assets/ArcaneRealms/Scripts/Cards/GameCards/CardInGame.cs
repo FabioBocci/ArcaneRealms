@@ -1,13 +1,11 @@
 using System;
 using System.Collections.Generic;
+using ArcaneRealms.Scripts.Cards.Effects;
 using ArcaneRealms.Scripts.Cards.ScriptableCards;
-using ArcaneRealms.Scripts.Effects;
 using ArcaneRealms.Scripts.Enums;
 using ArcaneRealms.Scripts.Interfaces;
 using ArcaneRealms.Scripts.Managers;
 using ArcaneRealms.Scripts.Players;
-using ArcaneRealms.Scripts.SO;
-using Assets.Scripts.Cards;
 using Unity.VisualScripting;
 
 namespace ArcaneRealms.Scripts.Cards.GameCards {

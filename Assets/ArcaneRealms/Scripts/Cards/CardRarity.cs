@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace ArcaneRealms.Scripts.Enums {
+namespace ArcaneRealms.Scripts.Cards {
 	[Serializable]
 	public enum CardRarity {
 		Common,

@@ -1,8 +1,8 @@
-﻿using ArcaneRealms.Scripts.Interfaces;
-using System;
+﻿using System;
+using ArcaneRealms.Scripts.Interfaces;
 using UnityEngine;
 
-namespace ArcaneRealms.Scripts.ArrowPointer {
+namespace ArcaneRealms.Scripts.Utils.ArrowPointer {
 	public class ArrowPointerBuilder : MonoBehaviour {
 
 		[SerializeField] private GameObject arrowPointerPrefab;

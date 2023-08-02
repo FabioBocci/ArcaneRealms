@@ -1,5 +1,5 @@
-﻿using ArcaneRealms.Scripts.Effects;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
+using ArcaneRealms.Scripts.Cards.Effects;
 
 namespace ArcaneRealms.Scripts.Enums {
 	public class TargetsEnum {

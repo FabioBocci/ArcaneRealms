@@ -1,12 +1,10 @@
-﻿using ArcaneRealms.Scripts.ArrowPointer;
-using ArcaneRealms.Scripts.Cards;
-using ArcaneRealms.Scripts.Cards.GameCards;
+﻿using ArcaneRealms.Scripts.Cards.GameCards;
 using ArcaneRealms.Scripts.Managers;
-using Unity.Netcode;
+using ArcaneRealms.Scripts.Utils.ArrowPointer;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
-namespace Assets.Scripts.UI {
+namespace ArcaneRealms.Scripts.UI {
 	public class FieldPannelManagerUI : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IDropHandler {
 
 		public static FieldPannelManagerUI Instance { get; private set; }

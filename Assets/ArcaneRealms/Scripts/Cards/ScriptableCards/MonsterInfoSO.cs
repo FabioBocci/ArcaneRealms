@@ -1,8 +1,6 @@
-﻿using ArcaneRealms.Scripts.Cards.ScriptableCards;
-using ArcaneRealms.Scripts.Enums;
-using UnityEngine;
+﻿using UnityEngine;
 
-namespace ArcaneRealms.Scripts.SO {
+namespace ArcaneRealms.Scripts.Cards.ScriptableCards {
 
 	[CreateAssetMenu(fileName = "New Monster", menuName = "Cards/New Monster", order = 0)]
 	public class MonsterInfoSO : CardInfoSO {

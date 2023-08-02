@@ -1,4 +1,5 @@
-﻿using ArcaneRealms.Scripts.Enums;
+﻿using ArcaneRealms.Scripts.Cards;
+using ArcaneRealms.Scripts.Enums;
 
 namespace ArcaneRealms.Scripts.Utils {
 	public static class CardUtils {

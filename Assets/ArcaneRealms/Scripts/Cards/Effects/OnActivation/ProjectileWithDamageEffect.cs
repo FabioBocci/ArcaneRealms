@@ -2,7 +2,7 @@
 using ArcaneRealms.Scripts.Utils;
 using UnityEngine;
 
-namespace ArcaneRealms.Scripts.Effects.OnActivation {
+namespace ArcaneRealms.Scripts.Cards.Effects.OnActivation {
 
 	[CreateAssetMenu(fileName = "New Projectile Damage Effect", menuName = "card effect/Projectile Damage")]
 	public class ProjectileWithDamageEffect : OnActivationEffect {

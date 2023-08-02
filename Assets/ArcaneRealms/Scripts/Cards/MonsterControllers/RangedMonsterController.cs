@@ -1,5 +1,4 @@
-﻿using Ara.Scripts.Cards.MonsterControllers;
-using System;
+﻿using System;
 using System.Collections;
 using UnityEngine;
 using UnityEngine.AI;

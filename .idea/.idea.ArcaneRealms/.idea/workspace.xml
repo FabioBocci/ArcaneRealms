@@ -5,18 +5,14 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="a1cab302-7974-4ba2-b555-96411d3e727c" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/Assets/ArcaneRealms/Editor/PriorityEventDrawer.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/ArcaneRealms/Editor/PriorityEventDrawer.cs.meta" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/ArcaneRealms/Scripts/Utils/Events.meta" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/ArcaneRealms/Scripts/Utils/Events/Events.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/ArcaneRealms/Scripts/Utils/Events/Events.cs.meta" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/ArcaneRealms/Scripts/Utils/Events/PriorityEvents.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/ArcaneRealms/Scripts/Utils/Events/PriorityEvents.cs.meta" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/.idea.ArcaneRealms/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.ArcaneRealms/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/ArcaneRealms/Scenes/TestScene.unity" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/ArcaneRealms/Scenes/TestScene.unity" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/ArcaneRealms/Scripts/Cards/GameCards/CardInGame.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/ArcaneRealms/Scripts/Cards/GameCards/CardInGame.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/ArcaneRealms/Scripts/Managers/GameManager.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/ArcaneRealms/Scripts/Managers/GameManager.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/ArcaneRealms/Scripts/Utils/SerializerHelper.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/ArcaneRealms/Scripts/Utils/SerializerHelper.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/ArcaneRealms/Scripts/Players/PlayerInGame.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/ArcaneRealms/Scripts/Players/PlayerInGame.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/ArcaneRealms/Scripts/Systems/Database.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/ArcaneRealms/Scripts/Systems/Database.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/ArcaneRealms/Scripts/Utils/GameEventListener.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/ArcaneRealms/Scripts/Utils/GameEventListener.cs.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/ArcaneRealms/Scripts/Utils/GameEventSO.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/ArcaneRealms/Scripts/Utils/GameEventSO.cs.meta" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -50,13 +46,18 @@
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/56073df97ede4f769c2cc45d546d986d172200/75/f07ebcc9/UnityEventBase.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/56073df97ede4f769c2cc45d546d986d172200/c3/9e2eea72/UnityAction.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/56073df97ede4f769c2cc45d546d986d172200/ca/61b2c416/UnityEventTools.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/5a41d6b7189842eca409fd0b1c3e3dcf17bf78/12/92101e6b/EventHandler`1.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/bf6080dbf0564cf1b405dfd6e0dac725940e00/5d/d69487d9/UnityEventTools.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/cbf1edbb7845423eaa29f4e3377f786f54600/0d/ef91b9c7/ClientRpcParams.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/cbf1edbb7845423eaa29f4e3377f786f54600/13/cb02c106/ClientRpcAttribute.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/cbf1edbb7845423eaa29f4e3377f786f54600/49/3997b302/ClientRpcReceiveParams.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/d44b17e136d09081da1e8fd0e8c83fde60e11818b9f2442d7ed8cb733fae895e/System.Collections.Generic.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Library/PackageCache/com.unity.collections@1.2.4/Unity.Collections/NativeList.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Library/PackageCache/com.unity.netcode.gameobjects@1.5.1/Runtime/Connection/NetworkClient.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Library/PackageCache/com.unity.netcode.gameobjects@1.5.1/Runtime/Core/NetworkBehaviour.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Library/PackageCache/com.unity.netcode.gameobjects@1.5.1/Runtime/Core/NetworkManager.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Library/PackageCache/com.unity.netcode.gameobjects@1.5.1/Runtime/Messaging/Messages/RpcMessages.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Library/PackageCache/com.unity.netcode.gameobjects@1.5.1/Runtime/Messaging/RpcAttributes.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Library/PackageCache/com.unity.netcode.gameobjects@1.5.1/Runtime/SceneManagement/NetworkSceneManager.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Library/PackageCache/com.unity.netcode.gameobjects@1.5.1/Runtime/Serialization/FastBufferReader.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Library/PackageCache/com.unity.netcode.gameobjects@1.5.1/Runtime/Serialization/FastBufferWriter.cs" root0="SKIP_HIGHLIGHTING" />
@@ -155,6 +156,8 @@
       <workItem from="1690418332108" duration="62219000" />
       <workItem from="1690797192823" duration="2906000" />
       <workItem from="1690806038510" duration="2492000" />
+      <workItem from="1690892996566" duration="44000" />
+      <workItem from="1690994160585" duration="1467000" />
     </task>
     <task id="LOCAL-00001" summary="implementation of handshake system">
       <created>1690562888952</created>
@@ -163,7 +166,14 @@
       <option name="project" value="LOCAL" />
       <updated>1690562888953</updated>
     </task>
-    <option name="localTasksCounter" value="2" />
+    <task id="LOCAL-00002" summary="temp">
+      <created>1690893031053</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1690893031053</updated>
+    </task>
+    <option name="localTasksCounter" value="3" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -186,6 +196,7 @@
   <component name="VcsManagerConfiguration">
     <option name="CLEAR_INITIAL_COMMIT_MESSAGE" value="true" />
     <MESSAGE value="implementation of handshake system" />
-    <option name="LAST_COMMIT_MESSAGE" value="implementation of handshake system" />
+    <MESSAGE value="temp" />
+    <option name="LAST_COMMIT_MESSAGE" value="temp" />
   </component>
 </project>

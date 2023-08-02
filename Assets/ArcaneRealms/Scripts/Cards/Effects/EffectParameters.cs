@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using Unity.Netcode;
 using UnityEngine;
 
-namespace ArcaneRealms.Scripts.Effects {
+namespace ArcaneRealms.Scripts.Cards.Effects {
 
 	[Serializable]
 	public class EffectParameters : INetworkSerializable, IEnumerable<Parameter> {

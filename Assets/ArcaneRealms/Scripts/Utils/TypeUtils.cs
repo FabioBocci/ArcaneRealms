@@ -1,8 +1,8 @@
-﻿using ArcaneRealms.Scripts.Effects;
-using ArcaneRealms.Scripts.Enums;
+﻿using ArcaneRealms.Scripts.Enums;
 using ArcaneRealms.Scripts.Interfaces;
 using System;
 using System.Collections.Generic;
+using ArcaneRealms.Scripts.Cards.Effects;
 
 namespace ArcaneRealms.Scripts.Utils {
 	public static class TypeUtils {

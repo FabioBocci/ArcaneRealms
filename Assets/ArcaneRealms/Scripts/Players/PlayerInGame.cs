@@ -1,10 +1,10 @@
 ﻿using System;
 using ArcaneRealms.Scripts.Cards;
 using ArcaneRealms.Scripts.Enums;
-using Assets.Scripts.Cards;
 using System.Collections.Generic;
 using System.Linq;
 using ArcaneRealms.Scripts.Cards.GameCards;
+using Unity.Netcode;
 using UnityEngine;
 
 namespace ArcaneRealms.Scripts.Players {
@@ -47,10 +47,19 @@ namespace ArcaneRealms.Scripts.Players {
 
 		public ulong playerUlong { private set; get; }
 		//also for teams
+		
+		public ClientRpcParams thisClientRpcTarget { get; }
 
 		public PlayerInGame(Guid iD, ulong player) {
 			ID = iD;
 			playerUlong = player;
+			thisClientRpcTarget = new ClientRpcParams()
+			{
+				Send = new ClientRpcSendParams()
+				{
+					TargetClientIds = new[] { player }
+				}
+			};
 		}
 
 		//these function will call the GameManager to sync the players to this state!

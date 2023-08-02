@@ -1,7 +1,6 @@
 ﻿using ArcaneRealms.Scripts.Cards;
 using ArcaneRealms.Scripts.Cards.GameCards;
 using ArcaneRealms.Scripts.UI;
-using Assets.Scripts.UI;
 using Unity.Netcode;
 using UnityEngine;
 

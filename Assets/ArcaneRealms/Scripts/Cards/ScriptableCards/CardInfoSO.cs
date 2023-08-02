@@ -1,10 +1,9 @@
 using System;
 using System.Collections.Generic;
+using ArcaneRealms.Scripts.Cards.Effects;
 using ArcaneRealms.Scripts.Cards.GameCards;
-using ArcaneRealms.Scripts.Effects;
 using ArcaneRealms.Scripts.Enums;
-using ArcaneRealms.Scripts.SO;
-using Assets.Scripts.Cards;
+using ArcaneRealms.Scripts.Utils.ScriptableDatabase;
 using UnityEngine;
 
 namespace ArcaneRealms.Scripts.Cards.ScriptableCards {

@@ -1,12 +1,10 @@
-﻿using ArcaneRealms.Scripts.Cards;
-using ArcaneRealms.Scripts.Cards.GameCards;
-using ArcaneRealms.Scripts.Effects;
+﻿using ArcaneRealms.Scripts.Cards.GameCards;
 using ArcaneRealms.Scripts.Enums;
 using ArcaneRealms.Scripts.Players;
-using ArcaneRealms.Scripts.SO;
+using ArcaneRealms.Scripts.Utils.ScriptableDatabase;
 using UnityEngine;
 
-namespace Assets.Scripts.SO {
+namespace ArcaneRealms.Scripts.Cards.Effects.ScriptableEffects {
 	public abstract class CardEffectSO : ScriptableObject {
 		public static readonly string TARGET_PARAM_NAME = "target";
 		protected static readonly string TARGET_TYPE = typeof(TargetsEnum).AssemblyQualifiedName;

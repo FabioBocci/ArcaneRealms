@@ -1,9 +1,8 @@
-﻿using ArcaneRealms.Scripts.Enums;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace ArcaneRealms.Scripts.Cards {
+namespace ArcaneRealms.Scripts.Cards.GameCards {
 	public class StatHandler {
 		private Dictionary<StatType, int> baseStats;
 		private Dictionary<StatType, List<StatChanger>> modifiedStats;

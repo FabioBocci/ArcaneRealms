@@ -1,9 +1,9 @@
-using ArcaneRealms.Scripts.Interfaces;
 using System;
 using System.Collections.Generic;
+using ArcaneRealms.Scripts.Interfaces;
 using UnityEngine;
 
-namespace ArcaneRealms.Scripts.ArrowPointer {
+namespace ArcaneRealms.Scripts.Utils.ArrowPointer {
 	public class ArrowPointer : MonoBehaviour {
 
 		public float tailSegmentSpacing = 0.6f;

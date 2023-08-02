@@ -1,11 +1,10 @@
-﻿using ArcaneRealms.Scripts.Cards;
-using ArcaneRealms.Scripts.Players;
-using Assets.Scripts.SO;
-using System;
+﻿using System;
+using ArcaneRealms.Scripts.Cards.Effects.ScriptableEffects;
 using ArcaneRealms.Scripts.Cards.GameCards;
+using ArcaneRealms.Scripts.Players;
 using UnityEngine;
 
-namespace ArcaneRealms.Scripts.Effects {
+namespace ArcaneRealms.Scripts.Cards.Effects {
 
 	[Serializable]
 	public class CardEffect {

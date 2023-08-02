@@ -1,13 +1,11 @@
-﻿using Ara.Scripts.Cards.MonsterControllers;
+﻿using System;
+using System.Collections;
 using ArcaneRealms.Scripts.Cards.MonsterControllers;
 using ArcaneRealms.Scripts.Enums;
 using ArcaneRealms.Scripts.Interfaces;
-using System;
-using System.Collections;
-using ArcaneRealms.Scripts.Cards.GameCards;
 using UnityEngine;
 
-namespace ArcaneRealms.Scripts.Cards {
+namespace ArcaneRealms.Scripts.Cards.GameCards {
 	public class MonsterPlatformController : MonoBehaviour, ITargetable {
 		[SerializeField] private Transform basePlatform;
 		[SerializeField] private Transform monsterPositionOnPlate;

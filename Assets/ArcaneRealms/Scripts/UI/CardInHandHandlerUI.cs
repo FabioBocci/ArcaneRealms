@@ -1,17 +1,14 @@
 ﻿using System;
-using ArcaneRealms.Scripts.ArrowPointer;
 using ArcaneRealms.Scripts.Cards;
 using ArcaneRealms.Scripts.Cards.GameCards;
 using ArcaneRealms.Scripts.Cards.ScriptableCards;
-using ArcaneRealms.Scripts.Enums;
 using ArcaneRealms.Scripts.Managers;
-using ArcaneRealms.Scripts.SO;
-using ArcaneRealms.Scripts.UI;
+using ArcaneRealms.Scripts.Utils.ArrowPointer;
 using Unity.Netcode;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
-namespace Assets.Scripts.UI {
+namespace ArcaneRealms.Scripts.UI {
 	public class CardInHandHandlerUI : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IDragHandler, IBeginDragHandler, IEndDragHandler {
 
 		[Header("Monsters border Sprite", order = 0)]

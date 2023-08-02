@@ -1,11 +1,8 @@
 ﻿using System;
-using ArcaneRealms.Scripts.Cards;
-using ArcaneRealms.Scripts.Enums;
-using ArcaneRealms.Scripts.SO;
 using System.Collections.Generic;
-using ArcaneRealms.Scripts.Cards.GameCards;
+using ArcaneRealms.Scripts.Cards.ScriptableCards;
 
-namespace Assets.Scripts.Cards {
+namespace ArcaneRealms.Scripts.Cards.GameCards {
 	public class SpellCard : CardInGame {
 
 		public new SpellInfoSO cardInfoSO;

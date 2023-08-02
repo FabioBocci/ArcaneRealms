@@ -4,7 +4,7 @@ using ArcaneRealms.Scripts.Cards.ScriptableCards;
 using UnityEditor;
 using UnityEngine;
 
-namespace ArcaneRealms.Scripts.SO {
+namespace ArcaneRealms.Scripts.Utils.ScriptableDatabase {
 	//[CreateAssetMenu(fileName = "new Database", menuName = "Cards/Create Database", order = 4)]
 	public class CardInfoDataBase : ScriptableObject {
 		public List<CardInfoSO> Cards = new();

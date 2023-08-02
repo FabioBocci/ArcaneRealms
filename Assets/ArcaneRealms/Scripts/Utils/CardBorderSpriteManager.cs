@@ -1,5 +1,5 @@
+using ArcaneRealms.Scripts.Cards;
 using ArcaneRealms.Scripts.Cards.ScriptableCards;
-using ArcaneRealms.Scripts.SO;
 using UnityEngine;
 
 namespace ArcaneRealms.Scripts.Utils {
@@ -43,13 +43,13 @@ namespace ArcaneRealms.Scripts.Utils {
 		private Sprite BuildMonsterSprite(CardInfoSO infoSO) {
 			switch(infoSO.Rarity) {
 				default:
-				case Enums.CardRarity.Common:
+				case CardRarity.Common:
 					return commonMonsterSprite;
-				case Enums.CardRarity.Rare:
+				case CardRarity.Rare:
 					return rareMonsterSprite;
-				case Enums.CardRarity.Epic:
+				case CardRarity.Epic:
 					return epicMonsterSprite;
-				case Enums.CardRarity.Legendary:
+				case CardRarity.Legendary:
 					return legendaryMonsterSprite;
 			}
 		}
@@ -57,13 +57,13 @@ namespace ArcaneRealms.Scripts.Utils {
 		private Sprite BuildSpellSprite(CardInfoSO infoSO) {
 			switch(infoSO.Rarity) {
 				default:
-				case Enums.CardRarity.Common:
+				case CardRarity.Common:
 					return commonSpellSprite;
-				case Enums.CardRarity.Rare:
+				case CardRarity.Rare:
 					return rareSpellSprite;
-				case Enums.CardRarity.Epic:
+				case CardRarity.Epic:
 					return epicSpellSprite;
-				case Enums.CardRarity.Legendary:
+				case CardRarity.Legendary:
 					return legendarySpellSprite;
 			}
 		}

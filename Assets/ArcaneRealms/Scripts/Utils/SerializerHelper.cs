@@ -5,7 +5,6 @@ using ArcaneRealms.Scripts.Cards.GameCards;
 using ArcaneRealms.Scripts.Cards.ScriptableCards;
 using ArcaneRealms.Scripts.Managers;
 using ArcaneRealms.Scripts.Players;
-using ArcaneRealms.Scripts.SO;
 using ArcaneRealms.Scripts.Systems;
 using Unity.Netcode;
 
@@ -114,7 +113,7 @@ namespace ArcaneRealms.Scripts.Utils
         public static void ReadValueSafe(this FastBufferReader reader, out CardInfoSO card)
         {
             reader.ReadValueSafe(out string cardId);
-            card = Database.Instance.cardsDatabase.GetCardFromID(cardId);
+            card = Database.Instance.GetCardFromId(cardId);
         }
 
         public static void WriteValueSafe(this FastBufferWriter writer, in CardInfoSO card)

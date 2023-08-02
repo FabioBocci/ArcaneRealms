@@ -2,7 +2,6 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using ArcaneRealms.Scripts.Cards.ScriptableCards;
-using ArcaneRealms.Scripts.SO;
 using UnityEngine;
 
 namespace ArcaneRealms.Scripts.Players

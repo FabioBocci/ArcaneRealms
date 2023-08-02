@@ -1,9 +1,8 @@
-﻿using ArcaneRealms.Scripts.Effects;
-using ArcaneRealms.Scripts.Enums;
-using ArcaneRealms.Scripts.SO;
+﻿using ArcaneRealms.Scripts.Enums;
 using ArcaneRealms.Scripts.Utils;
-using Assets.Scripts.SO;
 using System;
+using ArcaneRealms.Scripts.Cards.Effects;
+using ArcaneRealms.Scripts.Cards.Effects.ScriptableEffects;
 using ArcaneRealms.Scripts.Cards.ScriptableCards;
 using UnityEditor;
 using UnityEngine;

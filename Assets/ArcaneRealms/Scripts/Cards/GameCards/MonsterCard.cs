@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using ArcaneRealms.Scripts.Cards.ScriptableCards;
 using ArcaneRealms.Scripts.Enums;
-using ArcaneRealms.Scripts.SO;
 
 namespace ArcaneRealms.Scripts.Cards.GameCards {
 	public class MonsterCard : CardInGame {

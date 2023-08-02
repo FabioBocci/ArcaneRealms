@@ -1,10 +1,10 @@
-﻿using ArcaneRealms.Scripts.Interfaces;
-using System;
+﻿using System;
 using System.Collections;
+using ArcaneRealms.Scripts.Interfaces;
 using UnityEngine;
 using UnityEngine.AI;
 
-namespace Ara.Scripts.Cards.MonsterControllers {
+namespace ArcaneRealms.Scripts.Cards.MonsterControllers {
 
 	[RequireComponent(typeof(NavMeshAgent))]
 	[RequireComponent(typeof(Animator))]
