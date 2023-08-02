@@ -1487,29 +1487,28 @@ PrefabInstance:
     - target: {fileID: 4031162297676710103, guid: 57cbd3564f3c91948922039a78a912f2,
         type: 3}
       propertyPath: playerData.decks.Array.data[0].cards.Array.size
-      value: 2
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4031162297676710103, guid: 57cbd3564f3c91948922039a78a912f2,
         type: 3}
       propertyPath: playerData.decks.Array.data[0].cards.Array.data[0].card
       value: 
-      objectReference: {fileID: 11400000, guid: 82b42e3bd1b02954ea6e45dd2d07d678,
-        type: 2}
+      objectReference: {fileID: 0}
     - target: {fileID: 4031162297676710103, guid: 57cbd3564f3c91948922039a78a912f2,
         type: 3}
       propertyPath: playerData.decks.Array.data[0].cards.Array.data[1].card
       value: 
-      objectReference: {fileID: 11400000, guid: 5c02e597a02b0124fae853cda0c300f8,
+      objectReference: {fileID: 11400000, guid: 82b42e3bd1b02954ea6e45dd2d07d678,
         type: 2}
     - target: {fileID: 4031162297676710103, guid: 57cbd3564f3c91948922039a78a912f2,
         type: 3}
       propertyPath: playerData.decks.Array.data[0].cards.Array.data[0].count
-      value: 2
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4031162297676710103, guid: 57cbd3564f3c91948922039a78a912f2,
         type: 3}
       propertyPath: playerData.decks.Array.data[0].cards.Array.data[1].count
-      value: 2
+      value: 6
       objectReference: {fileID: 0}
     - target: {fileID: 5820692613890032782, guid: 57cbd3564f3c91948922039a78a912f2,
         type: 3}

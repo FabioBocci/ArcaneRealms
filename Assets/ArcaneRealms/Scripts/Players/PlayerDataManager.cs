@@ -1,6 +1,8 @@
 using System;
 using System.Collections.Generic;
 using ArcaneRealms.Scripts.Utils;
+using NaughtyAttributes;
+using Newtonsoft.Json;
 using Unity.Services.Authentication;
 using Unity.Services.CloudSave;
 using Unity.Services.Core;
@@ -13,15 +15,6 @@ namespace ArcaneRealms.Scripts.Players
         [SerializeField] private string loadJsonInfo;
         
         public PlayerData playerData = new();
-        
-        protected override void Awake()
-        {
-            if (!EnsureInstance())
-            {
-                return;
-            }
-
-        }
 
         private void Start()
         {
@@ -36,11 +29,19 @@ namespace ArcaneRealms.Scripts.Players
                 {
                     await UnityServices.InitializeAsync();
                 }
-                await AuthenticationService.Instance.SignInAnonymouslyAsync();
+
+                if (!AuthenticationService.Instance.IsSignedIn)
+                {
+                    await AuthenticationService.Instance.SignInAnonymouslyAsync();
+                }
+                
                 Debug.Log($"PlayerID: {AuthenticationService.Instance.PlayerId}");
-                Dictionary<string, string> savedData =
-                    await CloudSaveService.Instance.Data.LoadAsync(new HashSet<string>() {"PlayerData" });
+                Dictionary<string, string> savedData = await CloudSaveService.Instance.Data.LoadAsync(new HashSet<string>() {"PlayerData" });
                 Debug.Log($"PlayerData: {savedData.GetValueOrDefault("PlayerData", "EMPTY")}");
+                if (!string.IsNullOrEmpty(savedData["PlayerData"]))
+                {
+                    LoadJsonData(savedData["PlayerData"]);
+                }
             }
             catch (Exception e)
             {
@@ -49,16 +50,18 @@ namespace ArcaneRealms.Scripts.Players
         }
 
 
-        [ContextMenu("Save")]
+        [Button("Save")]
         public void Save()
         {
-            string jsonString = JsonUtility.ToJson(playerData);
+            JsonSerializerSettings settings = new JsonSerializerSettings();
+            settings.Converters.Add(new CardInDeckConverter());
+            string jsonString = JsonConvert.SerializeObject(playerData, settings);
             
             Debug.Log($"[PlayerData] json: {jsonString}");
             SaveAsync(jsonString);
         }
 
-        [ContextMenu("Load TEMP data")]
+        [Button("Load TEMP data")]
         public void Load()
         {
             LoadJsonData(loadJsonInfo);
@@ -66,7 +69,9 @@ namespace ArcaneRealms.Scripts.Players
 
         private void LoadJsonData(string jsonData)
         {
-            playerData = JsonUtility.FromJson<PlayerData>(jsonData);
+            JsonSerializerSettings settings = new JsonSerializerSettings();
+            settings.Converters.Add(new CardInDeckConverter());
+            playerData = JsonConvert.DeserializeObject<PlayerData>(jsonData, settings);
         }
 
         private async void SaveAsync(string jsonData)

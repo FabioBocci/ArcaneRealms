@@ -4,15 +4,10 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="a1cab302-7974-4ba2-b555-96411d3e727c" name="Changes" comment="">
+    <list default="true" id="a1cab302-7974-4ba2-b555-96411d3e727c" name="Changes" comment="namespace fixed">
       <change beforePath="$PROJECT_DIR$/.idea/.idea.ArcaneRealms/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.ArcaneRealms/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/ArcaneRealms/Scripts/Managers/GameManager.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/ArcaneRealms/Scripts/Managers/GameManager.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/ArcaneRealms/Scripts/Players/PlayerInGame.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/ArcaneRealms/Scripts/Players/PlayerInGame.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/ArcaneRealms/Scripts/Systems/Database.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/ArcaneRealms/Scripts/Systems/Database.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/ArcaneRealms/Scripts/Utils/GameEventListener.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/ArcaneRealms/Scripts/Utils/GameEventListener.cs.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/ArcaneRealms/Scripts/Utils/GameEventSO.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/ArcaneRealms/Scripts/Utils/GameEventSO.cs.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/ArcaneRealms/Scripts/Players/PlayerData.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/ArcaneRealms/Scripts/Players/PlayerData.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/ArcaneRealms/Scripts/Players/PlayerDataManager.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/ArcaneRealms/Scripts/Players/PlayerDataManager.cs" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -51,7 +46,30 @@
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/cbf1edbb7845423eaa29f4e3377f786f54600/0d/ef91b9c7/ClientRpcParams.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/cbf1edbb7845423eaa29f4e3377f786f54600/13/cb02c106/ClientRpcAttribute.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/cbf1edbb7845423eaa29f4e3377f786f54600/49/3997b302/ClientRpcReceiveParams.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/443ce614ff11fd4152a3c735dec9ef388c537ef8ea9c24e0f018f1bd619e85/JObject.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/4eae6449caa21e90c2ff2d63846343457a0e4192fb25892da80d78feb4774f/JsonSerializer.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/96ccfd5052d879c2c4cc1a3d98c2a0e79f2ad1276b6f898052efa720edbebb/JsonConverter.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/d44b17e136d09081da1e8fd0e8c83fde60e11818b9f2442d7ed8cb733fae895e/System.Collections.Generic.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock://D:/Projects/Unity/ArcaneRealms/Assets/ArcaneRealms/Editor/ArchLayoutGroupEditor.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock://D:/Projects/Unity/ArcaneRealms/Assets/ArcaneRealms/Editor/CardInfoSOEditor.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock://D:/Projects/Unity/ArcaneRealms/Assets/ArcaneRealms/Scripts/Cards/CardRarity.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock://D:/Projects/Unity/ArcaneRealms/Assets/ArcaneRealms/Scripts/Cards/Effects/CardEffect.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock://D:/Projects/Unity/ArcaneRealms/Assets/ArcaneRealms/Scripts/Cards/Effects/EffectParameters.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock://D:/Projects/Unity/ArcaneRealms/Assets/ArcaneRealms/Scripts/Cards/Effects/ScriptableEffects/CardEffectSO.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock://D:/Projects/Unity/ArcaneRealms/Assets/ArcaneRealms/Scripts/Cards/GameCards/CardInGame.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock://D:/Projects/Unity/ArcaneRealms/Assets/ArcaneRealms/Scripts/Cards/ScriptableCards/CardInfoSO.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock://D:/Projects/Unity/ArcaneRealms/Assets/ArcaneRealms/Scripts/Cards/SpellType.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock://D:/Projects/Unity/ArcaneRealms/Assets/ArcaneRealms/Scripts/Managers/FieldManager.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock://D:/Projects/Unity/ArcaneRealms/Assets/ArcaneRealms/Scripts/Systems/Database.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock://D:/Projects/Unity/ArcaneRealms/Assets/ArcaneRealms/Scripts/UI/ArchLayoutGroup.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock://D:/Projects/Unity/ArcaneRealms/Assets/ArcaneRealms/Scripts/UI/CardInHandHandlerUI.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock://D:/Projects/Unity/ArcaneRealms/Assets/ArcaneRealms/Scripts/UI/CurvedNameUI.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock://D:/Projects/Unity/ArcaneRealms/Assets/ArcaneRealms/Scripts/Utils/ArrowPointer/ArrowPointer.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock://D:/Projects/Unity/ArcaneRealms/Assets/ArcaneRealms/Scripts/Utils/ArrowPointer/ArrowPointerBuilder.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock://D:/Projects/Unity/ArcaneRealms/Assets/ArcaneRealms/Scripts/Utils/CardBorderSpriteManager.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock://D:/Projects/Unity/ArcaneRealms/Assets/ArcaneRealms/Scripts/Utils/CardUtils.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock://D:/Projects/Unity/ArcaneRealms/Assets/ArcaneRealms/Scripts/Utils/ScriptableDatabase/CardEffectDataBaseSO.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock://D:/Projects/Unity/ArcaneRealms/Assets/ArcaneRealms/Scripts/Utils/ScriptableDatabase/CardInfoDataBase.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Library/PackageCache/com.unity.collections@1.2.4/Unity.Collections/NativeList.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Library/PackageCache/com.unity.netcode.gameobjects@1.5.1/Runtime/Connection/NetworkClient.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Library/PackageCache/com.unity.netcode.gameobjects@1.5.1/Runtime/Core/NetworkBehaviour.cs" root0="SKIP_HIGHLIGHTING" />
@@ -157,7 +175,7 @@
       <workItem from="1690797192823" duration="2906000" />
       <workItem from="1690806038510" duration="2492000" />
       <workItem from="1690892996566" duration="44000" />
-      <workItem from="1690994160585" duration="1467000" />
+      <workItem from="1690994160585" duration="4028000" />
     </task>
     <task id="LOCAL-00001" summary="implementation of handshake system">
       <created>1690562888952</created>
@@ -173,7 +191,14 @@
       <option name="project" value="LOCAL" />
       <updated>1690893031053</updated>
     </task>
-    <option name="localTasksCounter" value="3" />
+    <task id="LOCAL-00003" summary="namespace fixed">
+      <created>1690996252605</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1690996252605</updated>
+    </task>
+    <option name="localTasksCounter" value="4" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -197,6 +222,7 @@
     <option name="CLEAR_INITIAL_COMMIT_MESSAGE" value="true" />
     <MESSAGE value="implementation of handshake system" />
     <MESSAGE value="temp" />
-    <option name="LAST_COMMIT_MESSAGE" value="temp" />
+    <MESSAGE value="namespace fixed" />
+    <option name="LAST_COMMIT_MESSAGE" value="namespace fixed" />
   </component>
 </project>
