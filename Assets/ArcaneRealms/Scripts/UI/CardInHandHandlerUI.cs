@@ -36,15 +36,15 @@ namespace ArcaneRealms.Scripts.UI {
 
 
 		public bool IsDragging { get; private set; } = false;
+		public RectTransform rectTransform { private set; get; }
 
 
-		private MonsterCard cardInGame;
+		private CardInGame cardInGame;
 		private ICardBuilderUI cardBuilderUI;
 		private bool hoveringThisCard = false;
 		private bool isShowingThisCard = false;
 		private float interlTimer = 0;
 		private GameObject cardCloneShowing = null;
-		private RectTransform rectTransform = null;
 		private CanvasGroup canvasGroup = null;
 		private UIOutline uiOutline = null;
 		private Transform originalParent = null;
@@ -74,7 +74,7 @@ namespace ArcaneRealms.Scripts.UI {
 			}
 		}
 
-		public void BuildCard(MonsterCard card) {
+		public void BuildCard(CardInGame card) {
 			cardInGame = card;
 			cardBuilderUI.BuildCardUI(card, BuildSprite(card.cardInfoSO));
 		}

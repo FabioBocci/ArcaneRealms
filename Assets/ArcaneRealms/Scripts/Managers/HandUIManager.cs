@@ -1,6 +1,10 @@
-﻿using ArcaneRealms.Scripts.Cards;
+﻿using System;
+using System.Collections.Generic;
+using ArcaneRealms.Scripts.Cards;
 using ArcaneRealms.Scripts.Cards.GameCards;
 using ArcaneRealms.Scripts.UI;
+using ArcaneRealms.Scripts.Utils;
+using ArcaneRealms.Scripts.Utils.Events;
 using Unity.Netcode;
 using UnityEngine;
 
@@ -17,7 +21,7 @@ namespace ArcaneRealms.Scripts.Managers {
 	/// <item> <see cref="OnEnemyHoverEvent"> OnEnemyHovering </see> <description> ....... </description></item>
 	/// </list>
 	/// </summary>
-	public class HandUIManager : MonoBehaviour {
+	public class HandUIManager : Singleton<HandUIManager> {
 
 		[SerializeField] RectTransform playerHandTransform;
 		[SerializeField] RectTransform enemyHandTransform;
@@ -26,7 +30,9 @@ namespace ArcaneRealms.Scripts.Managers {
 		[SerializeField] RectTransform playerCardPrefab_Monster;
 		[SerializeField] RectTransform playerCardPrefab_Spell;
 		[SerializeField] RectTransform emptyCardPrefab_back;
-
+		
+		[Header("Screen Position")]
+		[SerializeField] RectTransform outOfScreenRight;
 
 		public static HandUIManager Instance { get; private set; }
 
@@ -37,8 +43,29 @@ namespace ArcaneRealms.Scripts.Managers {
 		[HideInInspector]
 		public EnemyCardInHandUI enemyCardInHandHighlight = null; // keep reference of which EnemyCard is highlighting now
 
-		private void Awake() {
-			Instance = this;
+
+		private void Start()
+		{
+			GameManager.Instance.OnStartingCardsReceived += OnStartingCardsReceived;
+		}
+
+		private void OnStartingCardsReceived(EntityEventData<List<CardInGame>> entityeventdata)
+		{
+			List<CardInGame> cards = entityeventdata.Entity;
+
+			int i = 0;
+			foreach (var card in cards)
+			{
+				CardInHandHandlerUI cardInHand = SpawnNewCard(card);
+				if (cardInHand == null)
+				{
+					return;
+				}
+
+				cardInHand.rectTransform.position = outOfScreenRight.position;
+				//TODO - install DotWeen and use that to move the objects to the right positions
+				
+			}
 		}
 
 
@@ -86,5 +113,33 @@ namespace ArcaneRealms.Scripts.Managers {
 		public void OnManaChangeEvent(Component component, object parameters) {
 			if(parameters == null) { return; }
 		}
+
+
+		#region Utils
+
+		private CardInHandHandlerUI SpawnNewCard(CardInGame card)
+		{
+			CardInHandHandlerUI cardInHand = null;
+			if (card.IsMonsterCard(out MonsterCard monster))
+			{
+				cardInHand = Instantiate(playerCardPrefab_Monster, transform).GetComponent<CardInHandHandlerUI>();
+			}
+
+			if (card.IsSpellCard(out SpellCard spell))
+			{
+				cardInHand = Instantiate(playerCardPrefab_Monster, transform).GetComponent<CardInHandHandlerUI>();
+			}
+
+			if (cardInHand == null)
+			{
+				Debug.LogError($"Trying to spawn a CardInHand that is not a monster or a spell! NOT SUPPORTED TYPE inside HandUiManager.cs");
+				return null;
+			}
+			cardInHand.BuildCard(card);
+			return cardInHand;
+		}
+		
+
+		#endregion
 	}
 }

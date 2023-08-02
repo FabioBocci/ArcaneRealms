@@ -8,6 +8,11 @@
       <change beforePath="$PROJECT_DIR$/.idea/.idea.ArcaneRealms/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.ArcaneRealms/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/ArcaneRealms/Scripts/Players/PlayerData.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/ArcaneRealms/Scripts/Players/PlayerData.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/ArcaneRealms/Scripts/Players/PlayerDataManager.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/ArcaneRealms/Scripts/Players/PlayerDataManager.cs" afterDir="false" />
+    <list default="true" id="a1cab302-7974-4ba2-b555-96411d3e727c" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/Assets/ArcaneRealms/Scripts/Cards/Collections.meta" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/ArcaneRealms/Scripts/Scenes.meta" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/.idea.ArcaneRealms/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.ArcaneRealms/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ProjectSettings/ShaderGraphSettings.asset" beforeDir="false" afterPath="$PROJECT_DIR$/ProjectSettings/ShaderGraphSettings.asset" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -28,6 +33,7 @@
     </option>
   </component>
   <component name="HighlightingSettingsPerFile">
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/7b384ecdb5034f7f9257ab61980631593600/70/ccba1ce0/JsonUtility.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/ILViewer/56073df97ede4f769c2cc45d546d986d172200/4b/9dc1a208/0200034D.il" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/56073df97ede4f769c2cc45d546d986d172200/09/af003218/UnityEvent.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/56073df97ede4f769c2cc45d546d986d172200/34/a6d060fc/UnityAction`1.cs" root0="SKIP_HIGHLIGHTING" />
@@ -197,8 +203,18 @@
       <option name="presentableId" value="LOCAL-00003" />
       <option name="project" value="LOCAL" />
       <updated>1690996252605</updated>
+      <workItem from="1690398610656" duration="2560000" />
     </task>
     <option name="localTasksCounter" value="4" />
+    <task id="LOCAL-00001" summary="rework GGGGG dio cane non abbiamo perso tuttooo">
+      <option name="closed" value="true" />
+      <created>1690401158966</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1690401158966</updated>
+    </task>
+    <option name="localTasksCounter" value="2" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -224,5 +240,7 @@
     <MESSAGE value="temp" />
     <MESSAGE value="namespace fixed" />
     <option name="LAST_COMMIT_MESSAGE" value="namespace fixed" />
+    <MESSAGE value="rework GGGGG dio cane non abbiamo perso tuttooo" />
+    <option name="LAST_COMMIT_MESSAGE" value="rework GGGGG dio cane non abbiamo perso tuttooo" />
   </component>
 </project>

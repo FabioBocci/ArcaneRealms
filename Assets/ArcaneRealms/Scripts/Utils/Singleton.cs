@@ -7,6 +7,8 @@ namespace ArcaneRealms.Scripts.Utils
     {
         public static T Instance { private set; get; }
 
+        public bool dontDestroy = true;
+
         protected bool EnsureInstance()
         {
             if (Instance != null && Instance != this)
@@ -16,7 +18,10 @@ namespace ArcaneRealms.Scripts.Utils
             }
 
             Instance = this as T;
-            DontDestroyOnLoad(this);
+            if (dontDestroy)
+            {
+                DontDestroyOnLoad(this);
+            }
             return true;
         }
         

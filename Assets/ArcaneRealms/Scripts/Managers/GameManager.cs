@@ -31,7 +31,7 @@ namespace ArcaneRealms.Scripts.Managers {
 
 		#region Events
 		
-		private event EntityEvent<List<CardInGame>> OnStartingCardsReceived;
+		public event EntityEvent<List<CardInGame>> OnStartingCardsReceived;
 		
 		
 		#endregion
