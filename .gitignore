@@ -76,3 +76,7 @@ crashlytics-build.properties
 /Assets/JMO Assets
 /Assets/Fantastic Nature Pack
 /Assets/Fantastic Nature Pack.meta
+
+#Ignore Idea folder
+/.idea/workspace.xml
+/.idea/tasks.xml
