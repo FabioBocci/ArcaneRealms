@@ -42,7 +42,7 @@ namespace ArcaneRealms.Scripts.Managers {
 		private PlayerInGame remotePlayer; //1
 
 		[HideInInspector]
-		public NetworkVariable<Guid> playerTurn = new();
+		public NetworkVariable<Guid> playerTurn;
 
 		private GameState gameState;
 
@@ -52,15 +52,24 @@ namespace ArcaneRealms.Scripts.Managers {
 				return;
 			}
 			Instance = this;
+			
+			UserNetworkVariableSerialization<Guid>.WriteValue = SerializerHelper.WriteValueSafe;
+			UserNetworkVariableSerialization<Guid>.ReadValue = SerializerHelper.ReadValueSafe;
+			UserNetworkVariableSerialization<Guid>.DuplicateValue = (in Guid value, ref Guid duplicatedValue) =>
+			{
+				duplicatedValue = value;
+			};
+
 		}
 
-		private void Start() {
+		public override void OnNetworkSpawn()
+		{
 			if(IsServer) {
+				playerTurn = new();
 				gameState = GameState.PlayersHandShake;
 				StartHandlePlayersHandShake();
 				StartCoroutine(HandleGameStateCoroutine());
 			}
-			
 		}
 
 		private void StartHandlePlayersHandShake()
@@ -93,6 +102,7 @@ namespace ArcaneRealms.Scripts.Managers {
 			player = GetEnemyPlayer(player);
 			cardsInHand = player.currentDeck.GetRange(0, startingHandSize);
 			SendPlayersStartingHandsClientRPC(player, cardsInHand, player.thisClientRpcTarget);
+			gameState = GameState.PlayersWaitChooseHandCards;
 		}
 		
 		IEnumerator HandleGameStateCoroutine() {
@@ -206,6 +216,7 @@ namespace ArcaneRealms.Scripts.Managers {
 
 			if (!handShake.Any(pair => pair.Value == null || pair.Value.Count == 0))
 			{
+				Debug.Log("HandShake ended!");
 				SendPlayersDataAfterHandShakeClientRPC(localPlayer.ID, handShake[localPlayer].ToArray(), remotePlayer.ID, handShake[remotePlayer].ToArray());
 				handShake = null;
 				gameState = GameState.PlayersChooseHandCards;
@@ -314,6 +325,11 @@ namespace ArcaneRealms.Scripts.Managers {
 			{
 				Debug.LogError($" Received a ClientRPC for a different client! Aborting RPC! this client {localPlayer.playerUlong} received {thisPlayer.playerUlong}");
 				return;
+			}
+			Debug.Log("Cards received: ");
+			foreach (var card in startingHand)
+			{
+				Debug.Log(card.cardInfoSO.Name);
 			}
 			
 			OnStartingCardsReceived?.Invoke(new EntityEventData<List<CardInGame>>(startingHand));
@@ -431,7 +447,7 @@ namespace ArcaneRealms.Scripts.Managers {
 	public enum GameState {
 		PlayersHandShake,
 		PlayersChooseHandCards,
-		GameStart,
+		PlayersWaitChooseHandCards,
 		TurnStart,
 		PlayerDraw,
 		PlayerHandleTurn,

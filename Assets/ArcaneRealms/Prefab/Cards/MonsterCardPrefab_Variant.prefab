@@ -31,12 +31,11 @@ RectTransform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 666275915518796389}
-  m_RootOrder: -1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.5, y: 0.5}
-  m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 10, y: 10}
-  m_SizeDelta: {x: 700, y: 980}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 1, y: 1}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 20.000002, y: 20.000002}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &4273339728633420682
 CanvasRenderer:
@@ -80,35 +79,55 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 443541654319380372, guid: 06d507276d184ec4fa3e032dbe058d53,
+        type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 8.059998
+      objectReference: {fileID: 0}
+    - target: {fileID: 443541654319380372, guid: 06d507276d184ec4fa3e032dbe058d53,
+        type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: -10.805176
+      objectReference: {fileID: 0}
+    - target: {fileID: 677769151435418246, guid: 06d507276d184ec4fa3e032dbe058d53,
+        type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 2.699997
+      objectReference: {fileID: 0}
+    - target: {fileID: 677769151435418246, guid: 06d507276d184ec4fa3e032dbe058d53,
+        type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 51.199997
+      objectReference: {fileID: 0}
     - target: {fileID: 852940645942913136, guid: 06d507276d184ec4fa3e032dbe058d53,
         type: 3}
       propertyPath: m_AnchorMax.x
-      value: 0.5
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 852940645942913136, guid: 06d507276d184ec4fa3e032dbe058d53,
         type: 3}
       propertyPath: m_AnchorMax.y
-      value: 0.5
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 852940645942913136, guid: 06d507276d184ec4fa3e032dbe058d53,
         type: 3}
       propertyPath: m_AnchorMin.x
-      value: 0.5
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 852940645942913136, guid: 06d507276d184ec4fa3e032dbe058d53,
         type: 3}
       propertyPath: m_AnchorMin.y
-      value: 0.5
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 852940645942913136, guid: 06d507276d184ec4fa3e032dbe058d53,
         type: 3}
       propertyPath: m_SizeDelta.x
-      value: 720
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 852940645942913136, guid: 06d507276d184ec4fa3e032dbe058d53,
         type: 3}
       propertyPath: m_SizeDelta.y
-      value: 1000
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1241786644705544863, guid: 06d507276d184ec4fa3e032dbe058d53,
         type: 3}
@@ -148,12 +167,12 @@ PrefabInstance:
     - target: {fileID: 1241786644705544863, guid: 06d507276d184ec4fa3e032dbe058d53,
         type: 3}
       propertyPath: m_SizeDelta.x
-      value: 720
+      value: 210
       objectReference: {fileID: 0}
     - target: {fileID: 1241786644705544863, guid: 06d507276d184ec4fa3e032dbe058d53,
         type: 3}
       propertyPath: m_SizeDelta.y
-      value: 1000
+      value: 300
       objectReference: {fileID: 0}
     - target: {fileID: 1241786644705544863, guid: 06d507276d184ec4fa3e032dbe058d53,
         type: 3}
@@ -302,6 +321,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 03430c93b758c514c878df9a47416276, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  TIMER: 0.1
+  SCALE_MULTIPLIER: 0.3
+  MOVE_UP_MULTIPLIER: 70
+  ROTATION_Y_ANGLE: 30
+  ROTATION_SPEED: 20
+  TMP_Monster: {fileID: 0}
   commonMonsterSprite: {fileID: 1391564627, guid: 3d824e60b1b1ca74fb60ab5908edaed9,
     type: 3}
   rareMonsterSprite: {fileID: -1624110906, guid: a98fd582ae8583445a31b8e0ded0298f,
@@ -316,11 +341,3 @@ MonoBehaviour:
   epicSpellSprite: {fileID: -1489469076, guid: 1dbb7ddb08c773e4d9666bede9782359, type: 3}
   legendarySpellSprite: {fileID: 226285426, guid: 37f9c08d70a11b1478355a2404041472,
     type: 3}
-  TIMER: 0.1
-  SCALE_MULTIPLIER: 0.3
-  MOVE_UP_MULTIPLIER: 70
-  ROTATION_Y_ANGLE: 30
-  ROTATION_SPEED: 20
-  fieldTransform: {fileID: 0}
-  TMP_prefab: {fileID: 0}
-  TMP_Monster: {fileID: 0}

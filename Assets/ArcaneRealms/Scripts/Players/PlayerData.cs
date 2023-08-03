@@ -22,8 +22,7 @@ namespace ArcaneRealms.Scripts.Players
         public List<DeckOfCards> decks = new();
 
 
-        [JsonIgnore]
-        public DeckOfCards SelectedDeck => decks.Find(deck => deck.id == deckSelected);
+        [JsonIgnore] public DeckOfCards SelectedDeck => decks.First();
 
         public void SetSelectedDeck(Guid newDeckSelected)
         {

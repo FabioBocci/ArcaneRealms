@@ -33,8 +33,8 @@ namespace ArcaneRealms.Scripts.Managers {
 		
 		[Header("Screen Position")]
 		[SerializeField] RectTransform outOfScreenRight;
-
-		public static HandUIManager Instance { get; private set; }
+		[SerializeField] RectTransform[] centerPositions;
+		
 
 		[HideInInspector]
 		public bool PlayerIsDraggingCard = false;
@@ -54,6 +54,12 @@ namespace ArcaneRealms.Scripts.Managers {
 			List<CardInGame> cards = entityeventdata.Entity;
 
 			int i = 0;
+			for (int j = 0; j < centerPositions.Length; j++)
+			{
+				centerPositions[j].gameObject.SetActive(j < cards.Count);
+			}
+			
+			
 			foreach (var card in cards)
 			{
 				CardInHandHandlerUI cardInHand = SpawnNewCard(card);
@@ -63,8 +69,10 @@ namespace ArcaneRealms.Scripts.Managers {
 				}
 
 				cardInHand.rectTransform.position = outOfScreenRight.position;
-				//TODO - install DotWeen and use that to move the objects to the right positions
-				
+				LeanTween.delayedCall(i * 0.1f, () =>
+				{
+					LeanTween.move(cardInHand.rectTransform, centerPositions[i++].position, 0.25f + 0.05f * i);
+				});
 			}
 		}
 
@@ -127,7 +135,7 @@ namespace ArcaneRealms.Scripts.Managers {
 
 			if (card.IsSpellCard(out SpellCard spell))
 			{
-				cardInHand = Instantiate(playerCardPrefab_Monster, transform).GetComponent<CardInHandHandlerUI>();
+				cardInHand = Instantiate(playerCardPrefab_Spell, transform).GetComponent<CardInHandHandlerUI>();
 			}
 
 			if (cardInHand == null)

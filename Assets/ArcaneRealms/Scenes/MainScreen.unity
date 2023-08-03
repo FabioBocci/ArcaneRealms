@@ -123,6 +123,37 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
+--- !u!1 &500522753
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 500522754}
+  m_Layer: 0
+  m_Name: Custom Cards Screen
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &500522754
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 500522753}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &545061609
 GameObject:
   m_ObjectHideFlags: 0
@@ -962,6 +993,37 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1335116790}
   m_CullTransparentMesh: 1
+--- !u!1 &1339486904
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1339486905}
+  m_Layer: 0
+  m_Name: 'Main Screen '
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1339486905
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1339486904}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1378813732
 GameObject:
   m_ObjectHideFlags: 0
@@ -1472,7 +1534,8 @@ PrefabInstance:
     - target: {fileID: 4031162297676710103, guid: 57cbd3564f3c91948922039a78a912f2,
         type: 3}
       propertyPath: loadJsonInfo
-      value: '{"sawCards":[],"collectionList":[],"decks":[{"name":"TempDeck","cards":[{"card":{"instanceID":30692},"count":2},{"card":{"instanceID":30724},"count":2}]}]}'
+      value: '{"sawCards":[],"collectionList":[],"decks":[{"id":"00dd9d18-c6a5-43b3-a2ef-65a9d711d220","name":"Custom
+        Deck","cards":[{"cardId":"104","count":2},{"cardId":"2","count":4},{"cardId":"I-1","count":3}]}]}'
       objectReference: {fileID: 0}
     - target: {fileID: 4031162297676710103, guid: 57cbd3564f3c91948922039a78a912f2,
         type: 3}
@@ -1482,33 +1545,45 @@ PrefabInstance:
     - target: {fileID: 4031162297676710103, guid: 57cbd3564f3c91948922039a78a912f2,
         type: 3}
       propertyPath: playerData.decks.Array.data[0].name
-      value: TempDeck
+      value: CoolDeck
       objectReference: {fileID: 0}
     - target: {fileID: 4031162297676710103, guid: 57cbd3564f3c91948922039a78a912f2,
         type: 3}
       propertyPath: playerData.decks.Array.data[0].cards.Array.size
-      value: 0
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 4031162297676710103, guid: 57cbd3564f3c91948922039a78a912f2,
         type: 3}
       propertyPath: playerData.decks.Array.data[0].cards.Array.data[0].card
       value: 
-      objectReference: {fileID: 0}
+      objectReference: {fileID: 11400000, guid: 5c02e597a02b0124fae853cda0c300f8,
+        type: 2}
     - target: {fileID: 4031162297676710103, guid: 57cbd3564f3c91948922039a78a912f2,
         type: 3}
       propertyPath: playerData.decks.Array.data[0].cards.Array.data[1].card
+      value: 
+      objectReference: {fileID: 11400000, guid: 8381f44ab246a00479d20f03217cb331,
+        type: 2}
+    - target: {fileID: 4031162297676710103, guid: 57cbd3564f3c91948922039a78a912f2,
+        type: 3}
+      propertyPath: playerData.decks.Array.data[0].cards.Array.data[2].card
       value: 
       objectReference: {fileID: 11400000, guid: 82b42e3bd1b02954ea6e45dd2d07d678,
         type: 2}
     - target: {fileID: 4031162297676710103, guid: 57cbd3564f3c91948922039a78a912f2,
         type: 3}
       propertyPath: playerData.decks.Array.data[0].cards.Array.data[0].count
-      value: 0
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 4031162297676710103, guid: 57cbd3564f3c91948922039a78a912f2,
         type: 3}
       propertyPath: playerData.decks.Array.data[0].cards.Array.data[1].count
-      value: 6
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 4031162297676710103, guid: 57cbd3564f3c91948922039a78a912f2,
+        type: 3}
+      propertyPath: playerData.decks.Array.data[0].cards.Array.data[2].count
+      value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 5820692613890032782, guid: 57cbd3564f3c91948922039a78a912f2,
         type: 3}
@@ -1532,3 +1607,5 @@ SceneRoots:
   - {fileID: 1665263112}
   - {fileID: 1712367302}
   - {fileID: 8174548445415063277}
+  - {fileID: 1339486905}
+  - {fileID: 500522754}

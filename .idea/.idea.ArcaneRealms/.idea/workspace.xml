@@ -33,7 +33,6 @@
     </option>
   </component>
   <component name="HighlightingSettingsPerFile">
-    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/7b384ecdb5034f7f9257ab61980631593600/70/ccba1ce0/JsonUtility.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/ILViewer/56073df97ede4f769c2cc45d546d986d172200/4b/9dc1a208/0200034D.il" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/56073df97ede4f769c2cc45d546d986d172200/09/af003218/UnityEvent.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/56073df97ede4f769c2cc45d546d986d172200/34/a6d060fc/UnityAction`1.cs" root0="SKIP_HIGHLIGHTING" />
@@ -58,6 +57,7 @@
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/d44b17e136d09081da1e8fd0e8c83fde60e11818b9f2442d7ed8cb733fae895e/System.Collections.Generic.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="mock://D:/Projects/Unity/ArcaneRealms/Assets/ArcaneRealms/Editor/ArchLayoutGroupEditor.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="mock://D:/Projects/Unity/ArcaneRealms/Assets/ArcaneRealms/Editor/CardInfoSOEditor.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock://D:/Projects/Unity/ArcaneRealms/Assets/ArcaneRealms/Scenes/MainScreen.unity" root0="SKIP_HIGHLIGHTING" />
     <setting file="mock://D:/Projects/Unity/ArcaneRealms/Assets/ArcaneRealms/Scripts/Cards/CardRarity.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="mock://D:/Projects/Unity/ArcaneRealms/Assets/ArcaneRealms/Scripts/Cards/Effects/CardEffect.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="mock://D:/Projects/Unity/ArcaneRealms/Assets/ArcaneRealms/Scripts/Cards/Effects/EffectParameters.cs" root0="SKIP_HIGHLIGHTING" />
@@ -66,6 +66,7 @@
     <setting file="mock://D:/Projects/Unity/ArcaneRealms/Assets/ArcaneRealms/Scripts/Cards/ScriptableCards/CardInfoSO.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="mock://D:/Projects/Unity/ArcaneRealms/Assets/ArcaneRealms/Scripts/Cards/SpellType.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="mock://D:/Projects/Unity/ArcaneRealms/Assets/ArcaneRealms/Scripts/Managers/FieldManager.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock://D:/Projects/Unity/ArcaneRealms/Assets/ArcaneRealms/Scripts/Players/PlayerData.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="mock://D:/Projects/Unity/ArcaneRealms/Assets/ArcaneRealms/Scripts/Systems/Database.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="mock://D:/Projects/Unity/ArcaneRealms/Assets/ArcaneRealms/Scripts/UI/ArchLayoutGroup.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="mock://D:/Projects/Unity/ArcaneRealms/Assets/ArcaneRealms/Scripts/UI/CardInHandHandlerUI.cs" root0="SKIP_HIGHLIGHTING" />
@@ -181,7 +182,7 @@
       <workItem from="1690797192823" duration="2906000" />
       <workItem from="1690806038510" duration="2492000" />
       <workItem from="1690892996566" duration="44000" />
-      <workItem from="1690994160585" duration="4028000" />
+      <workItem from="1690994160585" duration="6460000" />
     </task>
     <task id="LOCAL-00001" summary="implementation of handshake system">
       <created>1690562888952</created>
@@ -215,6 +216,14 @@
       <updated>1690401158966</updated>
     </task>
     <option name="localTasksCounter" value="2" />
+    <task id="LOCAL-00004" summary="player data better save!">
+      <created>1690998471682</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1690998471682</updated>
+    </task>
+    <option name="localTasksCounter" value="5" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -242,5 +251,7 @@
     <option name="LAST_COMMIT_MESSAGE" value="namespace fixed" />
     <MESSAGE value="rework GGGGG dio cane non abbiamo perso tuttooo" />
     <option name="LAST_COMMIT_MESSAGE" value="rework GGGGG dio cane non abbiamo perso tuttooo" />
+    <MESSAGE value="player data better save!" />
+    <option name="LAST_COMMIT_MESSAGE" value="player data better save!" />
   </component>
 </project>

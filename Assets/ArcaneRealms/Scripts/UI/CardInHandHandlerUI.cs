@@ -4,6 +4,7 @@ using ArcaneRealms.Scripts.Cards.GameCards;
 using ArcaneRealms.Scripts.Cards.ScriptableCards;
 using ArcaneRealms.Scripts.Managers;
 using ArcaneRealms.Scripts.Utils.ArrowPointer;
+using NaughtyAttributes;
 using Unity.Netcode;
 using UnityEngine;
 using UnityEngine.EventSystems;
@@ -11,18 +12,7 @@ using UnityEngine.EventSystems;
 namespace ArcaneRealms.Scripts.UI {
 	public class CardInHandHandlerUI : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IDragHandler, IBeginDragHandler, IEndDragHandler {
 
-		[Header("Monsters border Sprite", order = 0)]
-		[SerializeField] private Sprite commonMonsterSprite;
-		[SerializeField] private Sprite rareMonsterSprite;
-		[SerializeField] private Sprite epicMonsterSprite;
-		[SerializeField] private Sprite legendaryMonsterSprite;
-
-		[Header("Spells border Sprite", order = 1)]
-		[SerializeField] private Sprite commonSpellSprite;
-		[SerializeField] private Sprite rareSpellSprite;
-		[SerializeField] private Sprite epicSpellSprite;
-		[SerializeField] private Sprite legendarySpellSprite;
-
+		
 		[Header("Hovering and Dragging params")]
 		[SerializeField] private float TIMER = 0.5f;
 		[SerializeField] private float SCALE_MULTIPLIER = 0.5f;
@@ -34,6 +24,22 @@ namespace ArcaneRealms.Scripts.UI {
 		[Header("field params")]
 		[SerializeField] private MonsterInfoSO TMP_Monster; //TODO - remove this line
 
+		#region Sprites
+		
+		[Header("Monsters border Sprite", order = 0)]
+		
+		[Foldout("Sprites")] [SerializeField] private Sprite commonMonsterSprite;
+		[Foldout("Sprites")] [SerializeField] private Sprite rareMonsterSprite;
+		[Foldout("Sprites")] [SerializeField] private Sprite epicMonsterSprite;
+		[Foldout("Sprites")] [SerializeField] private Sprite legendaryMonsterSprite;
+
+		[Header("Spells border Sprite", order = 1)]
+		[Foldout("Sprites")] [SerializeField] private Sprite commonSpellSprite;
+		[Foldout("Sprites")] [SerializeField] private Sprite rareSpellSprite;
+		[Foldout("Sprites")] [SerializeField] private Sprite epicSpellSprite;
+		[Foldout("Sprites")] [SerializeField] private Sprite legendarySpellSprite;
+
+		#endregion
 
 		public bool IsDragging { get; private set; } = false;
 		public RectTransform rectTransform { private set; get; }
@@ -55,7 +61,7 @@ namespace ArcaneRealms.Scripts.UI {
 			rectTransform = GetComponent<RectTransform>();
 			canvasGroup = GetComponent<CanvasGroup>();
 			uiOutline = GetComponentInChildren<UIOutline>();
-			BuildCard(new MonsterCard(TMP_Monster, Guid.NewGuid(), Guid.NewGuid())); //TODO - remove this line
+			//BuildCard(new MonsterCard(TMP_Monster, Guid.NewGuid(), Guid.NewGuid())); //TODO - remove this line
 		}
 
 		private void Update() {

@@ -20,7 +20,7 @@ namespace ArcaneRealms.Scripts.Cards.ScriptableCards {
 		public Sprite Artwork;
 
 		[HideInInspector]
-		public List<CardEffect> Effects;
+		public List<CardEffect> Effects = new();
 
 		public string Name;
 		public string Description;
