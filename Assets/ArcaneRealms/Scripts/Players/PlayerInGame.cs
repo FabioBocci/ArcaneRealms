@@ -124,14 +124,7 @@ namespace ArcaneRealms.Scripts.Players {
 			currentDeck.Remove(cardFromDeck);
 		}
 
-		//when the enemy draw a card
-		public void AddCardInHandCount() {
-			handCardsCounter++;
-		}
 
-		public void RemoveCardInHandCount() {
-			handCardsCounter--;
-		}
 
 		public void PlayCard(CardInGame cardInPlay, int index = 0) {
 			if(cardInPlay.IsMonsterCard(out MonsterCard monster)) {
@@ -155,7 +148,7 @@ namespace ArcaneRealms.Scripts.Players {
 				return;
 			}
 
-			Debug.LogError("Tryied to play a card that is not a Monster or a Spell?");
+			Debug.LogError("Tried to play a card that is not a Monster or a Spell?");
 
 		}
 

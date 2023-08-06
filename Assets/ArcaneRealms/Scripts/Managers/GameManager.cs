@@ -38,8 +38,8 @@ namespace ArcaneRealms.Scripts.Managers {
 		
 		public static GameManager Instance { get; private set; }
 		
-		private PlayerInGame localPlayer; //0
-		private PlayerInGame remotePlayer; //1
+		private PlayerInGame localPlayer;
+		private PlayerInGame remotePlayer;
 
 		[HideInInspector]
 		public NetworkVariable<Guid> playerTurn;
@@ -180,6 +180,8 @@ namespace ArcaneRealms.Scripts.Managers {
 		
 		//----------------------Server RPCs-------------------------------
 
+		#region RegionServerRPCs
+
 		private Dictionary<PlayerInGame, List<DeckCardSerializer>> handShake;
 
 		[ServerRpc(RequireOwnership = false)]
@@ -255,7 +257,6 @@ namespace ArcaneRealms.Scripts.Managers {
 
 			string cardID = cardInPlay.cardInfoSO.ID;
 			string cardStatJson = cardInPlay.GetJsonStatHandler();
-			PlayerPlayCardFromHandClientRPC(clientID, cardFromHandIndex, cardID, cardStatJson, cardOnFloorDestinationIndex);
 
 		}
 
@@ -266,10 +267,13 @@ namespace ArcaneRealms.Scripts.Managers {
 			DeclareMonsterAttackClientRPC(parameters.Receive.SenderClientId, attackerIndex, defenderIndex);
 
 		}
-
-
+		
+		#endregion
+		
 		// -------------------Client RPCs--------------------------------
 
+		#region RegionClientRPCs
+		
 		[ClientRpc]
 		private void SendSignalStartHandShakeClientRPC(ulong localPlayerPlayerUlong, Guid localPlayerID, ulong remotePlayerPlayerUlong, Guid remotePlayerID)
 		{
@@ -358,47 +362,7 @@ namespace ArcaneRealms.Scripts.Managers {
 
 			object[] parameters = { clientID, newManaPool, newManaUsable };
 		}
-
-		[ClientRpc]
-		public void PlayerDrawCardClientRPC(ulong clientID, string cardID, string cardJsonInfo) {
-			object[] parameters;
-			if(false) {
-				CardInGame cardInGame = null; // cardSO.BuildCardInGame(cardJsonInfo, clientID);
-				if(!IsServer) {
-					localPlayer.AddCardToHand(cardInGame);
-					localPlayer.RemoveCardFromDeck(cardID);
-				}
-				object[] objs = { clientID, cardInGame };
-				parameters = objs;
-			} else {
-				localPlayer.AddCardInHandCount(); //no reason to keep the other infos
-				object[] objs = { clientID };
-				parameters = objs;
-			}
-
-		}
-
-		[ClientRpc]
-		public void PlayerPlayCardFromHandClientRPC(ulong clientID, int cardFromHandIndex, string cardID, string cardJsonInfo, int cardOnFloorDestinationIndex = 0)
-		{
-			PlayerInGame player = null; // GetPlayerFromID(clientID);
-			if(player == null) {
-				Debug.LogError("Player == null with client ID: " + clientID);
-				return;
-			}
-
-			CardInGame cardInGame = null; // cardSO.BuildCardInGame(cardJsonInfo, clientID);
-			if(!IsServer) {
-				if(clientID == NetworkManager.Singleton.LocalClientId) {
-					player.RemoveCardFromHand(cardFromHandIndex);
-				} else {
-					player.RemoveCardInHandCount();
-				}
-				player.PlayCard(cardInGame, cardOnFloorDestinationIndex);
-			}
-			
-			object[] parameters = { clientID, cardInGame, cardOnFloorDestinationIndex };
-		}
+		
 
 		[ClientRpc]
 		private void DeclareMonsterAttackClientRPC(ulong senderClientId, int attackerIndex, int defenderIndex) {
@@ -417,10 +381,30 @@ namespace ArcaneRealms.Scripts.Managers {
 		}
 
 
+		#endregion
 
+		// ----------------------Client Actions--------------------------------------
 
+		public void PlayMonsterCard(MonsterCard monster, int destPos = 0)
+		{
+			if (!IsMyTurn() || GetPlayerMonsterCount() > 5)
+			{
+				Debug.LogError("Trying to summon a monster when is not possible!");
+				return;
+			}
 
+			//TODO - run server rpc and local handler
 
+		}
+
+		// -------------------------Utils-------------------------------------
+		
+		#region RegionUtils
+
+		public bool IsMyTurn() => localPlayer.ID == playerTurn.Value;
+
+		public bool IsPlayerTurn(PlayerInGame player) => player.ID == playerTurn.Value;
+		
 		public int GetPlayerMonsterCount() {
 			return localPlayer.monsterCardOnField.Count;
 		}
@@ -442,6 +426,8 @@ namespace ArcaneRealms.Scripts.Managers {
 
 			return remotePlayer.GetCardInGameFromGuid(cardGuid);
 		}
+		
+		#endregion
 	}
 
 	public enum GameState {

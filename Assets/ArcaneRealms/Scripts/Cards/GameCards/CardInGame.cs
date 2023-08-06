@@ -14,6 +14,8 @@ namespace ArcaneRealms.Scripts.Cards.GameCards {
 
 		public StatHandler statHandler;
 
+		public CardPosition position = CardPosition.Deck;
+		
 		public Guid cardTeam;
 		
 		public Guid CardGuid { private set; get; }
