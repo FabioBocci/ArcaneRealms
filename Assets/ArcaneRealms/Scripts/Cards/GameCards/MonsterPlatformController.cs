@@ -28,7 +28,9 @@ namespace ArcaneRealms.Scripts.Cards.GameCards {
 		public Guid GetTeam() => MonsterCard.GetTeam();
 
 		public TargetType GetTargetType() => MonsterCard.GetTargetType();
-
+		
+		public Guid GetUnique() => MonsterCard.CardGuid;
+		
 		private void Update() {
 			if(monsterController != null) {
 				/*

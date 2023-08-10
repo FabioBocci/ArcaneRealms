@@ -7,5 +7,7 @@ namespace ArcaneRealms.Scripts.Interfaces {
 		public Guid GetTeam();
 
 		public TargetType GetTargetType();
+
+		public Guid GetUnique();
 	}
 }

@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using ArcaneRealms.Scripts.Cards;
 using ArcaneRealms.Scripts.Cards.GameCards;
 using ArcaneRealms.Scripts.Cards.ScriptableCards;
+using ArcaneRealms.Scripts.Enums;
+using ArcaneRealms.Scripts.Interfaces;
 using ArcaneRealms.Scripts.Managers;
 using ArcaneRealms.Scripts.Players;
 using ArcaneRealms.Scripts.Systems;
@@ -223,6 +225,41 @@ namespace ArcaneRealms.Scripts.Utils
         }
         
         public static void SerializeValue<TReaderWriter>(this BufferSerializer<TReaderWriter> serializer, ref PlayerInGame player) where TReaderWriter: IReaderWriter
+        {
+            if (serializer.IsReader)
+            {
+                FastBufferReader reader = serializer.GetFastBufferReader();
+                reader.ReadValueSafe(out player);
+            }
+
+            if (serializer.IsWriter)
+            {
+                FastBufferWriter writer = serializer.GetFastBufferWriter();
+                writer.WriteValueSafe(player);
+            }
+        }
+
+
+        #endregion
+        
+        #region ITargettableSerialization
+        
+        public static void ReadValueSafe(this FastBufferReader reader, out ITargetable target)
+        {
+            reader.ReadValueSafe(out TargetType targetType);
+            reader.ReadValueSafe(out Guid uniqueId);
+            reader.ReadValueSafe(out Guid team);
+            target = GameManager.Instance.GetTarget(targetType, uniqueId, team);
+        }
+
+        public static void WriteValueSafe(this FastBufferWriter writer, in ITargetable target)
+        {
+            writer.WriteValueSafe(target.GetTargetType());
+            writer.WriteValueSafe(target.GetUnique());
+            writer.WriteValueSafe(target.GetTeam());
+        }
+        
+        public static void SerializeValue<TReaderWriter>(this BufferSerializer<TReaderWriter> serializer, ref ITargetable player) where TReaderWriter: IReaderWriter
         {
             if (serializer.IsReader)
             {

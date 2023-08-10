@@ -87,7 +87,7 @@ namespace ArcaneRealms.Scripts.UI {
 
 		private void ShowCard() {
 			if(NetworkManager.Singleton != null) {
-				GameManager.Instance.PlayerHoverOnCardInHandServerRPC(parentChildIndexForThisCard);
+				//GameManager.Instance.PlayerHoverOnCardInHandServerRPC(parentChildIndexForThisCard);
 			}
 			isShowingThisCard = true;
 			cardCloneShowing = Instantiate(gameObject, transform.position, Quaternion.identity);
@@ -166,7 +166,7 @@ namespace ArcaneRealms.Scripts.UI {
 		public void OnPointerExit(PointerEventData eventData) {
 			hoveringThisCard = false;
 			if(isShowingThisCard && NetworkManager.Singleton != null) {
-				GameManager.Instance.PlayerHoverOnCardInHandServerRPC(-1);
+				//TODO - GameManager.Instance.PlayerHoverOnCardInHandServerRPC(-1);
 			}
 			DestroyCardCloneShowing();
 		}

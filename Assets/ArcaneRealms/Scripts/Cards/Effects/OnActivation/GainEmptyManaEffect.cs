@@ -3,6 +3,7 @@ using ArcaneRealms.Scripts.Cards.GameCards;
 using ArcaneRealms.Scripts.Enums;
 using ArcaneRealms.Scripts.Managers;
 using ArcaneRealms.Scripts.Players;
+using ArcaneRealms.Scripts.Systems;
 using ArcaneRealms.Scripts.Utils;
 using UnityEngine;
 
@@ -32,7 +33,7 @@ namespace ArcaneRealms.Scripts.Cards.Effects.OnActivation {
 			bool empty = parameters.GetValueOrDefault(EMPTY_KEY, true);
 
 
-			if(GameManager.Instance.IsClient) {
+			if(NetworkManagerHelper.Instance.IsClient) {
 				//run animation
 
 

@@ -1,7 +1,9 @@
-﻿using ArcaneRealms.Scripts.Cards;
+﻿using System;
+using ArcaneRealms.Scripts.Cards;
 using System.Collections;
 using System.Collections.Generic;
 using ArcaneRealms.Scripts.Cards.GameCards;
+using ArcaneRealms.Scripts.Players;
 using ArcaneRealms.Scripts.Utils.ArrowPointer;
 using Unity.AI.Navigation;
 using Unity.Netcode;
@@ -52,7 +54,7 @@ namespace ArcaneRealms.Scripts.Managers {
 
 		private List<MonsterPlatformController> EnemyMonsterGameObjectList = new();
 
-		private NavMeshSurface navMesh;
+		private NavMeshSurface navMesh; //TODO - change this to A*
 
 
 		private void Awake() {
@@ -76,7 +78,7 @@ namespace ArcaneRealms.Scripts.Managers {
 					ArrowPointerBuilder.CreateBuilder()
 						.SetActionCallback(monster => {
 							MonsterPlatformController controller = monster as MonsterPlatformController;
-							GameManager.Instance.DeclareMonsterAttackServerRPC(AllyMonsterGameObjectList.IndexOf(AllyMonsterHit), EnemyMonsterGameObjectList.FindIndex((monsterController) => monsterController.MonsterCard == controller.MonsterCard));
+							//GameManager.Instance.DeclareMonsterAttackServerRPC(AllyMonsterGameObjectList.IndexOf(AllyMonsterHit), EnemyMonsterGameObjectList.FindIndex((monsterController) => monsterController.MonsterCard == controller.MonsterCard));
 
 						})
 						.SetStartingPosition(AllyMonsterHit.GetMonsterPosition())
@@ -91,50 +93,20 @@ namespace ArcaneRealms.Scripts.Managers {
 			}
 		}
 
-
-
-		public void TrySummonMonsterOnLocation(MonsterCard monsterCard, Vector3 location, out int index, out Transform monsterTransform) {
-			monsterTransform = null;
-			index = 0;
-			if(AllyMonsterGameObjectList.Count > 4) {
-				Debug.LogError("Tryied to summon a monster with full board WTF??");
-				return;
+		
+		public void SummonMonsterAtPlayer(PlayerInGame playerWhoSummon, MonsterCard card, int position, Action callback)
+		{
+			bool allay = GameManager.Instance.IsLocal(playerWhoSummon);
+			if (allay)
+			{
+				StartCoroutine(SummonAllayMonster(card, position, callback));
 			}
-
-			if(AllyMonsterGameObjectList.Count == 0) {
-				//middle of line
-				MonsterPlatformController go = InstanziateMonsterCard(monsterCard, oneMonsterPosition, false);
-				AllyMonsterGameObjectList.Add(go);
-				monsterTransform = go.transform;
-			} else {
-
-				index = 0;
-
-				for(int i = 0; i < AllyMonsterGameObjectList.Count; i++) {
-					Vector3 monsterWorldPosition = AllyMonsterGameObjectList[i].transform.position;
-					if(monsterWorldPosition.x < location.x) {
-						index++;
-					} else {
-						break;
-					}
-				}
-
-				Transform[] newTransformLocations = GetNextAllyTransformLocations();
-
-				MoveMonsterSkippingIndex(AllyMonsterGameObjectList, index, newTransformLocations);
-
-				MonsterPlatformController go = InstanziateMonsterCard(monsterCard, newTransformLocations[index], false);
-				AllyMonsterGameObjectList.Insert(index, go);
-				monsterTransform = go.transform;
-
+			else
+			{
+				StartCoroutine(SummonEnemyMonster(card, position, callback));
 			}
-			AllyMonsterOriginalLocationList.Clear();
-			foreach(MonsterPlatformController allyMonsterPlatformInfo in AllyMonsterGameObjectList) {
-				AllyMonsterOriginalLocationList.Add(allyMonsterPlatformInfo.transform.position);
-			}
-
 		}
-
+		
 
 		public void MoveMonsterSkippingIndex(List<MonsterPlatformController> monsters, int indexPosition, Transform[] newTransformLocations) {
 			bool found = false;
@@ -150,6 +122,7 @@ namespace ArcaneRealms.Scripts.Managers {
 				LeanTween.move(gameObject, endPosition, 0.3f).setEase(LeanTweenType.easeOutQuad).setOnComplete(() => {
 					monsterPlatformController.UpdateMonsterLocation();
 				});
+				
 			}
 		}
 
@@ -160,9 +133,7 @@ namespace ArcaneRealms.Scripts.Managers {
 				LeanTween.move(gameObject, endPosition, 0.3f).setEase(LeanTweenType.easeOutQuad);
 			}
 		}
-
-
-
+		
 		public void MouseOnLocationHit(Vector3 location) {
 
 			int index = 0;
@@ -176,8 +147,6 @@ namespace ArcaneRealms.Scripts.Managers {
 				}
 			}
 			MoveMonsterSkippingIndex(AllyMonsterGameObjectList, index, GetNextAllyTransformLocations());
-
-
 		}
 
 
@@ -232,7 +201,6 @@ namespace ArcaneRealms.Scripts.Managers {
 			} else {
 				return EnemyMonsterGameObjectList[index];
 			}
-
 		}
 
 
@@ -257,21 +225,29 @@ namespace ArcaneRealms.Scripts.Managers {
 
 			attacker.Attack(defender);
 		}
+		
+		IEnumerator SummonAllayMonster(MonsterCard card, int index, Action callback) {
+			Transform[] allayTransforms = GetNextAllyTransformLocations();
+			MoveMonsterSkippingIndex(AllyMonsterGameObjectList, index, allayTransforms);
 
-		public void OnEnemyPlaycardEvent(Component component, object parameters) {
-			object[] parametersArray = parameters as object[];
-			MonsterCard card = (MonsterCard) parametersArray[1];
-			int index = (int) parametersArray[2];
-
-			StartCoroutine(SummonEnemyMonster(card, index));
+			yield return new WaitForSeconds(0.3f);
+			SummonMonsterOnAllayLocation(card, index);
+			
+			AllyMonsterOriginalLocationList.Clear();
+			foreach(MonsterPlatformController allyMonsterPlatformInfo in AllyMonsterGameObjectList) {
+				AllyMonsterOriginalLocationList.Add(allyMonsterPlatformInfo.transform.position);
+			}
+			
+			callback?.Invoke();
 		}
-
-		IEnumerator SummonEnemyMonster(MonsterCard card, int index) {
+		
+		IEnumerator SummonEnemyMonster(MonsterCard card, int index, Action callback) {
 			Transform[] enemyTransform = GetNextEnemyTransformLocations();
 			MoveMonsterSkippingIndex(EnemyMonsterGameObjectList, index, enemyTransform);
 
 			yield return new WaitForSeconds(0.3f);
 			SummonMonsterOnEnemyLocation(card, index);
+			callback?.Invoke();
 		}
 
 		public void SummonMonsterOnEnemyLocation(MonsterCard monsterCard, int index) {
@@ -286,5 +262,16 @@ namespace ArcaneRealms.Scripts.Managers {
 			navMesh.BuildNavMesh();
 		}
 
+		public void SummonMonsterOnAllayLocation(MonsterCard monsterCard, int index) {
+			Transform[] allayTransforms = GetNextAllyTransformLocations();
+			MonsterPlatformController go = InstanziateMonsterCard(monsterCard, allayTransforms[index], false);
+			if(AllyMonsterGameObjectList.Count >= index) {
+				AllyMonsterGameObjectList.Add(go);
+			} else {
+				AllyMonsterGameObjectList.Insert(index, go);
+			}
+
+			navMesh.BuildNavMesh();
+		}
 	}
 }

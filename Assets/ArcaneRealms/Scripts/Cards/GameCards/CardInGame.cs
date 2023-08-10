@@ -76,22 +76,24 @@ namespace ArcaneRealms.Scripts.Cards.GameCards {
 
 		public TargetType GetTargetType() {
 			if(IsMonsterCard(out var monster)) {
-				return TargetType.Monster_card;
+				return TargetType.MonsterCard;
 			}
 
 			if(IsSpellCard(out var spellCard)) {
 				switch(spellCard.cardInfoSO.SpellType) {
 					case SpellType.Normal:
-						return TargetType.Spell_normal_card;
+						return TargetType.SpellNormalCard;
 					case SpellType.Continue:
-						return TargetType.Spell_continue_card;
+						return TargetType.SpellContinueCard;
 					case SpellType.Delayed:
-						return TargetType.Spell_delayed_card;
+						return TargetType.SpellDelayedCard;
 				}
 			}
 
 			return TargetType.Player;
 		}
+
+		public Guid GetUnique() => CardGuid;
 
 
 		public bool HasTargetingEffects() {
@@ -101,19 +103,6 @@ namespace ArcaneRealms.Scripts.Cards.GameCards {
 				}
 			}
 			return false;
-		}
-
-		public void RunOnActivationEffect() {
-			if(!GameManager.Instance.IsServer) {
-				return;
-			}
-
-			PlayerInGame owner = GameManager.Instance.GetPlayerFromID(GetTeam());
-
-			foreach(CardEffect effect in OnActivationCardEffects) {
-				effect.OnActivation(owner, this);
-			}
-
 		}
 
 

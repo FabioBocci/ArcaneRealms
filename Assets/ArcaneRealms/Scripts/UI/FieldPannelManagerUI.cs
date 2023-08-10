@@ -46,7 +46,7 @@ namespace ArcaneRealms.Scripts.UI {
 				if(cardInGame.IsMonsterCard(out var monster)) {
 					Ray ray = Camera.main.ScreenPointToRay(eventData.position);
 					if(Physics.Raycast(ray, out RaycastHit hit, 100, layerMask)) {
-						FieldManager.Instance.TrySummonMonsterOnLocation(monster, hit.point, out int index, out Transform monsterTransform);
+						//FieldManager.Instance.TrySummonMonsterOnLocation(monster, hit.point, out int index, out Transform monsterTransform);
 						if (cardInGame.HasTargetingEffects()) {
 							ArrowPointerBuilder.CreateBuilder()
 								.SetActionCallback((cardTarget) => {
@@ -60,11 +60,11 @@ namespace ArcaneRealms.Scripts.UI {
 
 								}).SetPredicateFilter((cardToFilter) => {
 									return false;
-								}).SetStartingPosition(monsterTransform)
+								})//.SetStartingPosition(monsterTransform)
 								.BuildArrowPointer();
 						} else {
 							card.DestroyAndResetState();
-							GameManager.Instance.PlayerPlayCardFromHandServerRPC(card.GetCardInGameIndex(), index);
+							//GameManager.Instance.PlayerPlayCardFromHandServerRPC(card.GetCardInGameIndex(), index);
 						}
 					}
 

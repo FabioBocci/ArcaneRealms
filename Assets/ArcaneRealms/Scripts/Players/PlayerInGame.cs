@@ -4,13 +4,14 @@ using ArcaneRealms.Scripts.Enums;
 using System.Collections.Generic;
 using System.Linq;
 using ArcaneRealms.Scripts.Cards.GameCards;
+using ArcaneRealms.Scripts.Interfaces;
 using Unity.Netcode;
 using UnityEngine;
 
 namespace ArcaneRealms.Scripts.Players {
 
 	//this class should only be used and edit by the game manager, other class should only be able to see what is inside but not chainging anything
-	public class PlayerInGame {
+	public class PlayerInGame : ITargetable {
 
 		private const int MAX_MANA = 10;
 		private const int MAX_CARDS_IN_HAND = 7;
@@ -61,23 +62,24 @@ namespace ArcaneRealms.Scripts.Players {
 				}
 			};
 		}
+		
 
-		//these function will call the GameManager to sync the players to this state!
-
-		public void AddMana(int amount) {
-			AddMana(amount, true, false);
-		}
-
-		public void AddMana(int mana, bool permanent, bool onlyEmpty) {
+		public void AddMana(int mana, bool permanent = true, bool onlyEmpty = false) {
 			if(permanent) {
 				currentManaPool = (currentManaPool + mana) % MAX_MANA;
 			}
 			if(!onlyEmpty) {
 				usableMana = (usableMana + mana) % MAX_MANA;
 			}
-
-			//GameManager.Instance.PlayerManaChangedClientRPC(ID, currentManaPool, usableMana);
 		}
+
+		public void PayMana(int mana)
+		{
+			usableMana -= mana;
+			usableMana = Mathf.Max(usableMana, 0);
+		}
+		
+		
 
 		public void DrawCards(int count) {
 
@@ -133,6 +135,7 @@ namespace ArcaneRealms.Scripts.Players {
 				} else {
 					monsterCardOnField.Insert(index, monster);
 				}
+				cardInPlay.position = CardPosition.Field;
 				return;
 			}
 
@@ -140,10 +143,12 @@ namespace ArcaneRealms.Scripts.Players {
 				if(spell.cardInfoSO.SpellType == SpellType.Continue) {
 					continueSpellCards.RemoveAll(card => card.cardInfoSO.ID == spell.cardInfoSO.ID);
 					continueSpellCards.Add(spell);
+					cardInPlay.position = CardPosition.Field;
 				}
 				if(spell.cardInfoSO.SpellType == SpellType.Delayed) {
 					delayedSpellCards.RemoveAll(card => card.cardInfoSO.ID == spell.cardInfoSO.ID);
 					delayedSpellCards.Add(spell);
+					cardInPlay.position = CardPosition.Field;
 				}
 				return;
 			}
@@ -156,5 +161,11 @@ namespace ArcaneRealms.Scripts.Players {
 		{
 			return allCardInGameDicionary[guid];
 		}
+
+		public Guid GetTeam() => ID;
+
+		public TargetType GetTargetType() => TargetType.Player;
+
+		public Guid GetUnique() => ID;
 	}
 }

@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using ArcaneRealms.Scripts.Cards.Effects;
 
 namespace ArcaneRealms.Scripts.Enums {
@@ -105,7 +106,8 @@ namespace ArcaneRealms.Scripts.Enums {
 	}
 
 
+	[Serializable]
 	public enum TargetType {
-		Monster_card, Spell_normal_card, Spell_continue_card, Spell_delayed_card, Player
+		MonsterCard, SpellNormalCard, SpellContinueCard, SpellDelayedCard, Player
 	}
 }

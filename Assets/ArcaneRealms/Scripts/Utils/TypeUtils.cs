@@ -75,28 +75,28 @@ namespace ArcaneRealms.Scripts.Utils {
 				case var value when value == TargetsEnum.ALL_CARDS.name || value == TargetsEnum.RANDOM_CARDS.name:
 					return possibleTarget.GetTargetType() != TargetType.Player;
 				case var value when value == TargetsEnum.ALL_MONSTERS.name || value == TargetsEnum.RANDOM_MONSTERS.name:
-					return possibleTarget.GetTargetType() == TargetType.Monster_card;
+					return possibleTarget.GetTargetType() == TargetType.MonsterCard;
 				case var value when value == TargetsEnum.ALL_SPELLS.name || value == TargetsEnum.RANDOM_SPELLS.name:
-					return possibleTarget.GetTargetType() == TargetType.Spell_continue_card || possibleTarget.GetTargetType() == TargetType.Spell_delayed_card || possibleTarget.GetTargetType() == TargetType.Spell_normal_card;
+					return possibleTarget.GetTargetType() == TargetType.SpellContinueCard || possibleTarget.GetTargetType() == TargetType.SpellDelayedCard || possibleTarget.GetTargetType() == TargetType.SpellNormalCard;
 
 				case var value when value == TargetsEnum.ALLY_CARDS.name:
 					return possibleTarget.GetTargetType() != TargetType.Player && sameTeam;
 				case var value when value == TargetsEnum.ALLY_MONSTERS.name:
-					return possibleTarget.GetTargetType() == TargetType.Monster_card && sameTeam;
+					return possibleTarget.GetTargetType() == TargetType.MonsterCard && sameTeam;
 				case var value when value == TargetsEnum.ALLY_PLAYERS.name:
 					return possibleTarget.GetTargetType() == TargetType.Player && sameTeam;
 				case var value when value == TargetsEnum.ALLY_SPELLS.name:
-					return (possibleTarget.GetTargetType() == TargetType.Spell_continue_card || possibleTarget.GetTargetType() == TargetType.Spell_delayed_card || possibleTarget.GetTargetType() == TargetType.Spell_normal_card) && sameTeam;
+					return (possibleTarget.GetTargetType() == TargetType.SpellContinueCard || possibleTarget.GetTargetType() == TargetType.SpellDelayedCard || possibleTarget.GetTargetType() == TargetType.SpellNormalCard) && sameTeam;
 
 
 				case var value when value == TargetsEnum.ENEMY_CARDS.name:
 					return possibleTarget.GetTargetType() != TargetType.Player && !sameTeam;
 				case var value when value == TargetsEnum.ENEMY_MONSTERS.name:
-					return possibleTarget.GetTargetType() == TargetType.Monster_card && !sameTeam;
+					return possibleTarget.GetTargetType() == TargetType.MonsterCard && !sameTeam;
 				case var value when value == TargetsEnum.ENEMY_PLAYERS.name:
 					return possibleTarget.GetTargetType() == TargetType.Player && !sameTeam;
 				case var value when value == TargetsEnum.ENEMY_SPELLS.name:
-					return (possibleTarget.GetTargetType() == TargetType.Spell_continue_card || possibleTarget.GetTargetType() == TargetType.Spell_delayed_card || possibleTarget.GetTargetType() == TargetType.Spell_normal_card) && !sameTeam;
+					return (possibleTarget.GetTargetType() == TargetType.SpellContinueCard || possibleTarget.GetTargetType() == TargetType.SpellDelayedCard || possibleTarget.GetTargetType() == TargetType.SpellNormalCard) && !sameTeam;
 
 			}
 
