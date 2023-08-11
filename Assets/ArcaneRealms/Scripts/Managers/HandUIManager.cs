@@ -49,7 +49,12 @@ namespace ArcaneRealms.Scripts.Managers {
 			GameManager.Instance.OnStartingCardsReceived += OnStartingCardsReceived;
 		}
 
-		private void OnStartingCardsReceived(EntityEventData<List<CardInGame>> entityeventdata)
+		private void OnDisable()
+		{
+			
+		}
+
+		private void OnStartingCardsReceived(ref EntityEventData<List<CardInGame>> entityeventdata)
 		{
 			List<CardInGame> cards = entityeventdata.Entity;
 
@@ -117,10 +122,6 @@ namespace ArcaneRealms.Scripts.Managers {
 			enemy.ActiveOutline();
 		}
 
-
-		public void OnManaChangeEvent(Component component, object parameters) {
-			if(parameters == null) { return; }
-		}
 
 
 		#region Utils

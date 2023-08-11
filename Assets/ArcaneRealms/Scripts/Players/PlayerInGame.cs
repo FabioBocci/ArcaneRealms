@@ -11,7 +11,7 @@ using UnityEngine;
 namespace ArcaneRealms.Scripts.Players {
 
 	//this class should only be used and edit by the game manager, other class should only be able to see what is inside but not chainging anything
-	public class PlayerInGame : ITargetable {
+	public class PlayerInGame : IDamageable {
 
 		private const int MAX_MANA = 10;
 		private const int MAX_CARDS_IN_HAND = 7;
@@ -30,7 +30,6 @@ namespace ArcaneRealms.Scripts.Players {
 
 		//list of all the card in the player hand
 		public List<CardInGame> handCards = new();
-		public int handCardsCounter = 0; //only used for remote player to know how many card it has
 
 		//all the monster on the field of this player
 		public List<MonsterCard> monsterCardOnField = new();
@@ -41,9 +40,10 @@ namespace ArcaneRealms.Scripts.Players {
 
 
 
-		public int currentManaPool = 0;
-		public int usableMana = 0;
-
+		private int currentManaPool = 0;
+		private int usableMana = 0;
+		private int damageReceived = 0;
+		
 		public Guid ID { private set; get; }
 
 		public ulong playerUlong { private set; get; }
@@ -102,32 +102,7 @@ namespace ArcaneRealms.Scripts.Players {
 			}
 
 		}
-
-
-		//these functions will be called from the GameManager for helping keep the game state
-
-		//when you drow a card
-		public void AddCardToHand(CardInGame card) {
-			handCards.Add(card);
-		}
-
-		public void RemoveCardFromHand(int index) {
-			handCards.RemoveAt(index);
-		}
-
-		internal void RemoveCardFromDeck(string cardID) {
-			if(currentDeck == null || currentDeck.Count == 0) {
-				return;
-			}
-			CardInGame cardFromDeck = currentDeck.Find(card => card.cardInfoSO.ID == cardID);
-			if(cardFromDeck == null) {
-				return;
-			}
-			currentDeck.Remove(cardFromDeck);
-		}
-
-
-
+		
 		public void PlayCard(CardInGame cardInPlay, int index = 0) {
 			if(cardInPlay.IsMonsterCard(out MonsterCard monster)) {
 				if(index >= monsterCardOnField.Count) {
@@ -163,9 +138,40 @@ namespace ArcaneRealms.Scripts.Players {
 		}
 
 		public Guid GetTeam() => ID;
-
+		public Guid GetUnique() => ID;
 		public TargetType GetTargetType() => TargetType.Player;
 
-		public Guid GetUnique() => ID;
+		public int GetHealth() => GetMaxHealth() - damageReceived;
+
+		public int GetMaxHealth() => 40; //TODO - change this!
+
+		public void Damage(int damage)
+		{
+			damageReceived += damage;
+			damageReceived = Mathf.Min(damageReceived, GetMaxHealth());
+		}
+
+		public void Heal(int amount)
+		{
+			damageReceived -= amount;
+			damageReceived = Mathf.Max(damageReceived, 0);
+		}
+
+		public void RemoveCard(CardInGame cardToRemove)
+		{
+			if (cardToRemove.IsMonsterCard(out var monster))
+			{
+				monsterCardOnField.Remove(monster);
+			}
+
+			if (cardToRemove.IsSpellCard(out var spell))
+			{
+				continueSpellCards.Remove(spell);
+				delayedSpellCards.Remove(spell);
+			}
+			
+			graveyardList.Add(cardToRemove);
+			cardToRemove.position = CardPosition.Graveyard;
+		}
 	}
 }

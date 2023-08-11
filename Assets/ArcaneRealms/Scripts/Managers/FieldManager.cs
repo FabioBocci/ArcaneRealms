@@ -3,6 +3,7 @@ using ArcaneRealms.Scripts.Cards;
 using System.Collections;
 using System.Collections.Generic;
 using ArcaneRealms.Scripts.Cards.GameCards;
+using ArcaneRealms.Scripts.Interfaces;
 using ArcaneRealms.Scripts.Players;
 using ArcaneRealms.Scripts.Utils.ArrowPointer;
 using Unity.AI.Navigation;
@@ -94,6 +95,11 @@ namespace ArcaneRealms.Scripts.Managers {
 		}
 
 		
+		public void ResetMonsters()
+		{
+			//TODO - implement
+		}
+		
 		public void SummonMonsterAtPlayer(PlayerInGame playerWhoSummon, MonsterCard card, int position, Action callback)
 		{
 			bool allay = GameManager.Instance.IsLocal(playerWhoSummon);
@@ -107,7 +113,23 @@ namespace ArcaneRealms.Scripts.Managers {
 			}
 		}
 		
+		public void DeclareAttack(MonsterCard card, IDamageable target, Action afterAttackDeclarationCallback)
+		{
+			
+		}
+		
+		public void HandleVisualAttack(IDamageable dataAttacker, IDamageable dataDefender, int dataAttackerAttack, int dataDefenderAttack, Action afterAttackVisual)
+		{
+			//Debug.Log("Client ID: " + clientID + " attacker ID: " + attackerIndex + " defender ID: " + defenderIndex);
 
+			//MonsterPlatformController attacker = GetMonsterPlatformControllerFromIndex(clientID == NetworkManager.Singleton.LocalClientId, attackerIndex);
+			//MonsterPlatformController defender = GetMonsterPlatformControllerFromIndex(clientID != NetworkManager.Singleton.LocalClientId, defenderIndex);
+
+			//attacker.Attack(defender);
+		}
+
+		#region RegionSummonUtils
+		
 		public void MoveMonsterSkippingIndex(List<MonsterPlatformController> monsters, int indexPosition, Transform[] newTransformLocations) {
 			bool found = false;
 			for(int i = 0; i < monsters.Count + 1; i++) {
@@ -172,7 +194,7 @@ namespace ArcaneRealms.Scripts.Managers {
 
 			switch(EnemyMonsterGameObjectList.Count) {
 				case 0:
-					return new Transform[1] { oneMonsterPositionEnemy };
+					return new[] { oneMonsterPositionEnemy };
 				case 1:
 					return twoMonsterPositionsEnemy;
 				case 2:
@@ -195,37 +217,6 @@ namespace ArcaneRealms.Scripts.Managers {
 			return monsterInGame;
 		}
 
-		private MonsterPlatformController GetMonsterPlatformControllerFromIndex(bool allyMonster, int index) {
-			if(allyMonster) {
-				return AllyMonsterGameObjectList[index];
-			} else {
-				return EnemyMonsterGameObjectList[index];
-			}
-		}
-
-
-		public void OnMonsterAttackDeclared(Component sender, object objects) {
-			if(objects == null) {
-				return;
-			}
-
-			object[] paramsArr = objects as object[];
-
-			ulong clientID = (ulong) paramsArr[0];
-			int attackerIndex = (int) paramsArr[1];
-			int defenderIndex = (int) paramsArr[2];
-			bool attackerIsDead = (bool) paramsArr[3];
-			bool defenderIsDead = (bool) paramsArr[4];
-
-			//Debug.Log("Client ID: " + clientID + " attacker ID: " + attackerIndex + " defender ID: " + defenderIndex);
-
-			MonsterPlatformController attacker = GetMonsterPlatformControllerFromIndex(clientID == NetworkManager.Singleton.LocalClientId, attackerIndex);
-			MonsterPlatformController defender = GetMonsterPlatformControllerFromIndex(clientID != NetworkManager.Singleton.LocalClientId, defenderIndex);
-
-
-			attacker.Attack(defender);
-		}
-		
 		IEnumerator SummonAllayMonster(MonsterCard card, int index, Action callback) {
 			Transform[] allayTransforms = GetNextAllyTransformLocations();
 			MoveMonsterSkippingIndex(AllyMonsterGameObjectList, index, allayTransforms);
@@ -273,5 +264,9 @@ namespace ArcaneRealms.Scripts.Managers {
 
 			navMesh.BuildNavMesh();
 		}
+		
+		#endregion
+
+		
 	}
 }

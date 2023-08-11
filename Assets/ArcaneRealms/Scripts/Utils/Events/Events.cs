@@ -17,15 +17,39 @@ namespace ArcaneRealms.Scripts.Utils.Events
         {
             Entity = entity;
         }
+
+        private int usedCount = 0;
+        private Action OnCompleted;
+        public void RegisterWaiter() => usedCount++;
+
+        public void UnregisterWaiter()
+        {
+            usedCount--;
+            if (usedCount <= 0)
+            {
+                OnCompleted?.Invoke();
+            }
+        }
+
+        public void OnComplete(Action callback)
+        {
+            if (usedCount <= 0)
+            {
+                callback.Invoke();
+            }
+            else
+            {
+                OnCompleted += callback;
+            }
+        }
+        
     }
 
-    public delegate void SimpleEmptyEvent();
-
-    public delegate void CancellableEvent(CancellableEventData cancellableEventData);
+    public delegate void CancellableEvent(ref CancellableEventData cancellableEventData);
 
     public delegate void CancellableEvent<in T>(T cancellableEventData) where T : CancellableEventData;
     
-    public delegate void EntityEvent<T>(EntityEventData<T> entityEventData);
+    public delegate void EntityEvent<T>(ref EntityEventData<T> entityEventData);
 
     public delegate void EntityEvent<in T, TD>(T entityEventData) where T : EntityEventData<TD>;
 }

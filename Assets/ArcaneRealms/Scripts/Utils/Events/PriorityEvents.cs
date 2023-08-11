@@ -10,7 +10,7 @@ namespace ArcaneRealms.Scripts.Utils.Events
     {
         public List<PriorityCallback<T>> list = new();
 
-        public virtual void Add(int priority, Action<T> action)
+        public virtual void Add(int priority, UnityAction<T> action)
         {
             list.Add(new PriorityCallback<T>()
             {
@@ -20,7 +20,7 @@ namespace ArcaneRealms.Scripts.Utils.Events
             list.Sort();
         }
 
-        public virtual void Remove(Action<T> action)
+        public virtual void Remove(UnityAction<T> action)
         {
             list.RemoveAll(pc => pc.callBack.Equals(action));
         }
@@ -34,13 +34,13 @@ namespace ArcaneRealms.Scripts.Utils.Events
             
         }
         
-        public static PriorityEvent<T> operator +(PriorityEvent<T> prioEvent, ( int prio, Action<T> callback) prioCallback)
+        public static PriorityEvent<T> operator +(PriorityEvent<T> prioEvent, ( int prio, UnityAction<T> callback) prioCallback)
         {
             prioEvent.Add(prioCallback.prio, prioCallback.callback);
             return prioEvent;
         }
 
-        public static PriorityEvent<T> operator -(PriorityEvent<T> prioEvent,  Action<T> callback)
+        public static PriorityEvent<T> operator -(PriorityEvent<T> prioEvent,  UnityAction<T> callback)
         {
             prioEvent.Remove(callback);
             return prioEvent;
@@ -69,7 +69,7 @@ namespace ArcaneRealms.Scripts.Utils.Events
     {
         public int priority;
 
-        public Action<T> callBack;
+        public UnityAction<T> callBack;
 
         public int CompareTo(PriorityCallback<T> other)
         {

@@ -274,6 +274,32 @@ namespace ArcaneRealms.Scripts.Utils
             }
         }
 
+         
+        public static void ReadValueSafe(this FastBufferReader reader, out IDamageable target)
+        {
+            reader.ReadValueSafe(out ITargetable targetable);
+            target = (IDamageable) targetable;
+        }
+
+        public static void WriteValueSafe(this FastBufferWriter writer, in IDamageable target)
+        {
+            writer.WriteValueSafe((ITargetable) target);
+        }
+        
+        public static void SerializeValue<TReaderWriter>(this BufferSerializer<TReaderWriter> serializer, ref IDamageable damageable) where TReaderWriter: IReaderWriter
+        {
+            if (serializer.IsReader)
+            {
+                FastBufferReader reader = serializer.GetFastBufferReader();
+                reader.ReadValueSafe(out damageable);
+            }
+
+            if (serializer.IsWriter)
+            {
+                FastBufferWriter writer = serializer.GetFastBufferWriter();
+                writer.WriteValueSafe(damageable);
+            }
+        }
 
         #endregion
         

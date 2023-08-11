@@ -24,8 +24,8 @@ namespace ArcaneRealms.Scripts.Cards.GameCards {
 		public int GetModifiedStat(StatType statType) {
 			int modifiedValue = GetBaseStat(statType);
 
-			if(modifiedStats.ContainsKey(statType)) {
-				foreach(var modifier in modifiedStats[statType]) {
+			if(modifiedStats.TryGetValue(statType, out var stat)) {
+				foreach(var modifier in stat) {
 					modifiedValue += modifier.amount;
 				}
 			}
