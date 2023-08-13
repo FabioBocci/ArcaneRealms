@@ -57,6 +57,8 @@ namespace ArcaneRealms.Scripts.Managers {
 
 		private NavMeshSurface navMesh; //TODO - change this to A*
 
+		private Dictionary<Guid, MonsterPlatformController> allPlatformOnField = new();
+		//TODO - add PlayerPlatformController : IPlatformController
 
 		private void Awake() {
 			if(Instance != null) {
@@ -124,7 +126,9 @@ namespace ArcaneRealms.Scripts.Managers {
 
 			//MonsterPlatformController attacker = GetMonsterPlatformControllerFromIndex(clientID == NetworkManager.Singleton.LocalClientId, attackerIndex);
 			//MonsterPlatformController defender = GetMonsterPlatformControllerFromIndex(clientID != NetworkManager.Singleton.LocalClientId, defenderIndex);
-
+			MonsterPlatformController attacker = allPlatformOnField[dataAttacker.GetUnique()];
+			MonsterPlatformController defender = allPlatformOnField[dataAttacker.GetUnique()];
+			attacker.Attack(defender, afterAttackVisual);
 			//attacker.Attack(defender);
 		}
 		

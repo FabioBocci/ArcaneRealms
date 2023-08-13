@@ -51,7 +51,7 @@ namespace ArcaneRealms.Scripts.Managers {
 
 		private void OnDisable()
 		{
-			
+			GameManager.Instance.OnStartingCardsReceived -= OnStartingCardsReceived;
 		}
 
 		private void OnStartingCardsReceived(ref EntityEventData<List<CardInGame>> entityeventdata)
@@ -74,55 +74,18 @@ namespace ArcaneRealms.Scripts.Managers {
 				}
 
 				cardInHand.rectTransform.position = outOfScreenRight.position;
-				LeanTween.delayedCall(i * 0.1f, () =>
+				LeanTween.delayedCall(i * 0.1f + 0.05f, () =>
 				{
-					LeanTween.move(cardInHand.rectTransform, centerPositions[i++].position, 0.25f + 0.05f * i);
+					LeanTween.move(cardInHand.rectTransform, centerPositions[i++].position, 0.25f + 0.05f * i).setOnComplete(
+						() =>
+						{
+							Debug.Log($"Distance: {Vector3.Distance(cardInHand.rectTransform.position, centerPositions[i++].position)}");
+						});
 				});
 			}
 		}
 
-
-		public void OnPlayerDrawCard(Component component, object parameters) {
-			if(parameters == null) {
-				return;
-			}
-
-			object[] objects = (object[]) parameters;
-			ulong clientID = (ulong) objects[0];
-
-			if(NetworkManager.Singleton.LocalClientId == clientID) {
-				CardInGame cardInGame = (CardInGame) objects[1];
-				//TODO - run animation to card draw
-			} else {
-				//TODO - run animation for enemy card draw
-			}
-
-		}
-
-		public void OnEnemyHoverEvent(Component component, object parameters) {
-			if(parameters == null) {
-				return;
-			}
-			object[] objects = (object[]) parameters;
-			int cardFromHandIndex = (int) objects[1];
-
-			if(cardFromHandIndex == -1) {
-				enemyCardInHandHighlight = null;
-				return;
-			}
-
-			Transform transform = enemyHandTransform.GetChild(cardFromHandIndex);
-			if(transform == null) {
-				Debug.LogError("transform == null");
-				return;
-			}
-
-			EnemyCardInHandUI enemy = transform.GetComponent<EnemyCardInHandUI>();
-			enemyCardInHandHighlight = enemy;
-			enemy.ActiveOutline();
-		}
-
-
+		
 
 		#region Utils
 

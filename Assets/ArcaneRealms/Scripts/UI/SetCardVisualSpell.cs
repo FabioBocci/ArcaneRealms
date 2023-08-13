@@ -37,21 +37,7 @@ namespace ArcaneRealms.Scripts.UI {
 			id.text = spellInfo.ID.ToString();
 		}
 
-		// Start is called before the first frame update
-		void Start() {
-			if(spellInfo != null) {
-				artwork.sprite = spellInfo.Artwork;
-				if(artwork.color == Color.black) {
-					artwork.color = Color.white;
-				}
-				border.sprite = CardBorderSpriteManager.Instance.BuildSprite(spellInfo);
-				manaCost.text = spellInfo.ManaCost.ToString();
-				nameCard.text = spellInfo.Name;
 
-				description.text = spellInfo.Description;
-				id.text = spellInfo.ID.ToString();
-			}
-		}
 
 	}
 }
