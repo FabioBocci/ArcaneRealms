@@ -50,7 +50,7 @@ namespace ArcaneRealms.Scripts.Cards.Effects {
 		public virtual bool HasOtherCardAttackEffect() => effectSO.HasOtherCardAttackEffect();
 
 		public virtual bool RequireTargetToRun() => effectSO.RequireTargetToRun(effectParameters);
-
+		
 		public string GetDesc() => effectSO.GetDesc(effectParameters);
 
 

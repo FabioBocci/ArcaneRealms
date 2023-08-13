@@ -28,18 +28,17 @@ namespace ArcaneRealms.Scripts.Utils.Events
             if (usedCount <= 0)
             {
                 OnCompleted?.Invoke();
+                OnCompleted = null;
             }
         }
 
         public void OnComplete(Action callback)
         {
+            OnCompleted += callback;
             if (usedCount <= 0)
             {
-                callback.Invoke();
-            }
-            else
-            {
-                OnCompleted += callback;
+                OnCompleted?.Invoke();
+                OnCompleted = null;
             }
         }
         

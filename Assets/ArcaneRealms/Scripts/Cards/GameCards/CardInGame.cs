@@ -4,9 +4,6 @@ using ArcaneRealms.Scripts.Cards.Effects;
 using ArcaneRealms.Scripts.Cards.ScriptableCards;
 using ArcaneRealms.Scripts.Enums;
 using ArcaneRealms.Scripts.Interfaces;
-using ArcaneRealms.Scripts.Managers;
-using ArcaneRealms.Scripts.Players;
-using Unity.VisualScripting;
 
 namespace ArcaneRealms.Scripts.Cards.GameCards {
 	public abstract class CardInGame : ITargetable, IEquatable<CardInGame> {
@@ -105,7 +102,17 @@ namespace ArcaneRealms.Scripts.Cards.GameCards {
 			return false;
 		}
 
+		public bool HasActivationEffect() => OnActivationCardEffects.Count > 0;
+		
+		public void OnCardActivation(Action cardActivationFinalCallback)
+		{
+			//TODO Spell continue e segreti avranno animazioni diverse
+			
+		}
+		
+		
 
+		#region RegionOperators
 		public static bool operator ==(CardInGame card1, CardInGame card2)
 		{
 			if (ReferenceEquals(card1, card2)) 
@@ -138,6 +145,8 @@ namespace ArcaneRealms.Scripts.Cards.GameCards {
 		{
 			return CardGuid.GetHashCode();
 		}
+		
+		#endregion
 	}
 
 }

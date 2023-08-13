@@ -127,6 +127,24 @@ namespace ArcaneRealms.Scripts.Managers {
 
 			//attacker.Attack(defender);
 		}
+		
+		
+		public void DestroyMonster(PlayerInGame playerD, CardInGame cardToRemove, Action animationEnded)
+		{
+			
+		}
+		
+		public void PlayCardAnimation(PlayerInGame player, CardInGame card, Action action)
+		{
+			
+		}
+		
+		
+		public void CloseCardAnimation(PlayerInGame player, CardInGame card)
+		{
+			
+		}
+		
 
 		#region RegionSummonUtils
 		
@@ -267,6 +285,6 @@ namespace ArcaneRealms.Scripts.Managers {
 		
 		#endregion
 
-		
+
 	}
 }

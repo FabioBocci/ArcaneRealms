@@ -51,6 +51,9 @@ namespace ArcaneRealms.Scripts.Players {
 		
 		public ClientRpcParams thisClientRpcTarget { get; }
 
+		public int CurrentUsableMana => usableMana;
+		public int CurrentTotalMana => currentManaPool;
+		
 		public PlayerInGame(Guid iD, ulong player) {
 			ID = iD;
 			playerUlong = player;
@@ -104,6 +107,11 @@ namespace ArcaneRealms.Scripts.Players {
 		}
 		
 		public void PlayCard(CardInGame cardInPlay, int index = 0) {
+			if (handCards.Contains(cardInPlay))
+			{
+				handCards.Remove(cardInPlay);
+			}
+			
 			if(cardInPlay.IsMonsterCard(out MonsterCard monster)) {
 				if(index >= monsterCardOnField.Count) {
 					monsterCardOnField.Add(monster);
