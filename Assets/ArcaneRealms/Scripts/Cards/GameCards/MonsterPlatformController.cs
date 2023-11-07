@@ -57,7 +57,7 @@ namespace ArcaneRealms.Scripts.Cards.GameCards {
 		}
 
 
-		internal void Attack(MonsterPlatformController defender, Action callback) {
+		internal void Attack(MonsterPlatformController defender) {
 			//TODO - there are too many magic number in this code, we need to change these to event or some sort of inside logic to know how long the attack last ec...
 
 			if(!monsterController.IsRanged() && !defender.monsterController.IsRanged()) {

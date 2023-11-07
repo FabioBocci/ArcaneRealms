@@ -22,7 +22,7 @@ namespace ArcaneRealms.Scripts.Cards.GameCards {
 			Dictionary<StatType, int> map = new() {
 				{ StatType.Health, cardInfoSO.Health },
 				{ StatType.Attack, cardInfoSO.Atk },
-				{ StatType.ManaCost, cardInfoSO.ManaCost }
+				{ StatType.ManaCost, cardInfoSO.manaCost }
 			};
 			statHandler = new StatHandler(map);
 		}

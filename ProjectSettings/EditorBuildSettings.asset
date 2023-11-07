@@ -17,4 +17,9 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/ArcaneRealms/Scenes/Terrein test Scene.unity
     guid: 5909fd33b43d0494299c544af81965d0
-  m_configObjects: {}
+  m_configObjects:
+    com.unity.addressableassets: {fileID: 11400000, guid: 02cabfce9c1d2464a83325f62efcdedf,
+      type: 2}
+    com.unity.localization.settings: {fileID: 11400000, guid: 5d8680a18ed4b304c99a6bc665268022,
+      type: 2}
+  m_UseUCBPForAssetBundles: 0

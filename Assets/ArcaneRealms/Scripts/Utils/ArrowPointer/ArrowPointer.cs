@@ -21,12 +21,14 @@ namespace ArcaneRealms.Scripts.Utils.ArrowPointer {
 
 		private List<GameObject> tailSegments = new List<GameObject>();
 
+		private int counter = 0;
+		
 		void Update() {
 			if(arrowStartingPosition == null || action == null || predicate == null) {
 				return;
 			}
 
-
+			counter = 0;
 
 			// Get the mouse position in world space
 			Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
@@ -35,16 +37,18 @@ namespace ArcaneRealms.Scripts.Utils.ArrowPointer {
 			if(Physics.Raycast(ray, out hit, Mathf.Infinity, terreinLayerMask)) {
 				// Update the position of the arrow pointer to the mouse position on the floor
 				transform.position = hit.point + Vector3.up * 1;
+				counter += 2;
 			}
 
 
 			if(Physics.Raycast(ray, out hit, Mathf.Infinity, monsterLayerMask)) {
 				transform.position = hit.transform.position + Vector3.up * 1;
+				counter += 5;
 			}
 
 			if(Input.GetMouseButtonDown(0)) {
 				//callback with monster hit
-				action.Invoke(hit.transform.GetComponent<ITargetable>());
+				action.Invoke(counter < 5 ? null : hit.transform.GetComponent<ITargetable>());
 				action = null;
 				arrowStartingPosition = null;
 				DestroyTail();
@@ -60,7 +64,7 @@ namespace ArcaneRealms.Scripts.Utils.ArrowPointer {
 			int numSegments = Mathf.CeilToInt(distance / tailSegmentSpacing);
 			for(int i = 0; i < numSegments; i++) {
 				Vector3 segmentPosition = Vector3.Lerp(arrowStartingPosition.position, transform.position, (float) i / numSegments);
-				segmentPosition += Mathf.Sin((float) i / numSegments * Mathf.PI) * Vector3.up * distance / 10f; // Add arc path to segment position
+				segmentPosition += Vector3.up * (Mathf.Sin((float) i / numSegments * Mathf.PI) * distance) / 10f; // Add arc path to segment position
 
 				if(i >= tailSegments.Count) {
 					GameObject segment = Instantiate(tailSegmentPrefab, segmentPosition, Quaternion.identity);

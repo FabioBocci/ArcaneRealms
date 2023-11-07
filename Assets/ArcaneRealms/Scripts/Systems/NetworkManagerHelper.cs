@@ -35,7 +35,7 @@ namespace ArcaneRealms.Scripts.Systems
         
         private void OnClientsLoadCompleted(string sceneName, LoadSceneMode loadSceneMode, List<ulong> clientsCompleted, List<ulong> clientsTimedOut)
         {
-            Debug.Log($" SceneName {sceneName} clients: {clientsCompleted.ToArray()}");
+            Debug.Log($" SceneName {sceneName} clients: [{string.Join(", ", clientsCompleted.ToArray())}]");
         }
 
         private void OnClientConnect(ulong client)
@@ -62,6 +62,8 @@ namespace ArcaneRealms.Scripts.Systems
         public new bool IsHost { get { return base.IsHost; } }
         public new bool IsClient { get { return base.IsClient; } }
         public int ConnectedClients { get {return NetworkManager.ConnectedClients.Count;}}
+
+
 
     }
 }

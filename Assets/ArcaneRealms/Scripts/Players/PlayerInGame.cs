@@ -113,7 +113,7 @@ namespace ArcaneRealms.Scripts.Players {
 			}
 			
 			if(cardInPlay.IsMonsterCard(out MonsterCard monster)) {
-				if(index >= monsterCardOnField.Count) {
+				if(index >= monsterCardOnField.Count - 1) {
 					monsterCardOnField.Add(monster);
 				} else {
 					monsterCardOnField.Insert(index, monster);
@@ -142,7 +142,7 @@ namespace ArcaneRealms.Scripts.Players {
 
 		public CardInGame GetCardInGameFromGuid(Guid guid)
 		{
-			return allCardInGameDicionary[guid];
+			return allCardInGameDicionary.TryGetValue(guid, out var value) ? value : null;
 		}
 
 		public Guid GetTeam() => ID;

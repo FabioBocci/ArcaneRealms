@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using ArcaneRealms.Scripts.Cards.Effects;
 using ArcaneRealms.Scripts.Cards.ScriptableCards;
 using ArcaneRealms.Scripts.Enums;
@@ -25,7 +26,7 @@ namespace ArcaneRealms.Scripts.Cards.GameCards {
 			cardInfoSO = cardInfo;
 			cardTeam = team;
 
-			foreach(CardEffect effect in cardInfoSO.Effects) {
+			foreach(CardEffect effect in cardInfoSO.effects) {
 				if(effect.HasActivationEffect()) {
 					OnActivationCardEffects.Add(effect);
 				}
@@ -93,8 +94,9 @@ namespace ArcaneRealms.Scripts.Cards.GameCards {
 		public Guid GetUnique() => CardGuid;
 
 
-		public bool HasTargetingEffects() {
-			foreach(CardEffect effect in cardInfoSO.Effects) {
+		public bool HasTargetingEffects() 
+		{
+			foreach(CardEffect effect in cardInfoSO.effects) {
 				if(effect.RequireTargetToRun()) {
 					return true;
 				}
@@ -102,12 +104,21 @@ namespace ArcaneRealms.Scripts.Cards.GameCards {
 			return false;
 		}
 
+		public void SetTargetForEffect(ITargetable target)
+		{
+			foreach(CardEffect effect in cardInfoSO.effects) {
+				if(effect.RequireTargetToRun()) {
+					effect.RequireTargetToRun()
+				}
+			}
+		}
+
 		public bool HasActivationEffect() => OnActivationCardEffects.Count > 0;
 		
-		public void OnCardActivation(Action cardActivationFinalCallback)
+		public Task OnCardActivation()
 		{
 			//TODO Spell continue e segreti avranno animazioni diverse
-			
+			return null;
 		}
 		
 		

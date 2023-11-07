@@ -2,6 +2,7 @@
 using ArcaneRealms.Scripts.Cards;
 using System.Collections;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using ArcaneRealms.Scripts.Cards.GameCards;
 using ArcaneRealms.Scripts.Interfaces;
 using ArcaneRealms.Scripts.Players;
@@ -63,7 +64,6 @@ namespace ArcaneRealms.Scripts.Managers {
 		private void Awake() {
 			if(Instance != null) {
 				Destroy(gameObject);
-				Debug.LogError("Double FieldManager Instace WTF!!!");
 				return;
 			}
 			Instance = this;
@@ -77,17 +77,23 @@ namespace ArcaneRealms.Scripts.Managers {
 				Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
 				RaycastHit hit;
 				if(Physics.Raycast(ray, out hit, Mathf.Infinity, monsterLayerMask)) {
-					MonsterPlatformController AllyMonsterHit = AllyMonsterGameObjectList.Find(monster => monster.gameObject == hit.transform.gameObject);
+					MonsterPlatformController allyMonsterHit = AllyMonsterGameObjectList.Find(monster => monster.gameObject == hit.transform.gameObject);
 					ArrowPointerBuilder.CreateBuilder()
 						.SetActionCallback(monster => {
+							if (monster == null)
+							{
+								return;
+							}
 							MonsterPlatformController controller = monster as MonsterPlatformController;
-							//GameManager.Instance.DeclareMonsterAttackServerRPC(AllyMonsterGameObjectList.IndexOf(AllyMonsterHit), EnemyMonsterGameObjectList.FindIndex((monsterController) => monsterController.MonsterCard == controller.MonsterCard));
-
+							PlayerInGame player = GameManager.Instance.GetPlayerTurn();
+							MonsterCard attacker = allyMonsterHit.MonsterCard;
+							MonsterCard defender = controller.MonsterCard;
+							GameManager.Instance.DeclareAttack(player, attacker, defender);
 						})
-						.SetStartingPosition(AllyMonsterHit.GetMonsterPosition())
+						.SetStartingPosition(allyMonsterHit.GetMonsterPosition())
 						.SetPredicateFilter(monster => {
 							MonsterPlatformController controller = monster as MonsterPlatformController;
-							return monster != null && controller.MonsterCard != null && AllyMonsterHit.MonsterCard.CanAttack(controller.MonsterCard);
+							return monster != null && controller.MonsterCard != null && allyMonsterHit.MonsterCard.CanAttack(controller.MonsterCard);
 						})
 						.BuildArrowPointer();
 
@@ -97,56 +103,56 @@ namespace ArcaneRealms.Scripts.Managers {
 		}
 
 		
-		public void ResetMonsters()
+		public Task ResetMonsters()
 		{
 			//TODO - implement
+			return Task.CompletedTask;
 		}
 		
-		public void SummonMonsterAtPlayer(PlayerInGame playerWhoSummon, MonsterCard card, int position, Action callback)
+		public async Task SummonMonsterAtPlayer(PlayerInGame playerWhoSummon, MonsterCard card, int position)
 		{
+			//TODO - convert to Async task instead of Coroutine
 			bool allay = GameManager.Instance.IsLocal(playerWhoSummon);
 			if (allay)
 			{
-				StartCoroutine(SummonAllayMonster(card, position, callback));
+				StartCoroutine(SummonAllayMonster(card, position));
 			}
 			else
 			{
-				StartCoroutine(SummonEnemyMonster(card, position, callback));
+				StartCoroutine(SummonEnemyMonster(card, position));
 			}
 		}
 		
-		public void DeclareAttack(MonsterCard card, IDamageable target, Action afterAttackDeclarationCallback)
+		public Task DeclareAttack(MonsterCard card, IDamageable target)
 		{
-			
+			return Task.CompletedTask;
 		}
 		
-		public void HandleVisualAttack(IDamageable dataAttacker, IDamageable dataDefender, int dataAttackerAttack, int dataDefenderAttack, Action afterAttackVisual)
+		public Task HandleVisualAttack(IDamageable dataAttacker, IDamageable dataDefender, int dataAttackerAttack, int dataDefenderAttack)
 		{
-			//Debug.Log("Client ID: " + clientID + " attacker ID: " + attackerIndex + " defender ID: " + defenderIndex);
-
-			//MonsterPlatformController attacker = GetMonsterPlatformControllerFromIndex(clientID == NetworkManager.Singleton.LocalClientId, attackerIndex);
-			//MonsterPlatformController defender = GetMonsterPlatformControllerFromIndex(clientID != NetworkManager.Singleton.LocalClientId, defenderIndex);
+		
 			MonsterPlatformController attacker = allPlatformOnField[dataAttacker.GetUnique()];
 			MonsterPlatformController defender = allPlatformOnField[dataAttacker.GetUnique()];
-			attacker.Attack(defender, afterAttackVisual);
+			attacker.Attack(defender);
 			//attacker.Attack(defender);
+			return Task.CompletedTask;
 		}
 		
 		
-		public void DestroyMonster(PlayerInGame playerD, CardInGame cardToRemove, Action animationEnded)
+		public Task DestroyMonster(PlayerInGame playerD, CardInGame cardToRemove)
 		{
-			
+			return Task.CompletedTask;
 		}
 		
-		public void PlayCardAnimation(PlayerInGame player, CardInGame card, Action action)
+		public Task PlayCardAnimation(PlayerInGame player, CardInGame card)
 		{
-			
+			return Task.CompletedTask;
 		}
 		
 		
-		public void CloseCardAnimation(PlayerInGame player, CardInGame card)
+		public Task CloseCardAnimation(PlayerInGame player, CardInGame card)
 		{
-			
+			return Task.CompletedTask;
 		}
 		
 
@@ -179,7 +185,11 @@ namespace ArcaneRealms.Scripts.Managers {
 		}
 		
 		public void MouseOnLocationHit(Vector3 location) {
-
+			if (AllyMonsterGameObjectList.Count == 0)
+			{
+				return;
+			}
+			
 			int index = 0;
 
 			for(int i = 0; i < AllyMonsterGameObjectList.Count; i++) {
@@ -198,6 +208,8 @@ namespace ArcaneRealms.Scripts.Managers {
 		private Transform[] GetNextAllyTransformLocations() {
 
 			switch(AllyMonsterGameObjectList.Count) {
+				case 0:
+					return new[] { oneMonsterPosition };
 				case 1:
 					return twoMonsterPositions;
 				case 2:
@@ -229,19 +241,23 @@ namespace ArcaneRealms.Scripts.Managers {
 			return null;
 		}
 
-		private MonsterPlatformController InstanziateMonsterCard(MonsterCard monsterCard, Transform location, bool isEnemy) {
+		private MonsterPlatformController InstantiateMonsterCard(MonsterCard monsterCard, Transform location, bool isEnemy) {
 			GameObject go = Instantiate(monsterCard.cardInfoSO.MonsterPrefab, location.position, Quaternion.identity);
 			go.transform.localScale = monsterCard.cardInfoSO.MonsterPrefabScale;
 			go.transform.rotation = new Quaternion(0, isEnemy ? 180 : 0, 0, 0);
 			go.transform.SetParent(isEnemy ? enemyFatherTransform : allyFatherTransform);
 			MonsterPlatformController monsterInGame = go.GetComponent<MonsterPlatformController>();
 			monsterInGame.MonsterCard = monsterCard;
+			allPlatformOnField[monsterCard.GetUnique()] = monsterInGame;
 			return monsterInGame;
 		}
 
-		IEnumerator SummonAllayMonster(MonsterCard card, int index, Action callback) {
+		IEnumerator SummonAllayMonster(MonsterCard card, int index) {
 			Transform[] allayTransforms = GetNextAllyTransformLocations();
-			MoveMonsterSkippingIndex(AllyMonsterGameObjectList, index, allayTransforms);
+			if (AllyMonsterGameObjectList.Count > 0)
+			{
+				MoveMonsterSkippingIndex(AllyMonsterGameObjectList, index, allayTransforms);
+			}
 
 			yield return new WaitForSeconds(0.3f);
 			SummonMonsterOnAllayLocation(card, index);
@@ -251,44 +267,88 @@ namespace ArcaneRealms.Scripts.Managers {
 				AllyMonsterOriginalLocationList.Add(allyMonsterPlatformInfo.transform.position);
 			}
 			
-			callback?.Invoke();
 		}
 		
-		IEnumerator SummonEnemyMonster(MonsterCard card, int index, Action callback) {
+		IEnumerator SummonEnemyMonster(MonsterCard card, int index) {
 			Transform[] enemyTransform = GetNextEnemyTransformLocations();
-			MoveMonsterSkippingIndex(EnemyMonsterGameObjectList, index, enemyTransform);
+			if (EnemyMonsterGameObjectList.Count > 0)
+			{
+				MoveMonsterSkippingIndex(EnemyMonsterGameObjectList, index, enemyTransform);
+			}
 
 			yield return new WaitForSeconds(0.3f);
 			SummonMonsterOnEnemyLocation(card, index);
-			callback?.Invoke();
 		}
 
 		public void SummonMonsterOnEnemyLocation(MonsterCard monsterCard, int index) {
 			Transform[] enemyTransform = GetNextEnemyTransformLocations();
-			MonsterPlatformController go = InstanziateMonsterCard(monsterCard, enemyTransform[index], true);
+			MonsterPlatformController go = InstantiateMonsterCard(monsterCard, enemyTransform[index], true);
 			if(EnemyMonsterGameObjectList.Count >= index) {
 				EnemyMonsterGameObjectList.Add(go);
 			} else {
 				EnemyMonsterGameObjectList.Insert(index, go);
 			}
 
-			navMesh.BuildNavMesh();
+			//navMesh.BuildNavMesh();
 		}
 
 		public void SummonMonsterOnAllayLocation(MonsterCard monsterCard, int index) {
 			Transform[] allayTransforms = GetNextAllyTransformLocations();
-			MonsterPlatformController go = InstanziateMonsterCard(monsterCard, allayTransforms[index], false);
+			MonsterPlatformController go = InstantiateMonsterCard(monsterCard, allayTransforms[index], false);
 			if(AllyMonsterGameObjectList.Count >= index) {
 				AllyMonsterGameObjectList.Add(go);
 			} else {
 				AllyMonsterGameObjectList.Insert(index, go);
 			}
 
-			navMesh.BuildNavMesh();
+			//navMesh.BuildNavMesh();
+		}
+		
+		public void TrySummonMonsterOnLocation(MonsterCard monsterCard, Vector3 hitInfoPoint, out int index, out Transform monsterTransform)
+		{
+			int i = 0;
+			if (AllyMonsterGameObjectList.Count == 0)
+			{
+				index = 0;
+				i = 0;
+			}
+			else
+			{
+				for (int findIndex = 0; findIndex < AllyMonsterGameObjectList.Count; findIndex++)
+				{
+					if (hitInfoPoint.x > AllyMonsterGameObjectList[findIndex].transform.position.x)
+					{
+						i = findIndex;
+					}
+					else
+					{
+						break;
+					}
+				}
+			}
+
+			index = i;
+			
+			Transform[] allayTransforms = GetNextAllyTransformLocations();
+			MonsterPlatformController go = InstantiateMonsterCard(monsterCard, allayTransforms[i], false);
+			monsterTransform = go.GetMonsterPosition();
 		}
 		
 		#endregion
 
 
+		public void TryGetNewMonsterIndex(Vector3 hitInfoPoint, out int i)
+		{
+			int findIndex;
+			for (findIndex = 0; findIndex < AllyMonsterGameObjectList.Count; findIndex++)
+			{
+				if (hitInfoPoint.x < AllyMonsterGameObjectList[findIndex].transform.position.x)
+				{
+					break;
+				}
+			}
+
+			i = findIndex;
+		}
 	}
 }

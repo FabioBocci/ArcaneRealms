@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using ArcaneRealms.Scripts.Cards;
 using ArcaneRealms.Scripts.Cards.GameCards;
 using ArcaneRealms.Scripts.UI;
@@ -7,6 +8,7 @@ using ArcaneRealms.Scripts.Utils;
 using ArcaneRealms.Scripts.Utils.Events;
 using Unity.Netcode;
 using UnityEngine;
+using UnityEngine.UI;
 
 namespace ArcaneRealms.Scripts.Managers {
 
@@ -23,6 +25,8 @@ namespace ArcaneRealms.Scripts.Managers {
 	/// </summary>
 	public class HandUIManager : Singleton<HandUIManager> {
 
+		[Header("Parents")]
+		[SerializeField] RectTransform chooseCardTransform;
 		[SerializeField] RectTransform playerHandTransform;
 		[SerializeField] RectTransform enemyHandTransform;
 
@@ -34,8 +38,10 @@ namespace ArcaneRealms.Scripts.Managers {
 		[Header("Screen Position")]
 		[SerializeField] RectTransform outOfScreenRight;
 		[SerializeField] RectTransform[] centerPositions;
-		
 
+		[Header("Buttons")]
+		[SerializeField] Button confirmStartingHand;
+		
 		[HideInInspector]
 		public bool PlayerIsDraggingCard = false;
 		[HideInInspector]
@@ -44,19 +50,22 @@ namespace ArcaneRealms.Scripts.Managers {
 		public EnemyCardInHandUI enemyCardInHandHighlight = null; // keep reference of which EnemyCard is highlighting now
 
 
+		private List<CardInHandHandlerUI> choosedCards = new();
+		private List<CardInHandHandlerUI> removedChoosedCards = new();
+
+
 		private void Start()
 		{
-			GameManager.Instance.OnStartingCardsReceived += OnStartingCardsReceived;
+			confirmStartingHand.onClick.AddListener(() =>
+			{
+				GameManager.Instance.PlayerChooseCards(choosedCards.Select(c => c.GetCardInGame()).ToList(),
+					removedChoosedCards.Select(c => c.GetCardInGame()).ToList());
+				confirmStartingHand.gameObject.SetActive(false);
+			});
 		}
 
-		private void OnDisable()
+		public void OnStartingCardsReceived(List<CardInGame> cards)
 		{
-			GameManager.Instance.OnStartingCardsReceived -= OnStartingCardsReceived;
-		}
-
-		private void OnStartingCardsReceived(ref EntityEventData<List<CardInGame>> entityeventdata)
-		{
-			List<CardInGame> cards = entityeventdata.Entity;
 
 			int i = 0;
 			for (int j = 0; j < centerPositions.Length; j++)
@@ -72,21 +81,82 @@ namespace ArcaneRealms.Scripts.Managers {
 				{
 					return;
 				}
-
+				cardInHand.transform.SetParent(chooseCardTransform);
+				cardInHand.gameObject.AddComponent<CardChoosingHandlerUi>();
 				cardInHand.rectTransform.position = outOfScreenRight.position;
+				choosedCards.Add(cardInHand);
 				LeanTween.delayedCall(i * 0.1f + 0.05f, () =>
 				{
-					LeanTween.move(cardInHand.rectTransform, centerPositions[i++].position, 0.25f + 0.05f * i).setOnComplete(
+					int d = i++;
+					LeanTween.move(cardInHand.gameObject, centerPositions[d].position, 0.25f + 0.05f * d).setOnComplete(
 						() =>
 						{
-							Debug.Log($"Distance: {Vector3.Distance(cardInHand.rectTransform.position, centerPositions[i++].position)}");
+							//Debug.LogWarning($"Distance: {Vector3.Distance(cardInHand.rectTransform.position, centerPositions[d].position)}");
 						});
 				});
 			}
 		}
 
-		
+		public void FinalStartingCardsReceived(List<CardInGame> oldCards, List<CardInGame> newCards)
+		{
+			int i = 0;
+			List<CardInHandHandlerUI> cards = new();
+			foreach (var card in newCards)
+			{
+				CardInHandHandlerUI cardInHand = removedChoosedCards[0];
+				removedChoosedCards.Remove(cardInHand);
+				CardChoosingHandlerUi removed = cardInHand.gameObject.GetComponent<CardChoosingHandlerUi>();
+				Destroy(removed);
+				cardInHand.BuildCard(card);
+				cards.Add(cardInHand);
+			}
 
+			foreach (CardInHandHandlerUI card in choosedCards)
+			{
+				CardChoosingHandlerUi removed = card.gameObject.GetComponent<CardChoosingHandlerUi>();
+				Destroy(removed);
+				LeanTween.move(card.gameObject, centerPositions[i++].position, 0.25f);
+			}
+
+			foreach (var outOfScreen in cards)
+			{
+				LeanTween.move(outOfScreen.gameObject, centerPositions[i++].position, 0.4f);
+			}
+
+			choosedCards.AddRange(cards);
+			
+			LeanTween.delayedCall(0.4f, () =>
+			{
+				foreach (var card in choosedCards)
+				{
+					card.transform.SetParent(playerHandTransform);
+				}
+			});
+			
+			LeanTween.delayedCall(0.45f, () =>
+			{
+				Debug.LogError("ALL DONE?");
+			});
+
+		}
+
+		public void CardChoosingTriggerClick(CardInHandHandlerUI card)
+		{
+			if (choosedCards.Contains(card))
+			{
+				choosedCards.Remove(card);
+				removedChoosedCards.Add(card);
+				return;
+			}
+
+			if (removedChoosedCards.Contains(card))
+			{
+				choosedCards.Add(card);
+				removedChoosedCards.Remove(card);
+			}
+		}
+		
+		
 		#region Utils
 
 		private CardInHandHandlerUI SpawnNewCard(CardInGame card)

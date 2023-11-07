@@ -43,7 +43,7 @@ namespace ArcaneRealms.Scripts.UI {
 
 		public bool IsDragging { get; private set; } = false;
 		public RectTransform rectTransform { private set; get; }
-
+		public UIOutline Outline => uiOutline;
 
 		private CardInGame cardInGame;
 		private ICardBuilderUI cardBuilderUI;
@@ -55,7 +55,9 @@ namespace ArcaneRealms.Scripts.UI {
 		private UIOutline uiOutline = null;
 		private Transform originalParent = null;
 		private int parentChildIndexForThisCard = -1;
-
+		private bool isChoosingTargets = false;
+		
+		
 		private void Awake() {
 			cardBuilderUI = GetComponent<ICardBuilderUI>();
 			rectTransform = GetComponent<RectTransform>();
@@ -69,14 +71,8 @@ namespace ArcaneRealms.Scripts.UI {
 				interlTimer += Time.deltaTime;
 				if(interlTimer >= TIMER) {
 					interlTimer = 0;
-					ShowCard();
+					//ShowCard();
 				}
-			}
-
-			if(HandUIManager.Instance.PlayerIsDraggingCard && !IsDragging) {
-				uiOutline.enabled = false;
-			} else {
-				uiOutline.enabled = true;
 			}
 		}
 
@@ -111,7 +107,7 @@ namespace ArcaneRealms.Scripts.UI {
 		}
 
 		private Sprite BuildMonsterSprite(CardInfoSO infoSO) {
-			switch(infoSO.Rarity) {
+			switch(infoSO.rarity) {
 				default:
 				case CardRarity.Common:
 					return commonMonsterSprite;
@@ -125,7 +121,7 @@ namespace ArcaneRealms.Scripts.UI {
 		}
 
 		private Sprite BuildSpellSprite(CardInfoSO infoSO) {
-			switch(infoSO.Rarity) {
+			switch(infoSO.rarity) {
 				default:
 				case CardRarity.Common:
 					return commonSpellSprite;
@@ -170,17 +166,29 @@ namespace ArcaneRealms.Scripts.UI {
 			}
 			DestroyCardCloneShowing();
 		}
-		public void OnBeginDrag(PointerEventData eventData) {
-
-			if(cardInGame != null && !cardInGame.IsMonsterCard(out var monster) && cardInGame.HasTargetingEffects()) {
+		public void OnBeginDrag(PointerEventData eventData) 
+		{
+			if (cardInGame == null)
+			{
+				return;
+			}
+			
+			if(!cardInGame.IsMonsterCard(out var monster) && cardInGame.HasTargetingEffects())
+			{
+				isChoosingTargets = true;
+				canvasGroup.alpha = 0;
 				//this only works for Spells not for monster since for monster we need before to check the final position
 				ArrowPointerBuilder.CreateBuilder()
 					.SetActionCallback((cardTarget) => {
 						//we didn't choose a right target, reset the card in hand
-						if(cardTarget == null) {
+						if(cardTarget == null)
+						{
+							isChoosingTargets = false;
 							OnEndDrag(null);
 							return;
 						}
+						
+						cardInGame.
 
 
 					}).SetPredicateFilter((cardToFilter) => {
@@ -189,15 +197,18 @@ namespace ArcaneRealms.Scripts.UI {
 					.BuildArrowPointer();
 			}
 
-			if(cardInGame.IsMonsterCard(out var monstreCard) && GameManager.Instance.GetPlayerMonsterCount() >= 5) {
+			if(cardInGame.IsMonsterCard(out var monsterCard) && GameManager.Instance.GetPlayerMonsterCount() >= 5) 
+			{
 				return;
 			}
 
 			IsDragging = true;
 			HandUIManager.Instance.PlayerIsDraggingCard = true;
 
-			originalParent = transform.parent;
-			transform.SetParent(transform.parent.parent);
+			var transform1 = transform;
+			var parent = transform1.parent;
+			originalParent = parent;
+			transform.SetParent(parent.parent);
 			rectTransform.rotation = Quaternion.identity;
 
 			DestroyCardCloneShowing();
@@ -208,7 +219,7 @@ namespace ArcaneRealms.Scripts.UI {
 		}
 
 		public void OnDrag(PointerEventData eventData) {
-			if(cardInGame.IsMonsterCard(out var monstreCard) && GameManager.Instance.GetPlayerMonsterCount() >= 5) {
+			if(cardInGame.IsMonsterCard(out var monsterCard) && GameManager.Instance.GetPlayerMonsterCount() >= 5) {
 				return;
 			}
 
@@ -239,25 +250,34 @@ namespace ArcaneRealms.Scripts.UI {
 
 		}
 
-		public void OnEndDrag(PointerEventData eventData) {
+		public void OnEndDrag(PointerEventData eventData) 
+		{
+			if (isChoosingTargets)
+			{
+				return;
+			}
 			Cursor.visible = true;
 			IsDragging = false;
 			hoveringThisCard = false;
 			transform.SetParent(originalParent);
 			transform.SetSiblingIndex(parentChildIndexForThisCard);
 
+			canvasGroup.alpha = 1;
 			canvasGroup.blocksRaycasts = true;
 			FieldPannelManagerUI.Instance.DeactivateGameObject();
 			HandUIManager.Instance.PlayerIsDraggingCard = false;
 		}
 
-		internal CardInGame GetCardInGame() {
+		internal CardInGame GetCardInGame() 
+		{
 			return cardInGame;
 		}
 
-		public void DestroyAndResetState() {
+		public void DestroyAndResetState() 
+		{
 			Destroy(gameObject);
 			HandUIManager.Instance.PlayerIsDraggingCard = false;
+			FieldPannelManagerUI.Instance.DeactivateGameObject();
 			Cursor.visible = true;
 		}
 

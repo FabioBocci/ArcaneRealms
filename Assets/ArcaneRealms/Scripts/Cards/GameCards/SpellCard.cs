@@ -12,7 +12,7 @@ namespace ArcaneRealms.Scripts.Cards.GameCards {
 
 		public override void Start() {
 			Dictionary<StatType, int> map = new() {
-				{ StatType.ManaCost, cardInfoSO.ManaCost }
+				{ StatType.ManaCost, cardInfoSO.manaCost }
 			};
 			statHandler = new StatHandler(map);
 		}

@@ -27,12 +27,12 @@ namespace ArcaneRealms.Scripts.UI
 			}
 			monsterInfo = monsterInfoSO;
 
-			artwork.sprite = monsterInfo.Artwork;
+			artwork.sprite = monsterInfo.artwork;
 			if(artwork.color == Color.black) {
 				artwork.color = Color.white;
 			}
 			border.sprite = borderSprite;
-			manaCost.text = monsterInfo.ManaCost.ToString();
+			manaCost.text = monsterInfo.manaCost.ToString();
 			nameCard.text = monsterInfo.Name;
 			race.text = monsterInfo.Race.GetName();
 			description.text = monsterInfo.Description;
@@ -44,14 +44,14 @@ namespace ArcaneRealms.Scripts.UI
 		// Start is called before the first frame update
 		void Start() {
 			if(monsterInfo != null) {
-				artwork.sprite = monsterInfo.Artwork;
+				artwork.sprite = monsterInfo.artwork;
 				if(artwork.color == Color.black) {
 					artwork.color = Color.white;
 				}
 				if(CardBorderSpriteManager.Instance != null) {
 					border.sprite = CardBorderSpriteManager.Instance.BuildSprite(monsterInfo);
 				}
-				manaCost.text = monsterInfo.ManaCost.ToString();
+				manaCost.text = monsterInfo.manaCost.ToString();
 				nameCard.text = monsterInfo.Name;
 				race.text = monsterInfo.Race.GetName();
 				description.text = monsterInfo.Description;

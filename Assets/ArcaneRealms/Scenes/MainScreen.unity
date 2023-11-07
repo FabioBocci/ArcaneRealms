@@ -67,9 +67,6 @@ LightmapSettings:
     m_LightmapParameters: {fileID: 0}
     m_LightmapsBakeMode: 1
     m_TextureCompression: 1
-    m_FinalGather: 0
-    m_FinalGatherFiltering: 1
-    m_FinalGatherRayCount: 256
     m_ReflectionCompression: 2
     m_MixedBakeMode: 2
     m_BakeBackend: 1
@@ -1573,17 +1570,17 @@ PrefabInstance:
     - target: {fileID: 4031162297676710103, guid: 57cbd3564f3c91948922039a78a912f2,
         type: 3}
       propertyPath: playerData.decks.Array.data[0].cards.Array.data[0].count
-      value: 5
-      objectReference: {fileID: 0}
-    - target: {fileID: 4031162297676710103, guid: 57cbd3564f3c91948922039a78a912f2,
-        type: 3}
-      propertyPath: playerData.decks.Array.data[0].cards.Array.data[1].count
       value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 4031162297676710103, guid: 57cbd3564f3c91948922039a78a912f2,
         type: 3}
+      propertyPath: playerData.decks.Array.data[0].cards.Array.data[1].count
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 4031162297676710103, guid: 57cbd3564f3c91948922039a78a912f2,
+        type: 3}
       propertyPath: playerData.decks.Array.data[0].cards.Array.data[2].count
-      value: 4
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 5820692613890032782, guid: 57cbd3564f3c91948922039a78a912f2,
         type: 3}

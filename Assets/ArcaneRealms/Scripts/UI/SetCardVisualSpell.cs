@@ -25,12 +25,12 @@ namespace ArcaneRealms.Scripts.UI {
 			}
 			spellInfo = spellInfoSO;
 
-			artwork.sprite = spellInfoSO.Artwork;
+			artwork.sprite = spellInfoSO.artwork;
 			if(artwork.color == Color.black) {
 				artwork.color = Color.white;
 			}
 			border.sprite = borderSprite;
-			manaCost.text = spellInfo.ManaCost.ToString();
+			manaCost.text = spellInfo.manaCost.ToString();
 			nameCard.text = spellInfo.Name;
 
 			description.text = spellInfo.Description;

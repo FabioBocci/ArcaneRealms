@@ -13,16 +13,16 @@ MonoBehaviour:
   m_Name: Fireball
   m_EditorClassIdentifier: 
   database: {fileID: 11400000, guid: b553070d189a5704c986a61319ddc7f3, type: 2}
-  ID: I-1
-  Rarity: 1
-  ManaCost: 1
-  Artwork: {fileID: 21300000, guid: 85568d58a3302ef40aab776fe1f6ffb5, type: 3}
-  Effects:
+  ID: 3
+  rarity: 0
+  manaCost: 4
+  artwork: {fileID: 21300000, guid: 85568d58a3302ef40aab776fe1f6ffb5, type: 3}
+  effects:
   - effectSO: {fileID: 11400000, guid: 31b1a31956627624c90c7a67687e3c25, type: 2}
     effectParameters:
       parametersArray:
       - Key: PP-Damage-Effect
-        Value: 1
+        Value: 4
         Type: System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
       - Key: target
         Value: Enemy Monsters
@@ -31,6 +31,6 @@ MonoBehaviour:
       - Key: Targent-Count
         Value: 1
         Type: System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
-  Name: Fireball
-  Description: 
+  cardName: Fireball
+  description: 
   SpellType: 0

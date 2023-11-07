@@ -1,3 +1,4 @@
+using System.Threading.Tasks;
 using ArcaneRealms.Scripts.Interfaces;
 using ArcaneRealms.Scripts.Players;
 using ArcaneRealms.Scripts.Utils.Events;
@@ -22,5 +23,5 @@ namespace ArcaneRealms.Scripts.Events
         }
     }
     
-    public delegate void AttackEntityEvent(ref AttackEntityEventData entityEventData);
+    public delegate Task AttackEntityEvent(ref AttackEntityEventData entityEventData);
 }

@@ -5,6 +5,7 @@ using NaughtyAttributes;
 using Newtonsoft.Json;
 using Unity.Services.Authentication;
 using Unity.Services.CloudSave;
+using Unity.Services.CloudSave.Models;
 using Unity.Services.Core;
 using UnityEngine;
 
@@ -36,11 +37,11 @@ namespace ArcaneRealms.Scripts.Players
                 }
                 
                 Debug.Log($"PlayerID: {AuthenticationService.Instance.PlayerId}");
-                Dictionary<string, string> savedData = await CloudSaveService.Instance.Data.LoadAsync(new HashSet<string>() {"PlayerData" });
-                Debug.Log($"PlayerData: {savedData.GetValueOrDefault("PlayerData", "EMPTY")}");
-                if (!string.IsNullOrEmpty(savedData["PlayerData"]))
+                Dictionary<string, Item> savedData = await CloudSaveService.Instance.Data.Player.LoadAsync(new HashSet<string>() {"PlayerData" });
+                Debug.Log($"PlayerData: {savedData["PlayerData"].Value.GetAsString()}");
+                if (savedData["PlayerData"]?.Value != null)
                 {
-                    LoadJsonData(savedData["PlayerData"]);
+                    LoadJsonData(savedData["PlayerData"].Value.GetAsString());
                 }
             }
             catch (Exception e)
@@ -85,7 +86,7 @@ namespace ArcaneRealms.Scripts.Players
                 
                 Dictionary<string, object> saveData = new Dictionary<string, object>();
                 saveData["PlayerData"] = jsonData;
-                await CloudSaveService.Instance.Data.ForceSaveAsync(saveData);
+                await CloudSaveService.Instance.Data.Player.SaveAsync(saveData);
                 Debug.Log($"[PlayerData] Saved");
             }
             catch (Exception e)

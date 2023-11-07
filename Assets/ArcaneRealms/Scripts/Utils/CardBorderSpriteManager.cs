@@ -41,7 +41,7 @@ namespace ArcaneRealms.Scripts.Utils {
 		}
 
 		private Sprite BuildMonsterSprite(CardInfoSO infoSO) {
-			switch(infoSO.Rarity) {
+			switch(infoSO.rarity) {
 				default:
 				case CardRarity.Common:
 					return commonMonsterSprite;
@@ -55,7 +55,7 @@ namespace ArcaneRealms.Scripts.Utils {
 		}
 
 		private Sprite BuildSpellSprite(CardInfoSO infoSO) {
-			switch(infoSO.Rarity) {
+			switch(infoSO.rarity) {
 				default:
 				case CardRarity.Common:
 					return commonSpellSprite;

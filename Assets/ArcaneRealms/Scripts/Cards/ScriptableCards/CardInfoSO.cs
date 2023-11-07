@@ -1,29 +1,38 @@
 using System;
 using System.Collections.Generic;
+using System.Text;
 using ArcaneRealms.Scripts.Cards.Effects;
 using ArcaneRealms.Scripts.Cards.GameCards;
 using ArcaneRealms.Scripts.Enums;
 using ArcaneRealms.Scripts.Utils.ScriptableDatabase;
 using UnityEngine;
+using UnityEngine.Localization;
+using UnityEngine.Localization.Settings;
+using UnityEngine.Localization.Tables;
+using UnityEngine.Serialization;
 
 namespace ArcaneRealms.Scripts.Cards.ScriptableCards {
 	public class CardInfoSO : ScriptableObject {
 		private static CardInfoDataBase DatabaseStatic;
+		//private static StringBuilder TableKeyBuilder = new StringBuilder("C{0}-D");
 
 		[SerializeField]
 		[HideInInspector]
 		private CardInfoDataBase database;
 
 		public string ID = "I-1";
-		public CardRarity Rarity;
-		public int ManaCost;
-		public Sprite Artwork;
+		public CardRarity rarity;
+		public int manaCost;
+		public Sprite artwork;
 
 		[HideInInspector]
-		public List<CardEffect> Effects = new();
+		public List<CardEffect> effects = new();
 
-		public string Name;
-		public string Description;
+		[SerializeField] private string cardName;
+		[SerializeField] private string description;
+		
+		public string Name => cardName;
+		public string Description => description;
 
 
 		private void OnValidate() {
@@ -40,6 +49,27 @@ namespace ArcaneRealms.Scripts.Cards.ScriptableCards {
 					DatabaseStatic.Cards.Add(this);
 				}
 			}
+
+			/*StringTable table = LocalizationSettings.Instance.GetStringDatabase().GetTable("CardTable");
+			if (table == null)
+			{
+				Debug.Log("Could not find table");
+				return;
+			}
+
+			if (ID.StartsWith("I"))
+			{
+				return;
+			}
+
+			string key = TableKeyBuilder.Replace("{0}", ID).ToString();
+			
+			StringTableEntry entry = table.GetEntry(key);
+			if (entry == null)
+			{
+				table.AddEntry(key, "TEMP DESC");
+			}*/
+
 		}
 
 

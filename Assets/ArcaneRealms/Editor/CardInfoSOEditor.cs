@@ -17,7 +17,7 @@ namespace ArcaneRealms.Editor {
 		private bool showEffectInfos = true;
 
 		private void OnEnable() {
-			effectInfosProperty = serializedObject.FindProperty("Effects");
+			effectInfosProperty = serializedObject.FindProperty("effects");
 			databaseProperty = serializedObject.FindProperty("database");
 		}
 
@@ -66,8 +66,8 @@ namespace ArcaneRealms.Editor {
 				EditorUtility.SetDirty(target);
 
 				if(effectProperty != null && effectProperty.objectReferenceValue != null) {
-					EffectParameters defaultParameters = ((CardInfoSO) target).Effects[i].effectSO.GetDefaultValueDictionary();
-					EffectParameters implementedParameters = ((CardInfoSO) target).Effects[i].effectParameters;
+					EffectParameters defaultParameters = ((CardInfoSO) target).effects[i].effectSO.GetDefaultValueDictionary();
+					EffectParameters implementedParameters = ((CardInfoSO) target).effects[i].effectParameters;
 					TargetsEnum targetType = defaultParameters.GetValueOrDefault(CardEffectSO.TARGET_PARAM_NAME, TargetsEnum.NONE);
 					defaultParameters = defaultParameters.AddAll(targetType.parameters);
 					for(int j = 0; j < defaultParameters.GetSize(); j++) {
@@ -133,7 +133,7 @@ namespace ArcaneRealms.Editor {
 			// Add card effect button
 			if(GUILayout.Button("Add Card Effect")) {
 				CardEffect newCardEffect = new CardEffect();
-				((CardInfoSO) target).Effects.Add(newCardEffect);
+				((CardInfoSO) target).effects.Add(newCardEffect);
 			}
 			serializedObject.ApplyModifiedProperties();
 			EditorUtility.SetDirty(target);
