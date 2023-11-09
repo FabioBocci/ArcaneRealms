@@ -1,6 +1,5 @@
 using System;
 using System.Collections.Generic;
-using ArcaneRealms.Scripts.Cards;
 using ArcaneRealms.Scripts.Cards.GameCards;
 using ArcaneRealms.Scripts.Cards.ScriptableCards;
 using ArcaneRealms.Scripts.Enums;
@@ -49,11 +48,43 @@ namespace ArcaneRealms.Scripts.Utils
         {
             reader.ReadValueSafe(out Guid cardGuid);
             card = GameManager.Instance.GetCardFromGuid(cardGuid);
+            if (card.HasTargetingEffects())
+            {
+                reader.ReadValueSafe(out bool hasTarget);
+                if (hasTarget)
+                {
+                    reader.ReadValueSafe(out int size);
+                    List<Guid> targets = new();
+                    for (int i = 0; i < size; i++)
+                    {
+                        reader.ReadValueSafe(out Guid target);
+                        targets.Add(target);
+                    }
+                    card.SetTargetsForEffect(targets);
+                }
+            }
         }
 
         public static void WriteValueSafe(this FastBufferWriter writer, in CardInGame card)
         {
             writer.WriteValueSafe(card.CardGuid);
+            if (card.HasTargetingEffects())
+            {
+                if (card.HasSetTargets())
+                {
+                    writer.WriteValueSafe(true);
+                    var targets = card.GetEffectsTarget();
+                    writer.WriteValueSafe(targets.Count);
+                    foreach (var target in targets)
+                    {
+                        writer.WriteValueSafe(target);
+                    }
+                }
+                else
+                {
+                    writer.WriteValueSafe(false);
+                }
+            }
         }
         
         public static void SerializeValue<TReaderWriter>(this BufferSerializer<TReaderWriter> serializer, ref CardInGame card) where TReaderWriter: IReaderWriter

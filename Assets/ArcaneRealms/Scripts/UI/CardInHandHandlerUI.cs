@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using ArcaneRealms.Scripts.Cards;
 using ArcaneRealms.Scripts.Cards.GameCards;
 using ArcaneRealms.Scripts.Cards.ScriptableCards;
@@ -187,12 +188,15 @@ namespace ArcaneRealms.Scripts.UI {
 							OnEndDrag(null);
 							return;
 						}
-						
-						cardInGame.
-
+						cardInGame.SetTargetsForEffect(new List<Guid>()
+						{
+							cardTarget.GetUnique()
+						});
+						GameManager.Instance.PlayCard(cardInGame);
+						DestroyAndResetState();
 
 					}).SetPredicateFilter((cardToFilter) => {
-						return false;
+						return false; //TODO - questo va a seconda dei target della carta.
 					}).SetStartingPosition(transform) //todo set position from GameManager.Instance.localPlayerGameObject
 					.BuildArrowPointer();
 			}

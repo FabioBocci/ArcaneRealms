@@ -350,5 +350,10 @@ namespace ArcaneRealms.Scripts.Managers {
 
 			i = findIndex;
 		}
+
+		public MonsterPlatformController GetPlatformController(Guid target)
+		{
+			return allPlatformOnField[target];
+		}
 	}
 }

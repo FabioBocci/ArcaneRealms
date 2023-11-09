@@ -1,10 +1,12 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using ArcaneRealms.Scripts.Cards.Effects;
 using ArcaneRealms.Scripts.Cards.ScriptableCards;
 using ArcaneRealms.Scripts.Enums;
 using ArcaneRealms.Scripts.Interfaces;
+using NUnit.Framework;
 
 namespace ArcaneRealms.Scripts.Cards.GameCards {
 	public abstract class CardInGame : ITargetable, IEquatable<CardInGame> {
@@ -18,7 +20,7 @@ namespace ArcaneRealms.Scripts.Cards.GameCards {
 		
 		public Guid CardGuid { private set; get; }
 
-		private List<CardEffect> OnActivationCardEffects = new(); //TODO - add other effects list
+		private readonly List<CardEffect> onActivationCardEffects = new(); //TODO - add other effects list
 
 		protected CardInGame(CardInfoSO cardInfo, Guid cardGuid, Guid team)
 		{
@@ -28,7 +30,7 @@ namespace ArcaneRealms.Scripts.Cards.GameCards {
 
 			foreach(CardEffect effect in cardInfoSO.effects) {
 				if(effect.HasActivationEffect()) {
-					OnActivationCardEffects.Add(effect);
+					onActivationCardEffects.Add(effect);
 				}
 			}
 		}
@@ -104,16 +106,38 @@ namespace ArcaneRealms.Scripts.Cards.GameCards {
 			return false;
 		}
 
-		public void SetTargetForEffect(ITargetable target)
+		public bool HasSetTargets()
 		{
-			foreach(CardEffect effect in cardInfoSO.effects) {
+			foreach(CardEffect effect in cardInfoSO.effects) 
+			{
+				if(effect.RequireTargetToRun() && effect.effectTargets.targets.Count > 0) {
+					return true;
+				}
+			}
+			return false;
+		}
+		
+		public void SetTargetsForEffect(List<Guid> target)
+		{
+			foreach(CardEffect effect in cardInfoSO.effects) 
+			{
 				if(effect.RequireTargetToRun()) {
-					effect.RequireTargetToRun()
+					effect.effectTargets.targets.AddRange(target);
 				}
 			}
 		}
 
-		public bool HasActivationEffect() => OnActivationCardEffects.Count > 0;
+		public List<Guid> GetEffectsTarget()
+		{
+			foreach (var effect in cardInfoSO.effects.Where(effect => effect.RequireTargetToRun()))
+			{
+				return effect.effectTargets.targets;
+			}
+
+			return new List<Guid>();
+		}
+
+		public bool HasActivationEffect() => onActivationCardEffects.Count > 0;
 		
 		public Task OnCardActivation()
 		{
@@ -158,6 +182,8 @@ namespace ArcaneRealms.Scripts.Cards.GameCards {
 		}
 		
 		#endregion
+
+		
 	}
 
 }

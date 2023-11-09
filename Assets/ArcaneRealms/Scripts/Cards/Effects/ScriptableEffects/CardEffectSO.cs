@@ -1,4 +1,5 @@
-﻿using ArcaneRealms.Scripts.Cards.GameCards;
+﻿using System.Threading.Tasks;
+using ArcaneRealms.Scripts.Cards.GameCards;
 using ArcaneRealms.Scripts.Enums;
 using ArcaneRealms.Scripts.Players;
 using ArcaneRealms.Scripts.Utils.ScriptableDatabase;
@@ -38,7 +39,7 @@ namespace ArcaneRealms.Scripts.Cards.Effects.ScriptableEffects {
 		//TODO : each metod should have a reference (thisCard, thisGame, thisPlayer)
 
 		//Called when the card is posizioned on the field
-		public virtual void OnActivation(PlayerInGame owner, CardInGame card, EffectParameters parameters) {
+		public virtual async Task OnActivation(PlayerInGame owner, CardInGame card, EffectParameters parameters, EffectTargets targets) {
 
 		}
 
@@ -47,7 +48,7 @@ namespace ArcaneRealms.Scripts.Cards.Effects.ScriptableEffects {
 		}
 
 		//Called when the card is destroyed from the field
-		public virtual void OnDestruction(PlayerInGame owner, CardInGame card, EffectParameters parameters) {
+		public virtual async Task OnDestruction(PlayerInGame owner, CardInGame card, EffectParameters parameters, EffectTargets targets) {
 
 		}
 
@@ -57,7 +58,7 @@ namespace ArcaneRealms.Scripts.Cards.Effects.ScriptableEffects {
 
 
 		//Called when the card is draw from the deck to your hand
-		public virtual void OnDraw(PlayerInGame owner, CardInGame card, EffectParameters parameters) {
+		public virtual async Task OnDraw(PlayerInGame owner, CardInGame card, EffectParameters parameters, EffectTargets targets) {
 
 		}
 
@@ -66,7 +67,7 @@ namespace ArcaneRealms.Scripts.Cards.Effects.ScriptableEffects {
 		}
 
 		//Called when the game start
-		public virtual void OnGameStart(PlayerInGame owner, CardInGame card, EffectParameters parameters) {
+		public virtual async Task OnGameStart(PlayerInGame owner, CardInGame card, EffectParameters parameters, EffectTargets targets) {
 
 		}
 
@@ -76,7 +77,7 @@ namespace ArcaneRealms.Scripts.Cards.Effects.ScriptableEffects {
 
 
 		//Called when ThisCardAttack
-		public virtual void OnThisCardAttack(PlayerInGame owner, CardInGame card, EffectParameters parameters) {
+		public virtual async Task OnThisCardAttack(PlayerInGame owner, CardInGame card, EffectParameters parameters, EffectTargets targets) {
 
 		}
 
@@ -86,7 +87,7 @@ namespace ArcaneRealms.Scripts.Cards.Effects.ScriptableEffects {
 
 
 		//Called when OtherCardAttack
-		public virtual void OnOtherCardAttack(PlayerInGame owner, CardInGame card, EffectParameters parameters) {
+		public virtual async Task OnOtherCardAttack(PlayerInGame owner, CardInGame card, EffectParameters parameters, EffectTargets targets) {
 
 		}
 

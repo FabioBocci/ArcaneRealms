@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Threading.Tasks;
 using ArcaneRealms.Scripts.Cards.GameCards;
 using ArcaneRealms.Scripts.Enums;
 using ArcaneRealms.Scripts.Managers;
@@ -23,7 +24,7 @@ namespace ArcaneRealms.Scripts.Cards.Effects.OnActivation {
 
 		private static readonly string TARGET_DEFAULT = TargetsEnum.ALLY_PLAYERS.name;
 
-		public override void OnActivation(PlayerInGame owner, CardInGame card, EffectParameters parameters) {
+		public override async Task OnActivation(PlayerInGame owner, CardInGame card, EffectParameters parameters, EffectTargets targets) {
 			TargetsEnum target = parameters.GetValueOrDefault(TARGET_PARAM_NAME, TargetsEnum.ALLY_PLAYERS);
 
 			PlayerInGame targetPlayer = target == TargetsEnum.ALLY_PLAYERS ? owner : GameManager.Instance.GetEnemyPlayer(owner);
