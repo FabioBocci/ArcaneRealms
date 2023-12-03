@@ -14,4 +14,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Name: Fireball
   database: {fileID: 11400000, guid: 8615251b3bdc9894daeb024980db3c5b, type: 2}
-  projectile: {fileID: 0}
+  projectile: {fileID: 4510227158798403954, guid: 637e11155e9082c4584f60fb14223fc6,
+    type: 3}

@@ -6,6 +6,7 @@ using ArcaneRealms.Scripts.Cards.Effects;
 using ArcaneRealms.Scripts.Cards.ScriptableCards;
 using ArcaneRealms.Scripts.Enums;
 using ArcaneRealms.Scripts.Interfaces;
+using ArcaneRealms.Scripts.Managers;
 using NUnit.Framework;
 
 namespace ArcaneRealms.Scripts.Cards.GameCards {
@@ -139,10 +140,13 @@ namespace ArcaneRealms.Scripts.Cards.GameCards {
 
 		public bool HasActivationEffect() => onActivationCardEffects.Count > 0;
 		
-		public Task OnCardActivation()
+		public async Task OnCardActivation()
 		{
-			//TODO Spell continue e segreti avranno animazioni diverse
-			return null;
+			foreach (var cardEffect in onActivationCardEffects)
+			{
+				await cardEffect.OnActivation(GameManager.Instance.GetPlayerFromID(cardTeam), this);
+			}
+			
 		}
 		
 		

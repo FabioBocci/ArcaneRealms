@@ -37,6 +37,7 @@ namespace ArcaneRealms.Scripts.Managers {
 		public event EntityEvent<MonsterCard> OnMonsterSummon;			//monster who is summoned
 		public event EntityEvent<MonsterCard> OnMonsterDying;			//monster who is dying
 		public event EntityEvent<CardInGame> OnCardDraw;				//playerWhoDraw cardThatHasBeenDraw
+
 		public event EntityEvent<CardInGame> OnCardPlayed;
 		//public event EntityEvent<EntityEventData<CardInGame>> OnCardPlayed;						//playerWhoDraw cardThatHasBeenDraw
 
@@ -140,35 +141,39 @@ namespace ArcaneRealms.Scripts.Managers {
 				await FieldManager.Instance.PlayCardAnimation(player, card);
 			}
 
+			
+			
+			EntityEventData<CardInGame> data = new EntityEventData<CardInGame>(card);
 			if (OnCardPlayed != null)
 			{
-				EntityEventData<CardInGame> data = new EntityEventData<CardInGame>(card);
 				await OnCardPlayed.Invoke(ref data);
-				if (!data.IsCancelled)
+			}
+			if (!data.IsCancelled)
+			{
+				Debug.LogWarning("[GameManager] HandlePlayerPlayCardLocally running OnCardActivation");
+				await card.OnCardActivation();
+				if (card.IsSpellCard(out var spell))
 				{
-					await card.OnCardActivation();
-					if (card.IsSpellCard(out var spell))
+					if (spell.cardInfoSO.SpellType == SpellType.Normal)
 					{
-						if (spell.cardInfoSO.SpellType == SpellType.Normal)
-						{
-							spell.position = CardPosition.Graveyard;
-							player.graveyardList.Add(card);
-						}
+						spell.position = CardPosition.Graveyard;
+						player.graveyardList.Add(card);
 					}
 				}
-				else
-				{
-					card.position = CardPosition.Graveyard;
-					player.graveyardList.Add(card);
-				}
-				
-				if (NetworkManagerHelper.Instance.IsClient)
-				{
-					await FieldManager.Instance.CloseCardAnimation(player, card);
-				}
-				
-				await ResolveFinalCallbacks();
 			}
+			else
+			{
+				card.position = CardPosition.Graveyard;
+				player.graveyardList.Add(card);
+			}
+			
+			if (NetworkManagerHelper.Instance.IsClient)
+			{
+				await FieldManager.Instance.CloseCardAnimation(player, card);
+			}
+			
+			await ResolveFinalCallbacks();
+			
 		}
 		
 		private async Task HandlePlayerSummonLocally(PlayerInGame playerWhoSummon, MonsterCard card, int position)

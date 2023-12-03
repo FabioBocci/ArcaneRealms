@@ -8,6 +8,7 @@ namespace ArcaneRealms.Scripts.Utils.EffectsUtils
     public static class EffectsUtils
     {
         //TODO - add other options
+        //TODO - add spawn position
         public static async Task LaunchProjectile(GameObject projectilePrefab, MonsterPlatformController target)
         {
             GameObject newGo = Object.Instantiate(projectilePrefab);

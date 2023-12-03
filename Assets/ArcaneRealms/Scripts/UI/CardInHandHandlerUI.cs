@@ -64,7 +64,6 @@ namespace ArcaneRealms.Scripts.UI {
 			rectTransform = GetComponent<RectTransform>();
 			canvasGroup = GetComponent<CanvasGroup>();
 			uiOutline = GetComponentInChildren<UIOutline>();
-			//BuildCard(new MonsterCard(TMP_Monster, Guid.NewGuid(), Guid.NewGuid())); //TODO - remove this line
 		}
 
 		private void Update() {
