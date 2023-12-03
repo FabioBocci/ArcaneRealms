@@ -14,6 +14,7 @@ using ArcaneRealms.Scripts.Events;
 using ArcaneRealms.Scripts.Interfaces;
 using ArcaneRealms.Scripts.Systems;
 using ArcaneRealms.Scripts.Utils.Events;
+using NaughtyAttributes;
 using Unity.Netcode;
 using UnityEngine;
 using Random = UnityEngine.Random;
@@ -120,7 +121,7 @@ namespace ArcaneRealms.Scripts.Managers {
 
 		#region LocallyHandlers
 
-		private async Task HandlePlayerPlayCardLocally(PlayerInGame player, CardInGame card, int position = -1)
+		public async Task HandlePlayerPlayCardLocally(PlayerInGame player, CardInGame card, int position = -1)
 		{
 			if (card.IsMonsterCard(out var monster))
 			{
@@ -392,7 +393,7 @@ namespace ArcaneRealms.Scripts.Managers {
 						guid = card.CardGuid
 					});
 					player.startingDeck.Add(card);
-					player.allCardInGameDicionary.Add(card.CardGuid, card);
+					player.allCardInGameDictionary.Add(card.CardGuid, card);
 					player.currentDeck.AddRange(player.startingDeck);
 					player.currentDeck.Shuffle();
 				}
@@ -542,7 +543,7 @@ namespace ArcaneRealms.Scripts.Managers {
 				{
 					CardInGame cardInGame = card.cardInfo.BuildCardInGame(player.ID, card.guid);
 					player.startingDeck.Add(cardInGame);
-					player.allCardInGameDicionary[cardInGame.CardGuid] = cardInGame;
+					player.allCardInGameDictionary[cardInGame.CardGuid] = cardInGame;
 				}
 				player.currentDeck.AddRange(player.startingDeck);
 				player.currentDeck.Shuffle();
@@ -552,7 +553,7 @@ namespace ArcaneRealms.Scripts.Managers {
 				{
 					CardInGame cardInGame = card.cardInfo.BuildCardInGame(player.ID, card.guid);
 					player.startingDeck.Add(cardInGame);
-					player.allCardInGameDicionary[cardInGame.CardGuid] = cardInGame;
+					player.allCardInGameDictionary[cardInGame.CardGuid] = cardInGame;
 				}
 				player.currentDeck.AddRange(player.startingDeck);
 				player.currentDeck.Shuffle();
@@ -786,12 +787,12 @@ namespace ArcaneRealms.Scripts.Managers {
 
 		private Func<Task> finalCallback;
 
-		public void RegisterFinalCallback(Func<Task> callback)
+		private void RegisterFinalCallback(Func<Task> callback)
 		{
 			finalCallback += callback;
 		}
 
-		public async Task ResolveFinalCallbacks()
+		private async Task ResolveFinalCallbacks()
 		{
 			Func<Task> finalCallbackClone = finalCallback;
 			finalCallback = null;
@@ -801,6 +802,38 @@ namespace ArcaneRealms.Scripts.Managers {
 			}
 		}
 
+
+		[ContextMenu("Get JsonString")]
+		public string GetJsonCurrentState()
+		{
+			GameStateSerializable gameStateToSerialize = new()
+			{
+				players = new []
+				{
+					localPlayer.ToPlayerState(),
+					remotePlayer.ToPlayerState()
+				}
+			};
+			string jsonString = JsonUtility.ToJson(gameStateToSerialize);
+			Debug.Log($"[GameManager] json state: {jsonString}");
+			return jsonString;
+		}
+
+		public void SetJsonCurrentState(string json)
+		{
+			GameStateSerializable gameStateSerializable = JsonUtility.FromJson<GameStateSerializable>(json);
+			foreach (var player in gameStateSerializable.players)
+			{
+				localPlayer.FromPlayerState(player);
+				remotePlayer.FromPlayerState(player);
+			}
+
+			
+			FieldManager.Instance.UpdateCurrentStateImmediately();
+			HandUIManager.Instance.UpdateCurrentStateImmediately();
+		}
+		
+		
 		#endregion
 
 

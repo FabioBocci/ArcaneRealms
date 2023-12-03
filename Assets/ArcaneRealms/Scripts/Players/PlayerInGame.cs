@@ -5,8 +5,10 @@ using System.Collections.Generic;
 using System.Linq;
 using ArcaneRealms.Scripts.Cards.GameCards;
 using ArcaneRealms.Scripts.Interfaces;
+using ArcaneRealms.Scripts.Utils;
 using Unity.Netcode;
 using UnityEngine;
+using UnityEngine.Playables;
 
 namespace ArcaneRealms.Scripts.Players {
 
@@ -16,7 +18,7 @@ namespace ArcaneRealms.Scripts.Players {
 		private const int MAX_MANA = 10;
 		private const int MAX_CARDS_IN_HAND = 7;
 
-		public Dictionary<Guid, CardInGame> allCardInGameDicionary = new();
+		public Dictionary<Guid, CardInGame> allCardInGameDictionary = new();
 		
 		//immutable list of the card in the deck at the start of the game
 		public List<CardInGame> startingDeck = new();
@@ -40,9 +42,9 @@ namespace ArcaneRealms.Scripts.Players {
 
 
 
-		private int currentManaPool = 0;
-		private int usableMana = 0;
-		private int damageReceived = 0;
+		public int currentManaPool = 0;
+		public int usableMana = 0;
+		public int damageReceived = 0;
 		
 		public Guid ID { private set; get; }
 
@@ -142,7 +144,7 @@ namespace ArcaneRealms.Scripts.Players {
 
 		public CardInGame GetCardInGameFromGuid(Guid guid)
 		{
-			return allCardInGameDicionary.TryGetValue(guid, out var value) ? value : null;
+			return allCardInGameDictionary.TryGetValue(guid, out var value) ? value : null;
 		}
 
 		public Guid GetTeam() => ID;
@@ -181,5 +183,46 @@ namespace ArcaneRealms.Scripts.Players {
 			graveyardList.Add(cardToRemove);
 			cardToRemove.position = CardPosition.Graveyard;
 		}
+
+
+		public PlayerState ToPlayerState()
+		{
+			PlayerState playState = new()
+			{
+				id = ID.ToString(),
+				currentDeck = currentDeck.Select(c => c.GetUnique().ToString()).ToArray(),
+				graveyard = graveyardList.Select(c => c.GetUnique().ToString()).ToArray(),
+				handCards = handCards.Select(c => c.GetUnique().ToString()).ToArray(),
+				monsterCardOnField = monsterCardOnField.Select(c => c.GetUnique().ToString()).ToArray(),
+				continueSpellCards = continueSpellCards.Select(c => c.GetUnique().ToString()).ToArray(),
+				delayedSpellCards = delayedSpellCards.Select(c => c.GetUnique().ToString()).ToArray(),
+				currentManaPool = currentManaPool,
+				usableMana = usableMana,
+				damageReceived = damageReceived
+			};
+
+			return playState;
+		}
+
+		public void FromPlayerState(PlayerState state)
+		{
+			if (!ID.ToString().Equals(state.id))
+			{
+				return;
+			}
+
+			currentDeck = state.currentDeck.Select(c => allCardInGameDictionary[Guid.Parse(c)]).ToList();
+			graveyardList = state.graveyard.Select(c => allCardInGameDictionary[Guid.Parse(c)]).ToList();
+			handCards = state.handCards.Select(c => allCardInGameDictionary[Guid.Parse(c)]).ToList();
+			monsterCardOnField = state.monsterCardOnField.Select(c => allCardInGameDictionary[Guid.Parse(c)] as MonsterCard).ToList();
+			continueSpellCards = state.continueSpellCards.Select(c => allCardInGameDictionary[Guid.Parse(c)] as SpellCard).ToList();
+			delayedSpellCards = state.delayedSpellCards.Select(c => allCardInGameDictionary[Guid.Parse(c)] as SpellCard).ToList();
+			currentManaPool = state.currentManaPool;
+			usableMana = state.usableMana;
+			damageReceived = state.damageReceived;
+
+
+		}
+		
 	}
 }

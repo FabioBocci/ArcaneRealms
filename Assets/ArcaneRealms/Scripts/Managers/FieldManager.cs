@@ -355,5 +355,10 @@ namespace ArcaneRealms.Scripts.Managers {
 		{
 			return allPlatformOnField[target];
 		}
+
+		public void UpdateCurrentStateImmediately()
+		{
+			//praticamente devo aggiornare tutti i mostri che sono sul terreno
+		}
 	}
 }

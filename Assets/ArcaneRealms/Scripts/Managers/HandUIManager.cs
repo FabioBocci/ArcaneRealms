@@ -183,5 +183,10 @@ namespace ArcaneRealms.Scripts.Managers {
 		
 
 		#endregion
+
+		public void UpdateCurrentStateImmediately()
+		{
+			//aggiorno tutte le carte in mano ed eventuali altri segnali
+		}
 	}
 }
