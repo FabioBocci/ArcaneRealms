@@ -437,6 +437,7 @@ namespace ArcaneRealms.Scripts.Managers {
 				cardInGame.position = CardPosition.Hand;
 			}
 
+			
 			List<CardInGame> newCards = new();
 			foreach (var cardInGame in cardNotChosen)
 			{
@@ -470,7 +471,7 @@ namespace ArcaneRealms.Scripts.Managers {
 			}
 
 			if (!NetworkManagerHelper.Instance.IsHost || playerWhoSummon.ID != localPlayer.ID)
-			{
+			{ 
 				HandlePlayerPlayCardLocally(playerWhoSummon, card, position);
 			}
 			
@@ -568,12 +569,6 @@ namespace ArcaneRealms.Scripts.Managers {
 				Debug.LogError($" Received a ClientRPC for a different client! Aborting RPC! this client {localPlayer.playerUlong} received {thisPlayer.playerUlong}");
 				return;
 			}
-			Debug.Log("Cards received: ");
-			foreach (var card in startingHand)
-			{
-				Debug.Log(card.cardInfoSO.Name);
-			}
-
 			HandUIManager.Instance.OnStartingCardsReceived(startingHand);
 		}
 		
