@@ -13,8 +13,6 @@ MonoBehaviour:
   m_Name: Localization-String-Tables-Danish (da)
   m_EditorClassIdentifier: 
   m_GroupName: Localization-String-Tables-Danish (da)
-  m_Data:
-    m_SerializedData: []
   m_GUID: 8aaf6abb288c265448213223324ad7d2
   m_SerializeEntries:
   - m_GUID: 903e8fea3ca3a534b85b39c104be3331

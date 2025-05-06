@@ -13,8 +13,6 @@ MonoBehaviour:
   m_Name: Localization-String-Tables-Greek (el)
   m_EditorClassIdentifier: 
   m_GroupName: Localization-String-Tables-Greek (el)
-  m_Data:
-    m_SerializedData: []
   m_GUID: ec6bc2c41e3a50344b1cf6deb8b81fca
   m_SerializeEntries:
   - m_GUID: 238327d7553008f4d89ee94488297fc3

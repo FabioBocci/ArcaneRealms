@@ -1,26 +1,29 @@
 
+#region
+
 using System;
-using ArcaneRealms.Scripts.Cards;
-using ArcaneRealms.Scripts.Players;
-using ArcaneRealms.Scripts.Utils;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using ArcaneRealms.Scripts.Cards;
 using ArcaneRealms.Scripts.Cards.GameCards;
 using ArcaneRealms.Scripts.Cards.ScriptableCards;
 using ArcaneRealms.Scripts.Enums;
 using ArcaneRealms.Scripts.Events;
 using ArcaneRealms.Scripts.Interfaces;
+using ArcaneRealms.Scripts.Players;
 using ArcaneRealms.Scripts.Systems;
+using ArcaneRealms.Scripts.Utils;
 using ArcaneRealms.Scripts.Utils.Events;
-using NaughtyAttributes;
 using Unity.Netcode;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
+#endregion
+
 namespace ArcaneRealms.Scripts.Managers {
-	
+
 	public class GameManager : NetworkBehaviour {
 
 		[Header("Game Infos")]
@@ -28,7 +31,7 @@ namespace ArcaneRealms.Scripts.Managers {
 
 
 		#region Events
-		
+
 		public event EntityEvent<List<CardInGame>> OnStartingCardsReceived;
 		public event EntityEvent<PlayerInGame> OnPlayerDeath;
 		public event EntityEvent<CardInGame> OnBeforeCardDestroy;
@@ -42,11 +45,11 @@ namespace ArcaneRealms.Scripts.Managers {
 		public event EntityEvent<CardInGame> OnCardPlayed;
 		//public event EntityEvent<EntityEventData<CardInGame>> OnCardPlayed;						//playerWhoDraw cardThatHasBeenDraw
 
-		
+
 		#endregion
-		
+
 		public static GameManager Instance { get; private set; }
-		
+
 		private PlayerInGame localPlayer;
 		private PlayerInGame remotePlayer;
 
@@ -80,7 +83,7 @@ namespace ArcaneRealms.Scripts.Managers {
 		}
 
 		#region RegionHandlers
-		
+
 		private void StartHandlePlayersHandShake()
 		{
 			localPlayer = new PlayerInGame(Guid.NewGuid(), NetworkManager.ConnectedClients.Keys.First());
@@ -99,15 +102,15 @@ namespace ArcaneRealms.Scripts.Managers {
 			SendSignalStartHandShakeClientRPC(localPlayer.playerUlong, localPlayer.ID, remotePlayer.playerUlong,
 				remotePlayer.ID);
 		}
-		
+
 		private void HandlePlayerChooseCards()
 		{
 			PlayerInGame player = GetPlayerTurn();
 			//chose 3 card from the player and 3 for the other
 			List<CardInGame> cardsInHand = player.currentDeck.GetRange(0, startingHandSize);
-			
+
 			SendPlayersStartingHandsClientRPC(player, cardsInHand, player.thisClientRpcTarget);
-			
+
 			player = GetEnemyPlayer(player);
 			cardsInHand = player.currentDeck.GetRange(0, startingHandSize);
 			SendPlayersStartingHandsClientRPC(player, cardsInHand, player.thisClientRpcTarget);
@@ -128,22 +131,22 @@ namespace ArcaneRealms.Scripts.Managers {
 				await HandlePlayerSummonLocally(player, monster, position);
 				return;
 			}
-			
+
 			if (card.GetManaCost() > 0)
 			{
 				player.PayMana(card.GetManaCost());
 			}
-			
+
 			//not a monster card? use generic events
 			player.PlayCard(card, position);
-			
+
 			if (NetworkManagerHelper.Instance.IsClient)
 			{
 				await FieldManager.Instance.PlayCardAnimation(player, card);
 			}
 
-			
-			
+
+
 			EntityEventData<CardInGame> data = new EntityEventData<CardInGame>(card);
 			if (OnCardPlayed != null)
 			{
@@ -167,32 +170,32 @@ namespace ArcaneRealms.Scripts.Managers {
 				card.position = CardPosition.Graveyard;
 				player.graveyardList.Add(card);
 			}
-			
+
 			if (NetworkManagerHelper.Instance.IsClient)
 			{
 				await FieldManager.Instance.CloseCardAnimation(player, card);
 			}
-			
+
 			await ResolveFinalCallbacks();
-			
+
 		}
-		
+
 		private async Task HandlePlayerSummonLocally(PlayerInGame playerWhoSummon, MonsterCard card, int position)
 		{
 			if (card.GetManaCost() > 0)
 			{
 				playerWhoSummon.PayMana(card.GetManaCost());
 			}
-			
+
 			playerWhoSummon.PlayCard(card, position);
-			
+
 			if (NetworkManagerHelper.Instance.IsClient)
 			{
 				//Client or Host
 				await FieldManager.Instance.SummonMonsterAtPlayer(playerWhoSummon, card, position);
-				
+
 			}
-			
+
 			EntityEventData<MonsterCard> data = new EntityEventData<MonsterCard>(card);
 			if (OnMonsterSummon != null)
 			{
@@ -201,7 +204,7 @@ namespace ArcaneRealms.Scripts.Managers {
 			//TODO battle cry
 			await ResolveFinalCallbacks();
 		}
-		
+
 		private async Task HandleAttackLocally(PlayerInGame player, MonsterCard card, IDamageable target)
 		{
 			if (NetworkManagerHelper.Instance.IsClient)
@@ -209,8 +212,8 @@ namespace ArcaneRealms.Scripts.Managers {
 				//visual and other things...
 				await FieldManager.Instance.DeclareAttack(card, target);
 			}
-			
-			AttackEntityEventData eventData = 
+
+			var eventData =
 				new AttackEntityEventData(
 					player, card, target, card.GetAttack(), target.GetTargetType() == TargetType.MonsterCard ? ((MonsterCard) target).GetAttack() : 0);
 			if (OnAttackDeclaration != null)
@@ -236,29 +239,29 @@ namespace ArcaneRealms.Scripts.Managers {
 			}
 
 			#endregion
-			
+
 			if (NetworkManagerHelper.Instance.IsClient)
 			{
 				await FieldManager.Instance.HandleVisualAttack(eventData.Attacker, eventData.Defender, eventData.AttackerAttack,
 					eventData.DefenderAttack);
 			}
-			
+
 			//do damage and run event after attack then alive checks
 			eventData.Attacker.Damage(eventData.AttackerAttack);
 			eventData.Defender.Damage(eventData.DefenderAttack);
-			
+
 			eventData = new AttackEntityEventData(player, eventData.Attacker, eventData.Defender, eventData.AttackerAttack, eventData.DefenderAttack);
 			if (OnAttackResult != null)
 			{
 				await OnAttackResult.Invoke(ref eventData);
 			}
-			
+
 			if (!AliveCheck(localPlayer) || !AliveCheck(remotePlayer))
 			{
 				gameState = GameState.GameEnd;
 				return;
 			}
-			
+
 			if (AliveCheck(eventData.Defender))
 			{
 				//we know for sure that this is a card since we are checking the players before this
@@ -277,8 +280,8 @@ namespace ArcaneRealms.Scripts.Managers {
 					{
 						await OnAfterCardDestroy.Invoke(ref entityEventData);
 					}
-					
-					
+
+
 				});
 			}
 
@@ -300,21 +303,21 @@ namespace ArcaneRealms.Scripts.Managers {
 					{
 						await OnAfterCardDestroy.Invoke(ref entityEventData);
 					}
-					
+
 				});
 			}
-					
+
 			await ResolveFinalCallbacks();
 		}
-		
-		
+
+
 
 		#endregion
-		
+
 		#endregion
 
 		#region RegionCoroutineHandleGameStates
-		
+
 		IEnumerator HandleGameStateCoroutine() {
 			while(true) {
 				yield return new WaitForSeconds(.5f);
@@ -406,7 +409,7 @@ namespace ArcaneRealms.Scripts.Managers {
 				handShake = null;
 				gameState = GameState.PlayersChooseHandCards;
 			}
-			
+
 		}
 
 		[ServerRpc(RequireOwnership = false)]
@@ -428,8 +431,8 @@ namespace ArcaneRealms.Scripts.Managers {
 			}
 
 			handShakeSecond[playerInGame] = true;
-			
-			
+
+
 			foreach (var cardInGame in cardsChosen)
 			{
 				playerInGame.currentDeck.Remove(cardInGame);
@@ -437,7 +440,7 @@ namespace ArcaneRealms.Scripts.Managers {
 				cardInGame.position = CardPosition.Hand;
 			}
 
-			
+
 			List<CardInGame> newCards = new();
 			foreach (var cardInGame in cardNotChosen)
 			{
@@ -449,7 +452,7 @@ namespace ArcaneRealms.Scripts.Managers {
 			}
 
 
-			SendFinalPlayersStartingHandsClientRPC(playerInGame, cardsChosen, newCards); 
+			SendFinalPlayersStartingHandsClientRPC(playerInGame, cardsChosen, newCards);
 			//sending this to both player so they can keep the track
 
 			if (handShakeSecond[localPlayer] && handShakeSecond[remotePlayer])
@@ -460,7 +463,7 @@ namespace ArcaneRealms.Scripts.Managers {
 			}
 
 		}
-		
+
 		[ServerRpc(RequireOwnership = false)]
 		private void HandlePlayerPlayCardRemoteServerRPC(PlayerInGame playerWhoSummon, CardInGame card, int position = -1)
 		{
@@ -470,16 +473,13 @@ namespace ArcaneRealms.Scripts.Managers {
 				return;
 			}
 
-			if (!NetworkManagerHelper.Instance.IsHost || playerWhoSummon.ID != localPlayer.ID)
-			{ 
-				HandlePlayerPlayCardLocally(playerWhoSummon, card, position);
-			}
-			
+			if (!NetworkManagerHelper.Instance.IsHost || playerWhoSummon.ID != localPlayer.ID) HandlePlayerPlayCardLocally(playerWhoSummon, card, position);
+
 			PlayerInGame enemy = GetEnemyPlayer(playerWhoSummon);
 			HandlePlayerPlayCardRemoteClientRPC(playerWhoSummon, card, position, enemy.thisClientRpcTarget);
-			
+
 		}
-		
+
 		[ServerRpc(RequireOwnership = false)]
 		private void HandleAttackRemoteServerRPC(PlayerInGame playerWhoAttack, CardInGame card, IDamageable target)
 		{
@@ -487,7 +487,7 @@ namespace ArcaneRealms.Scripts.Managers {
 			{
 				return;
 			}
-			
+
 			if (!IsPlayerTurn(playerWhoAttack))
 			{
 				Debug.LogError($"[ServerRPC] Somehow a player card is attacking not in player turn? card name: {card.cardInfoSO.Name}");
@@ -509,11 +509,11 @@ namespace ArcaneRealms.Scripts.Managers {
 
 
 		#endregion
-		
+
 		// -------------------Client RPCs--------------------------------
 
 		#region RegionClientRPCs
-		
+
 		[ClientRpc]
 		private void SendSignalStartHandShakeClientRPC(ulong localPlayerPlayerUlong, Guid localPlayerID, ulong remotePlayerPlayerUlong, Guid remotePlayerID)
 		{
@@ -522,7 +522,7 @@ namespace ArcaneRealms.Scripts.Managers {
 				localPlayer = new PlayerInGame(NetworkManager.LocalClientId == localPlayerPlayerUlong ? localPlayerID : remotePlayerID, NetworkManager.LocalClientId);
 				remotePlayer = new PlayerInGame(NetworkManager.LocalClientId != localPlayerPlayerUlong ? localPlayerID : remotePlayerID, remotePlayerPlayerUlong);
 			}
-			
+
 			DeckOfCards deck = PlayerDataManager.Instance.playerData.SelectedDeck;
 			if (deck == null)
 			{
@@ -571,11 +571,11 @@ namespace ArcaneRealms.Scripts.Managers {
 			}
 			HandUIManager.Instance.OnStartingCardsReceived(startingHand);
 		}
-		
+
 		[ClientRpc]
 		private void SendFinalPlayersStartingHandsClientRPC(PlayerInGame playerInGame, List<CardInGame> cardsChosen, List<CardInGame> newCards)
 		{
-			
+
 			foreach (var cardInGame in cardsChosen.Concat(newCards))
 			{
 				playerInGame.currentDeck.Remove(cardInGame);
@@ -588,7 +588,7 @@ namespace ArcaneRealms.Scripts.Managers {
 				//Update visual
 				HandUIManager.Instance.FinalStartingCardsReceived(cardsChosen, newCards);
 			}
-			
+
 		}
 
 		[ClientRpc]
@@ -605,10 +605,10 @@ namespace ArcaneRealms.Scripts.Managers {
 			{
 				return;
 			}
-			
+
 			HandlePlayerPlayCardLocally(playerWhoSummon, card, position);
 		}
-		
+
 		[ClientRpc]
 		private void HandleAttackRemoteClientRPC(PlayerInGame playerWhoAttack, CardInGame card, IDamageable target, ClientRpcParams clientRpcParams = default)
 		{
@@ -616,21 +616,21 @@ namespace ArcaneRealms.Scripts.Managers {
 			{
 				return;
 			}
-			
+
 			if (playerWhoAttack.ID == localPlayer.ID)
 			{
 				Debug.LogError($"[ClientRpc] Why did i received this client rpc when it was for the enemy? ");
 				return;
 			}
-			
+
 			if (NetworkManagerHelper.Instance.IsServer)
 			{
 				return;
 			}
-			
+
 			HandleAttackLocally(playerWhoAttack, monster, target);
 		}
-		
+
 
 		[ClientRpc]
 		public void EndTurnEventClientRPC() {
@@ -639,7 +639,7 @@ namespace ArcaneRealms.Scripts.Managers {
 
 		[ClientRpc]
 		public void StartTurnEventClientRPC() {
-			
+
 		}
 
 
@@ -676,17 +676,17 @@ namespace ArcaneRealms.Scripts.Managers {
 			HandleAttackRemoteServerRPC(player, card, target);
 		}
 
-		
+
 		#endregion
 
 		// -------------------------Utils-------------------------------------
-		
+
 		#region RegionUtils
 
 		public bool IsMyTurn() => localPlayer.ID == playerTurn.Value;
 
 		public bool IsLocal(PlayerInGame playerInGame) => localPlayer.ID == playerInGame.ID;
-		
+
 		public bool IsPlayerTurn(PlayerInGame player) => player.ID == playerTurn.Value;
 
 		public PlayerInGame GetPlayerTurn()
@@ -720,7 +720,7 @@ namespace ArcaneRealms.Scripts.Managers {
 		{
 			return owner.ID == localPlayer.ID ? remotePlayer : localPlayer;
 		}
-		
+
 		public int GetPlayerMonsterCount() {
 			return localPlayer.monsterCardOnField.Count;
 		}
@@ -735,7 +735,7 @@ namespace ArcaneRealms.Scripts.Managers {
 
 			return remotePlayer.GetCardInGameFromGuid(cardGuid);
 		}
-		
+
 		public ITargetable GetTarget(TargetType targetType, Guid uniqueId, Guid team)
 		{
 			if (targetType == TargetType.Player)
@@ -755,12 +755,12 @@ namespace ArcaneRealms.Scripts.Managers {
 			{
 				return true;
 			}
-			
+
 			if (damageable.GetTargetType() == TargetType.Player)
 			{
 				var entityEventData = new EntityEventData<PlayerInGame>(GetPlayerFromID(damageable.GetUnique()));
 				OnPlayerDeath?.Invoke(ref entityEventData);
-				
+
 			}
 
 			if (damageable.GetTargetType() == TargetType.MonsterCard)
@@ -771,7 +771,7 @@ namespace ArcaneRealms.Scripts.Managers {
 
 			return false;
 		}
-		
+
 		private bool CanPlay(PlayerInGame playerInGame, CardInGame card)
 		{
 			return true;
@@ -797,38 +797,6 @@ namespace ArcaneRealms.Scripts.Managers {
 			}
 		}
 
-
-		[ContextMenu("Get JsonString")]
-		public string GetJsonCurrentState()
-		{
-			GameStateSerializable gameStateToSerialize = new()
-			{
-				players = new []
-				{
-					localPlayer.ToPlayerState(),
-					remotePlayer.ToPlayerState()
-				}
-			};
-			string jsonString = JsonUtility.ToJson(gameStateToSerialize);
-			Debug.Log($"[GameManager] json state: {jsonString}");
-			return jsonString;
-		}
-
-		public void SetJsonCurrentState(string json)
-		{
-			GameStateSerializable gameStateSerializable = JsonUtility.FromJson<GameStateSerializable>(json);
-			foreach (var player in gameStateSerializable.players)
-			{
-				localPlayer.FromPlayerState(player);
-				remotePlayer.FromPlayerState(player);
-			}
-
-			
-			FieldManager.Instance.UpdateCurrentStateImmediately();
-			HandUIManager.Instance.UpdateCurrentStateImmediately();
-		}
-		
-		
 		#endregion
 
 
@@ -855,7 +823,7 @@ namespace ArcaneRealms.Scripts.Managers {
 	}
 
 	#region DeckHandShakeSerialization
-	
+
 	public struct DeckCardSerializer : INetworkSerializable
 	{
 		public Guid guid;

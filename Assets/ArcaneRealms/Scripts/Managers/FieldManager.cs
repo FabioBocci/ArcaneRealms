@@ -1,5 +1,6 @@
-﻿using System;
-using ArcaneRealms.Scripts.Cards;
+﻿#region
+
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Threading.Tasks;
@@ -8,8 +9,9 @@ using ArcaneRealms.Scripts.Interfaces;
 using ArcaneRealms.Scripts.Players;
 using ArcaneRealms.Scripts.Utils.ArrowPointer;
 using Unity.AI.Navigation;
-using Unity.Netcode;
 using UnityEngine;
+
+#endregion
 
 namespace ArcaneRealms.Scripts.Managers {
 
@@ -102,11 +104,10 @@ namespace ArcaneRealms.Scripts.Managers {
 			}
 		}
 
-		
-		public Task ResetMonsters()
+
+		public async Task ResetMonsters()
 		{
 			//TODO - implement
-			return Task.CompletedTask;
 		}
 		
 		public async Task SummonMonsterAtPlayer(PlayerInGame playerWhoSummon, MonsterCard card, int position)
@@ -122,37 +123,33 @@ namespace ArcaneRealms.Scripts.Managers {
 				StartCoroutine(SummonEnemyMonster(card, position));
 			}
 		}
-		
-		public Task DeclareAttack(MonsterCard card, IDamageable target)
+
+		public async Task DeclareAttack(MonsterCard card, IDamageable target)
 		{
-			return Task.CompletedTask;
 		}
-		
-		public Task HandleVisualAttack(IDamageable dataAttacker, IDamageable dataDefender, int dataAttackerAttack, int dataDefenderAttack)
+
+		public async Task HandleVisualAttack(IDamageable dataAttacker, IDamageable dataDefender, int dataAttackerAttack,
+			int dataDefenderAttack)
 		{
 		
 			MonsterPlatformController attacker = allPlatformOnField[dataAttacker.GetUnique()];
 			MonsterPlatformController defender = allPlatformOnField[dataAttacker.GetUnique()];
 			attacker.Attack(defender);
 			//attacker.Attack(defender);
-			return Task.CompletedTask;
 		}
-		
-		
-		public Task DestroyMonster(PlayerInGame playerD, CardInGame cardToRemove)
+
+
+		public async Task DestroyMonster(PlayerInGame playerD, CardInGame cardToRemove)
 		{
-			return Task.CompletedTask;
 		}
-		
-		public Task PlayCardAnimation(PlayerInGame player, CardInGame card)
+
+		public async Task PlayCardAnimation(PlayerInGame player, CardInGame card)
 		{
-			return Task.CompletedTask;
 		}
-		
-		
-		public Task CloseCardAnimation(PlayerInGame player, CardInGame card)
+
+
+		public async Task CloseCardAnimation(PlayerInGame player, CardInGame card)
 		{
-			return Task.CompletedTask;
 		}
 		
 

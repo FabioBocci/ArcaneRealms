@@ -1,10 +1,8 @@
-using System;
 using System.Collections.Generic;
 using ArcaneRealms.Scripts.Cards.ScriptableCards;
 using ArcaneRealms.Scripts.Utils;
 using ArcaneRealms.Scripts.Utils.ScriptableDatabase;
 using NaughtyAttributes;
-using UnityEngine;
 
 namespace ArcaneRealms.Scripts.Systems
 {
@@ -44,7 +42,7 @@ namespace ArcaneRealms.Scripts.Systems
 
             return normalCardsLoaded[id];
         }
-        
+
 
     }
 }
