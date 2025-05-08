@@ -164,11 +164,22 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   dontDestroy: 1
-  loadJsonInfo: 
+  loadJsonInfo: '{"sawCards":[],"collectionList":[],"decks":[{"id":"10b4abf7-147c-425d-82da-b174e0d6f1cc","name":"Default
+    Deck","cards":[{"cardId":"2","count":4},{"cardId":"1","count":4},{"cardId":"3","count":4},{"cardId":"104","count":4}]}]}'
   playerData:
     sawCards: 
     collectionList: []
-    decks: []
+    decks:
+    - name: Default Deck
+      cards:
+      - card: {fileID: 11400000, guid: 82b42e3bd1b02954ea6e45dd2d07d678, type: 2}
+        count: 4
+      - card: {fileID: 11400000, guid: e8e69d8874b0d9a47a8daec192516f9b, type: 2}
+        count: 4
+      - card: {fileID: 11400000, guid: 8381f44ab246a00479d20f03217cb331, type: 2}
+        count: 4
+      - card: {fileID: 11400000, guid: 5c02e597a02b0124fae853cda0c300f8, type: 2}
+        count: 4
 --- !u!1001 &67409265
 PrefabInstance:
   m_ObjectHideFlags: 0
