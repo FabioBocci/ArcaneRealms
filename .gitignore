@@ -73,3 +73,10 @@ crashlytics-build.properties
 
 # Autosave plugin saves
 /[Aa]ssets/AutoSave/*
+/Assets/JMO Assets
+/Assets/Fantastic Nature Pack
+/Assets/Fantastic Nature Pack.meta
+
+#Ignore Idea folder
+/.idea/workspace.xml
+/.idea/tasks.xml
